@@ -1,4 +1,6 @@
 coverage
+etc
+dist
 node_modules
 .DS_Store
 lib

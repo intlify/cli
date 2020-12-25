@@ -39,6 +39,8 @@
   "devDependencies": {
     "@microsoft/api-extractor": "^7.12.0",
     "@types/debug": "^4.1.5",
+    "@types/eslint": "^7.2.6",
+    "@types/eslint-visitor-keys": "^1.0.0",
     "@types/jest": "^26.0.15",
     "@types/meow": "^5.0.0",
     "@types/node": "^14.14.9",
@@ -83,7 +85,10 @@
     "url": "git+https://github.com/intlify/cli.git"
   },
   "scripts": {
-    "build": "tsc -p .",
+    "build": "yarn build:transpile && yarn build:extract",
+    "build:docs": "api-docs-gen ./temp/cli.api.json -c ./docsgen.config.js -o ./",
+    "build:extract": "api-extractor run -l -c ./api-extractor.json",
+    "build:transpile": "tsc -p .",
     "clean": "npm-run-all clean:*",
     "clean:cache:jest": "jest --clearCache",
     "clean:coverage": "rm -rf ./coverage",
