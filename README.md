@@ -2,8 +2,6 @@
 
 CLI Tooling for i18n development
 
-> WIP :construction:
-
 ## :cd: Installation
 
 ### npm
@@ -20,12 +18,27 @@ yarn global @intlify/cli
 
 ## :rocket: Usage
 
-TODO:
+```
+Usage: intlify <command> [options]
+
+Commands:
+  intlify compile  compile the i18n resources                          [aliases: cp]
+
+Options:
+  --help     Show help                                                 [boolean]
+  --version  Show version number                                       [boolean]
+```
 
 ## :handshake: API
 
 About details, See the [API References](https://github.com/intlify/cli/blob/master/api.md)
 
+
+## :globe_with_meridians: I18n
+
+Intlify cli is supporting for I18n.
+
+If you would like to localiize Intlify CLI, you can contribute i18n resource to [locales](https://github.com/intlify/cli/blob/master/locales) directory.
 
 ## :scroll: Changelog
 Details changes for each release are documented in the [CHANGELOG.md](https://github.com/intlify/cli/blob/master/CHANGELOG.md).
