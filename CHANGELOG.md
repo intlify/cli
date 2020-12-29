@@ -1,4 +1,13 @@
 
+## v0.1.1 (2020-12-29)
+
+#### :bug: Bug Fixes
+* [#5](https://github.com/intlify/cli/pull/5) fix: add i18n resource to dist files ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.1.0 (2020-12-29)
 
 #### :star: Features
