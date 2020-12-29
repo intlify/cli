@@ -1,6 +1,6 @@
 # :toolbox: Intlify CLI
 
-Tooling for i18n development
+CLI Tooling for i18n development
 
 > WIP :construction:
 
@@ -9,19 +9,18 @@ Tooling for i18n development
 ### npm
 
 ```sh
-$ npm install -g @intlify/cli
+npm install -g @intlify/cli
 ```
 
 ### yarn
 ```sh
-yarn global @initlify/cli
+yarn global @intlify/cli
 ```
 
 
 ## :rocket: Usage
 
 TODO:
-
 
 ## :handshake: API
 
