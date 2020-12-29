@@ -71,6 +71,7 @@
   },
   "files": [
     "bin/*.js",
+    "locales/*.json",
     "dist/*.d.ts",
     "lib/**/*.js"
   ],
