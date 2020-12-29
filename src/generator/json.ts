@@ -14,6 +14,9 @@ import { RawSourceMap } from 'source-map'
 import type { JSONProgram, JSONNode } from 'jsonc-eslint-parser/lib/parser/ast'
 import type { CodeGenOptions, CodeGenerator, CodeGenResult } from './codegen'
 
+/**
+ * @internal
+ */
 export function generate(
   targetSource: string | Buffer,
   {

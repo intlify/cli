@@ -14,6 +14,9 @@ import {
 
 import type { RawSourceMap } from 'source-map'
 
+/**
+ * @internal
+ */
 export type DevEnv = 'development' | 'production'
 
 export interface Position {
@@ -29,6 +32,9 @@ export interface SourceLocationable {
   }
 }
 
+/**
+ * @internal
+ */
 export interface CodeGenOptions {
   type?: 'plain' | 'sfc'
   source?: string
@@ -73,6 +79,9 @@ export interface CodeGenerator {
   ): void
 }
 
+/**
+ * @internal
+ */
 export interface CodeGenResult<ASTNode> {
   code: string
   ast: ASTNode

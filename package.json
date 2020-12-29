@@ -71,6 +71,7 @@
   },
   "files": [
     "bin/*.js",
+    "dist/*.d.ts",
     "lib/**/*.js"
   ],
   "homepage": "https://github.com/intlify/cli#readme",
@@ -88,7 +89,7 @@
   },
   "scripts": {
     "build": "yarn build:transpile && yarn build:extract",
-    "build:docs": "api-docs-gen ./temp/cli.api.json -c ./docsgen.config.js -o ./",
+    "build:docs": "api-docs-gen ./temp/cli.api.json -c ./docsgen.config.js -o ./ -g noprefix",
     "build:extract": "api-extractor run -l -c ./api-extractor.json",
     "build:transpile": "tsc -p .",
     "clean": "npm-run-all clean:*",
@@ -108,5 +109,6 @@
     "test:unit": "jest --env node",
     "test:watch": "jest --env node --watch",
     "watch": "tsc -p . --watch"
-  }
+  },
+  "types": "dist/cli.d.ts"
 }

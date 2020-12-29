@@ -1,11 +1,10 @@
 import path from 'path'
-import { promises as fs } from 'fs'
 import chalk from 'chalk'
 import { Arguments, Argv } from 'yargs'
-import { generateJSON, generateYAML } from '../generator/index'
-import { globAsync } from '../utils'
+import { debug as Debug } from 'debug'
+import { CompileErrorCodes, compile } from '../api'
 
-const SUPPORTED_FORMAT = ['.json', '.json5', '.yaml', '.yml']
+const debug = Debug('@intlify/cli:compile')
 
 type CompileOptions = {
   source: string
@@ -36,59 +35,41 @@ export const handler = async (
 ): Promise<void> => {
   const output =
     args.output != null ? path.resolve(__dirname, args.output) : process.cwd()
-  const targets = await globAsync(args.source)
-  targets.forEach(async (target: string) => {
-    const parsed = path.parse(target)
-    if (!SUPPORTED_FORMAT.includes(parsed.ext)) {
-      console.warn(
-        chalk.yellow(
-          `${target}: Ignore compilation due to not supported '${parsed.ext}'`
-        )
-      )
-      return
-    }
-    const source = await fs.readFile(target, { encoding: 'utf-8' })
-    const generate = /\.json?5/.test(parsed.ext) ? generateJSON : generateYAML
-    const filename = `${parsed.name}.js`
-    const generatePath = path.resolve(output, filename)
-    let occuredError = false
-    const { code } = generate(source, {
-      type: 'plain',
-      filename: target,
-      env: 'production',
-      onError: (msg: string): void => {
-        occuredError = true
-        console.log(
-          chalk.green(`error compilation: ${target} -> ${generatePath}, ${msg}`)
-        )
-      },
-      onWarn: (msg: string): void => {
-        console.log(
-          chalk.yellow(
-            `warning compilation: ${target} -> ${generatePath}, ${msg}`
+  const ret = await compile(args.source, output, {
+    onCompile: (source: string, output: string): void => {
+      console.log(chalk.green(`success compilation: ${source} -> ${output}`))
+    },
+    onError: (
+      code: number,
+      source: string,
+      output: string,
+      msg?: string
+    ): void => {
+      switch (code) {
+        case CompileErrorCodes.NOT_SUPPORTED_FORMAT:
+          const parsed = path.parse(source)
+          console.warn(
+            chalk.yellow(
+              `${source}: Ignore compilation due to not supported '${parsed.ext}'`
+            )
           )
-        )
+          break
+        case CompileErrorCodes.INTERNAL_COMPILE_WARNING:
+          console.log(
+            chalk.yellow(`warning compilation: ${source} -> ${output}, ${msg}`)
+          )
+          break
+        case CompileErrorCodes.INTERNAL_COMPILE_ERROR:
+          console.log(
+            chalk.green(`error compilation: ${source} -> ${output}, ${msg}`)
+          )
+          break
+        default:
+          break
       }
-    })
-    if (!occuredError) {
-      const filename = `${parsed.name}.js`
-      await writeGenerateCode(output, filename, code)
-      console.log(
-        chalk.green(`success compilation: ${target} -> ${generatePath}`)
-      )
     }
   })
-}
-
-async function writeGenerateCode(
-  target: string,
-  filename: string,
-  code: string
-): Promise<string> {
-  await fs.mkdir(target, { recursive: true })
-  const generatePath = path.resolve(target, filename)
-  await fs.writeFile(generatePath, code)
-  return generatePath
+  debug('compile: ', ret)
 }
 
 export default {

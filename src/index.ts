@@ -1,3 +1,2 @@
-export type Foo = 1
-
-console.log('hello @intlify/cli !')
+export * from './generator'
+export { CompileErrorCodes, CompileOptions, compile } from './api'
