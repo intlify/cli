@@ -14,6 +14,9 @@ import { RawSourceMap } from 'source-map'
 import type { YAMLProgram, YAMLNode } from 'yaml-eslint-parser/lib/ast'
 import type { CodeGenOptions, CodeGenerator, CodeGenResult } from './codegen'
 
+/**
+ * @internal
+ */
 export function generate(
   targetSource: string | Buffer,
   {

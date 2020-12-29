@@ -24,7 +24,7 @@ TODO:
 
 ## :handshake: API
 
-TODO:
+About details, See the [API References](https://github.com/intlify/cli/blob/master/api.md)
 
 
 ## :scroll: Changelog
