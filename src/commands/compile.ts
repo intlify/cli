@@ -1,8 +1,10 @@
 import path from 'path'
 import chalk from 'chalk'
-import { Arguments, Argv } from 'yargs'
 import { debug as Debug } from 'debug'
 import { CompileErrorCodes, compile } from '../api'
+import { t } from '../i18n'
+
+import type { Arguments, Argv } from 'yargs'
 
 const debug = Debug('@intlify/cli:compile')
 
@@ -13,20 +15,20 @@ type CompileOptions = {
 
 export const command = 'compile'
 export const aliases = 'cp'
-export const describe = 'compile the i18n resources'
+export const describe = t('compile the i18n resources')
 
 export const builder = (args: Argv): Argv<CompileOptions> => {
   return args
     .option('source', {
       type: 'string',
       alias: 's',
-      describe: 'the source i18n resource path',
+      describe: t('the i18n resource source path'),
       demandOption: true
     })
     .option('output', {
       type: 'string',
       alias: 'o',
-      describe: 'the compiled i18n resource output path'
+      describe: t('the compiled i18n resource output path')
     })
 }
 
@@ -37,7 +39,13 @@ export const handler = async (
     args.output != null ? path.resolve(__dirname, args.output) : process.cwd()
   const ret = await compile(args.source, output, {
     onCompile: (source: string, output: string): void => {
-      console.log(chalk.green(`success compilation: ${source} -> ${output}`))
+      console.log(
+        chalk.green(
+          t('Success compilation: {source} -> {output}', {
+            named: { source, output }
+          })
+        )
+      )
     },
     onError: (
       code: number,
@@ -50,18 +58,28 @@ export const handler = async (
           const parsed = path.parse(source)
           console.warn(
             chalk.yellow(
-              `${source}: Ignore compilation due to not supported '${parsed.ext}'`
+              t("{source}: Ignore compilation due to not supported '{ext}'", {
+                named: { ext: parsed.ext }
+              })
             )
           )
           break
         case CompileErrorCodes.INTERNAL_COMPILE_WARNING:
           console.log(
-            chalk.yellow(`warning compilation: ${source} -> ${output}, ${msg}`)
+            chalk.yellow(
+              t('Warning compilation: {source} -> {output}, {msg}', {
+                named: { source, output, msg }
+              })
+            )
           )
           break
         case CompileErrorCodes.INTERNAL_COMPILE_ERROR:
           console.log(
-            chalk.green(`error compilation: ${source} -> ${output}, ${msg}`)
+            chalk.green(
+              t('Error compilation: {source} -> {output}, {msg}', {
+                named: { source, output, msg }
+              })
+            )
           )
           break
         default:
