@@ -1,4 +1,13 @@
 
+## v0.1.2 (2020-12-31)
+
+#### :zap: Improvement Features
+* [#7](https://github.com/intlify/cli/pull/7) improvement: update locale and export types ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.1.1 (2020-12-29)
 
 #### :bug: Bug Fixes
