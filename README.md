@@ -12,7 +12,7 @@ npm install -g @intlify/cli
 
 ### yarn
 ```sh
-yarn global @intlify/cli
+yarn global add @intlify/cli
 ```
 
 
