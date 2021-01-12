@@ -3,6 +3,7 @@ import { initI18n, t } from './i18n'
 ;(async () => {
   await initI18n()
   yargs
+    .scriptName('intlify')
     .usage(t('Usage: $0 <command> [options]'))
     .commandDir('./commands')
     .demandCommand()
