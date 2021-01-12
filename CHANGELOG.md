@@ -1,4 +1,13 @@
 
+## v0.1.3 (2021-01-12)
+
+#### :bug: Bug Fixes
+* [#12](https://github.com/intlify/cli/pull/12) Closes [#11](https://github.com/intlify/cli/issues/11): script name show wrong ([@PeterAlfredLee](https://github.com/PeterAlfredLee))
+
+#### Committers: 1
+- Lee ([@PeterAlfredLee](https://github.com/PeterAlfredLee))
+
+
 ## v0.1.2 (2020-12-31)
 
 #### :zap: Improvement Features
