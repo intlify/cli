@@ -1,5 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`bare: code 1`] = `
+"{
+  \\"hello\\": (()=>{const fn=(ctx) => {const { normalize: _normalize } = ctx;return _normalize([\\"hello world!\\"])};fn.source=\\"hello world!\\";return fn;})()
+}"
+`;
+
+exports[`bare: map 1`] = `
+Object {
+  "mappings": ";6EACUA",
+  "names": Array [
+    "hello world!",
+  ],
+  "sources": Array [
+    "vue-i18n-loader.json",
+  ],
+  "sourcesContent": Array [
+    "{
+  \\"hello\\": \\"hello world!\\"
+}
+",
+  ],
+  "version": 3,
+}
+`;
+
 exports[`complex: code 1`] = `
 "export default {
   \\"hi\\": (()=>{const fn=(ctx) => {const { normalize: _normalize } = ctx;return _normalize([\\"hi there!\\"])};fn.source=\\"hi there!\\";return fn;})(),
