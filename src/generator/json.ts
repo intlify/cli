@@ -89,7 +89,7 @@ function generateNode(
         case 'Program':
           if (type === 'plain') {
             generator.push(`export default `)
-          } else {
+          } else if (type === 'sfc') {
             // for 'sfc'
             const variableName =
               type === 'sfc' ? (!isGlobal ? '__i18n' : '__i18nGlobal') : ''
