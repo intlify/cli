@@ -1,4 +1,13 @@
 
+## v0.2.0 (2021-02-03)
+
+#### :star: Features
+* [#14](https://github.com/intlify/cli/pull/14) feat: bare generating mode ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.1.3 (2021-01-12)
 
 #### :bug: Bug Fixes
