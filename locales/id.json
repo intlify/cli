@@ -1,0 +1,10 @@
+{
+  "Usage: $0 <command> [options]": "Cara menggunakan: $0 <perintah> [opsi]",
+  "compile the i18n resources": "susun sumber i18n",
+  "the i18n resource source path": "lokasi path sumber i18n",
+  "the compiled i18n resource output path": "path hasil keluaran penyusunan i18n",
+  "Success compilation: {source} -> {output}": "Penyusunan sukses: {source} -> {output}",
+  "{source}: Ignore compilation due to not supported '{ext}'": "{source}: Abaikan penyusunan karena belum didukung '{ext}'",
+  "Warning compilation: {source} -> {output}, {msg}": "Peringatan penyusunan: {source} -> {output}, {msg}",
+  "Error compilation: {source} -> {output}, {msg}": "Galat penyusunan: {source} -> {output}, {msg}"
+}
