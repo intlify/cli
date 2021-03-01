@@ -1,4 +1,13 @@
 
+## v0.3.0 (2021-03-01)
+
+#### :globe_with_meridians: Internationalization
+* [#16](https://github.com/intlify/cli/pull/16) i18n(id): add indonesia ([@jefrydco](https://github.com/jefrydco))
+
+#### Committers: 1
+- Jefry Dewangga ([@jefrydco](https://github.com/jefrydco))
+
+
 ## v0.2.0 (2021-02-03)
 
 #### :star: Features
