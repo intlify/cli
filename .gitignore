@@ -8,3 +8,4 @@ lib
 *.swp
 *~
 temp
+.env
