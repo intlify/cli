@@ -1,4 +1,14 @@
 
+## v0.4.0 (2021-04-07)
+
+#### :zap: Improvement Features
+* [#19](https://github.com/intlify/cli/pull/19) bump deps ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 2
+- Lukas ([@lukashass](https://github.com/lukashass))
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.3.0 (2021-03-01)
 
 #### :globe_with_meridians: Internationalization
