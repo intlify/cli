@@ -9,7 +9,6 @@ import type {
   Locale,
   LocaleMessages,
   LocaleMessageDictionary,
-  TranslateOptions,
   CoreContext
 } from '@intlify/core'
 
@@ -49,7 +48,7 @@ export function getLocale(env?: Record<string, unknown>): Locale {
 
 export function t<Key extends keyof typeof i18nResourceSchema>(
   key: Key,
-  options?: TranslateOptions
+  ...args: unknown[]
 ): string {
   if (context == null) {
     console.error(
@@ -57,7 +56,7 @@ export function t<Key extends keyof typeof i18nResourceSchema>(
     )
     return key
   }
-  const ret = translate(context, key, options)
+  const ret = translate(context, key, ...args)
   return isString(ret) ? ret : key
 }
 
