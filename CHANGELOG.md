@@ -1,4 +1,16 @@
 
+## v0.5.0 (2021-04-10)
+
+#### :star: Features
+* [#22](https://github.com/intlify/cli/pull/22) feat: compile mode ([@kazupon](https://github.com/kazupon))
+
+#### :bug: Bug Fixes
+* [#21](https://github.com/intlify/cli/pull/21) fix: cannot display compilation message ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.4.0 (2021-04-07)
 
 #### :zap: Improvement Features
