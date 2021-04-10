@@ -8,6 +8,8 @@
   - [CompileErrorCodes](#compileerrorcodes)
 - [Interface](#interface)
   - [CompileOptions](#compileoptions)
+- [TypeAlias](#typealias)
+  - [DevEnv](#devenv)
 
 ## Function
 
@@ -82,6 +84,19 @@ This optioins is used at [compile](#compile) function
 
 #### Properties
 
+##### mode
+
+Compile mode
+
+**Signature:**
+```typescript
+mode?: DevEnv;
+```
+
+#### Remarks
+
+The mode of code generation. Default `production` for optimization. If `development`, code generated with meta information from i18n resources.
+
 ##### onCompile
 
 Compile handler
@@ -100,5 +115,17 @@ Compile Error handler
 onError?: (code: number, source: string, output: string, msg?: string) => void;
 ```
 
+
+
+## TypeAlias
+
+### DevEnv
+
+Compilation dev environments
+
+**Signature:**
+```typescript
+export declare type DevEnv = 'development' | 'production';
+```
 
 

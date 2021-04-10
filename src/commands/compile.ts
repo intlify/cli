@@ -5,12 +5,14 @@ import { CompileErrorCodes, compile } from '../api'
 import { t } from '../i18n'
 
 import type { Arguments, Argv } from 'yargs'
+import type { DevEnv } from '../generator/index'
 
 const debug = Debug('@intlify/cli:compile')
 
 type CompileOptions = {
   source: string
   output?: string
+  mode?: string
 }
 
 export const command = 'compile'
@@ -30,6 +32,14 @@ export const builder = (args: Argv): Argv<CompileOptions> => {
       alias: 'o',
       describe: t('the compiled i18n resource output path')
     })
+    .option('mode', {
+      type: 'string',
+      alias: 'm',
+      default: 'production',
+      describe: t(
+        "the compiled i18n resource mode, 'production' or 'development' (default: 'production')"
+      )
+    })
 }
 
 export const handler = async (
@@ -38,6 +48,7 @@ export const handler = async (
   const output =
     args.output != null ? path.resolve(__dirname, args.output) : process.cwd()
   const ret = await compile(args.source, output, {
+    mode: args.mode as DevEnv,
     onCompile: (source: string, output: string): void => {
       console.log(
         chalk.green(

@@ -1,8 +1,11 @@
 import path from 'path'
 import { promises as fs } from 'fs'
 import { debug as Debug } from 'debug'
+import { isString } from '@intlify/shared'
 import { generateJSON, generateYAML } from './generator/index'
 import { globAsync } from './utils'
+
+import type { DevEnv } from './generator/index'
 
 const SUPPORTED_FORMAT = ['.json', '.json5', '.yaml', '.yml']
 const debug = Debug('@intlify/cli:api')
@@ -47,7 +50,16 @@ export interface CompileOptions {
    * Compile handler
    */
   onCompile?: (source: string, output: string) => void
+  /**
+   * Compile mode
+   *
+   * @remarks
+   * The mode of code generation. Default `production` for optimization. If `development`, code generated with meta information from i18n resources.
+   */
+  mode?: DevEnv
 }
+
+const COMPILE_MODE = ['production', 'development'] as const
 
 /**
  * Compile i18n resources
@@ -93,11 +105,16 @@ export async function compile(
     }
     const source = await fs.readFile(target, { encoding: 'utf-8' })
     const generate = /\.json?5/.test(parsed.ext) ? generateJSON : generateYAML
+    const env: DevEnv =
+      isString(options.mode) && COMPILE_MODE.includes(options.mode)
+        ? options.mode
+        : 'production'
+    debug('env', env)
     let occuredError = false
     const { code } = generate(source, {
       type: 'plain',
       filename: target,
-      env: 'production',
+      env,
       onError: (msg: string): void => {
         occuredError = true
         options.onError &&

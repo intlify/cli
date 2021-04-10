@@ -15,7 +15,9 @@ import {
 import type { RawSourceMap } from 'source-map'
 
 /**
- * @internal
+ * Compilation dev environments
+ *
+ * @public
  */
 export type DevEnv = 'development' | 'production'
 
