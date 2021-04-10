@@ -41,9 +41,7 @@ export const handler = async (
     onCompile: (source: string, output: string): void => {
       console.log(
         chalk.green(
-          t('Success compilation: {source} -> {output}', {
-            named: { source, output }
-          })
+          t('Success compilation: {source} -> {output}', { source, output })
         )
       )
     },
