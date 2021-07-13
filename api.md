@@ -77,9 +77,6 @@ export interface CompileOptions
 This optioins is used at [compile](#compile) function
 
 
-#### Methods
-
-
 #### Properties
 
 ##### mode
