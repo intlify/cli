@@ -5,7 +5,7 @@ import { CompileErrorCodes, compile } from '../api'
 import { t } from '../i18n'
 
 import type { Arguments, Argv } from 'yargs'
-import type { DevEnv } from '../generator/index'
+import type { DevEnv } from '@intlify/bundle-utils'
 
 const debug = Debug('@intlify/cli:compile')
 

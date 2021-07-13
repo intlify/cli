@@ -8,8 +8,6 @@
   - [CompileErrorCodes](#compileerrorcodes)
 - [Interface](#interface)
   - [CompileOptions](#compileoptions)
-- [TypeAlias](#typealias)
-  - [DevEnv](#devenv)
 
 ## Function
 
@@ -115,17 +113,5 @@ Compile Error handler
 onError?: (code: number, source: string, output: string, msg?: string) => void;
 ```
 
-
-
-## TypeAlias
-
-### DevEnv
-
-Compilation dev environments
-
-**Signature:**
-```typescript
-export declare type DevEnv = 'development' | 'production';
-```
 
 

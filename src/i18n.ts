@@ -1,7 +1,7 @@
 import path from 'path'
 import { promises as fs } from 'fs'
 import { isString } from '@intlify/shared'
-import { createCoreContext, translate } from '@intlify/core'
+import { createCoreContext, translate } from '@intlify/core-base'
 import { debug as Debug } from 'debug'
 import i18nResourceSchema from '../locales/en.json'
 
