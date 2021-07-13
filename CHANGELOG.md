@@ -1,4 +1,14 @@
 
+## v0.6.0 (2021-07-13)
+
+#### :boom: Breaking Change
+* [#24](https://github.com/intlify/cli/pull/24) breaking: move generator to @intlify/bundle-utils ([@kazupon](https://github.com/kazupon))
+* [#25](https://github.com/intlify/cli/pull/25) breaking: drop node v10 ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.5.0 (2021-04-10)
 
 #### :star: Features
