@@ -2,10 +2,10 @@ import path from 'path'
 import { promises as fs } from 'fs'
 import { debug as Debug } from 'debug'
 import { isString } from '@intlify/shared'
-import { generateJSON, generateYAML } from './generator/index'
+import { generateJSON, generateYAML } from '@intlify/bundle-utils'
 import { globAsync } from './utils'
 
-import type { DevEnv } from './generator/index'
+import type { DevEnv } from '@intlify/bundle-utils'
 
 const SUPPORTED_FORMAT = ['.json', '.json5', '.yaml', '.yml']
 const debug = Debug('@intlify/cli:api')
