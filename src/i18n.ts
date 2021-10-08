@@ -73,7 +73,7 @@ export async function initI18n() {
       messages: resources
     })
   } catch (e) {
-    debug('load i18n resource errors', e.message)
+    debug('load i18n resource errors', (e as Error).message)
     throw e
   }
 }
