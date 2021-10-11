@@ -2,3 +2,4 @@ lib
 coverage
 tsconfig.json
 __generated__
+.nyc_output

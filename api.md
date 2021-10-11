@@ -17,7 +17,7 @@ Compile i18n resources
 
 **Signature:**
 ```typescript
-export declare function compile(source: string, output: string, options?: CompileOptions): Promise<boolean>;
+declare function compile(source: string, output: string, options?: CompileOptions): Promise<boolean>;
 ```
 
 #### Parameters
@@ -45,7 +45,7 @@ Compile Error Codes
 
 **Signature:**
 ```typescript
-export declare const enum CompileErrorCodes 
+declare const enum CompileErrorCodes 
 ```
 
 #### Members
@@ -69,7 +69,7 @@ Compile Options
 
 **Signature:**
 ```typescript
-export interface CompileOptions 
+interface CompileOptions 
 ```
 
 #### Remarks

@@ -1,2 +1,4 @@
 export { DevEnv } from '@intlify/bundle-utils'
-export { CompileErrorCodes, CompileOptions, compile } from './api'
+export { CompileErrorCodes, compile } from './api'
+
+export type { CompileOptions } from './api'

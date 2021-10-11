@@ -1,74 +1,75 @@
-import path from 'path'
+import sinon from 'sinon'
+import { assert } from '@sinonjs/referee'
+import path from 'pathe'
 import { CompileErrorCodes, compile } from '../src/api'
 
-afterEach(() => {
-  jest.clearAllMocks()
-})
+const dirname = path.dirname(new URL(import.meta.url).pathname)
 
 describe('compile', () => {
-  test('json', async () => {
-    const onCompile = jest.fn()
-    const onError = jest.fn()
+  it('json', async () => {
+    const onCompile = sinon.spy()
+    const onError = sinon.spy()
     const ret = await compile(
       './test/fixtures/codegen/**.json',
-      path.resolve(__dirname, './__generated__/compile/json'),
+      path.resolve(dirname, './__generated__/compile/json'),
       {
         onCompile,
         onError
       }
     )
-    expect(ret).toEqual(true)
-    expect(onCompile).toHaveBeenCalledTimes(3)
-    expect(onError).toHaveBeenCalledTimes(0)
+    assert.equals(ret, true)
+    assert.equals(onCompile.callCount, 3)
+    assert.equals(onError.callCount, 0)
   })
 
-  test('yaml', async () => {
-    const onCompile = jest.fn()
-    const onError = jest.fn()
+  it('yaml', async () => {
+    const onCompile = sinon.spy()
+    const onError = sinon.spy()
     const ret = await compile(
       './test/fixtures/codegen/**.yaml',
-      path.resolve(__dirname, './__generated__/compile/yaml'),
+      path.resolve(dirname, './__generated__/compile/yaml'),
       {
         onCompile,
         onError
       }
     )
-    expect(ret).toEqual(true)
-    expect(onCompile).toHaveBeenCalledTimes(1)
-    expect(onError).toHaveBeenCalledTimes(0)
+    assert.equals(ret, true)
+    assert.equals(onCompile.callCount, 1)
+    assert.equals(onError.callCount, 0)
   })
 
-  test('json5', async () => {
-    const onCompile = jest.fn()
-    const onError = jest.fn()
+  it('json5', async () => {
+    const onCompile = sinon.spy()
+    const onError = sinon.spy()
     const ret = await compile(
       './test/fixtures/codegen/**.json5',
-      path.resolve(__dirname, './__generated__/compile/json5'),
+      path.resolve(dirname, './__generated__/compile/json5'),
       {
         onCompile,
         onError
       }
     )
-    expect(ret).toEqual(true)
-    expect(onCompile).toHaveBeenCalledTimes(1)
-    expect(onError).toHaveBeenCalledTimes(0)
+    assert.equals(ret, true)
+    assert.equals(onCompile.callCount, 1)
+    assert.equals(onError.callCount, 0)
   })
 
-  test('other format', async () => {
-    const onCompile = jest.fn()
-    const onError = jest.fn()
+  it('other format', async () => {
+    const onCompile = sinon.spy()
+    const onError = sinon.spy()
     const ret = await compile(
       './test/fixtures/**.txt',
-      path.resolve(__dirname, './__generated__/compile/other'),
+      path.resolve(dirname, './__generated__/compile/other'),
       {
         onCompile,
         onError
       }
     )
-    expect(ret).toEqual(false)
-    expect(onCompile).toHaveBeenCalledTimes(0)
-    expect(onError).toHaveBeenCalledTimes(1)
-    expect(onError.mock.calls[0][0]).toEqual(
+    assert.equals(ret, false)
+    assert.equals(onCompile.callCount, 0)
+    assert.equals(onError.callCount, 1)
+    assert.equals(
+      onError.getCall(0).args[0],
       CompileErrorCodes.NOT_SUPPORTED_FORMAT
     )
   })
