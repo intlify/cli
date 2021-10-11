@@ -7,7 +7,7 @@
     "email": "kawakazu80@gmail.com"
   },
   "bin": {
-    "intlify": "./bin/run.js"
+    "intlify": "./bin/run.mjs"
   },
   "bugs": {
     "url": "https://github.com/intlify/cli/issues"
@@ -31,20 +31,23 @@
     "@intlify/core-base": "^9.1.9",
     "@intlify/shared": "^9.1.9",
     "chalk": "^4.1.0",
-    "debug": "^4.3.1",
+    "debug": "^4.3.2",
     "glob": "^7.2.0",
+    "pathe": "^0.2.0",
     "yargs": "^17.2.0"
   },
   "devDependencies": {
     "@kazupon/lerna-changelog": "^4.3.0",
     "@microsoft/api-extractor": "^7.18.2",
-    "@secretlint/secretlint-rule-preset-recommend": "^4.1.0",
-    "@types/debug": "^4.1.5",
+    "@secretlint/secretlint-rule-preset-recommend": "^3.3.0",
+    "@sinonjs/referee": "^9.1.1",
+    "@types/debug": "^4.1.7",
     "@types/eslint": "^7.2.6",
     "@types/eslint-visitor-keys": "^1.0.0",
     "@types/glob": "^7.1.3",
-    "@types/jest": "^27.0.2",
+    "@types/mocha": "^9.0.0",
     "@types/node": "^16.10.3",
+    "@types/sinon": "^10.0.4",
     "@types/yargs": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^4.32.0",
     "@typescript-eslint/parser": "^4.32.0",
@@ -53,27 +56,38 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue-libs": "^4.0.0",
-    "jest": "^27.2.4",
-    "jest-watch-typeahead": "^1.0.0",
+    "jiti": "^1.12.6",
     "lint-staged": "^11.0.0",
+    "mocha": "^9.1.2",
     "npm-run-all": "^4.1.5",
+    "nyc": "^15.1.0",
     "opener": "^1.5.1",
     "prettier": "^2.3.2",
-    "secretlint": "^4.1.0",
+    "secretlint": "^3.3.0",
     "shipjs": "^0.24.0",
-    "ts-jest": "^27.0.5",
+    "sinon": "^11.1.2",
     "typescript": "^4.4.3",
     "typescript-eslint-language-service": "^4.1.3",
+    "unbuild": "^0.5.6",
     "yorkie": "^2.0.0"
   },
   "engines": {
     "node": ">= 12"
   },
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    },
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
   "files": [
     "bin/*.js",
     "locales/*.json",
     "dist/*.d.ts",
-    "lib/**/*.js"
+    "lib/index.cjs",
+    "lib/index.mjs"
   ],
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -106,12 +120,9 @@
     "build": "yarn build:transpile && yarn build:extract",
     "build:docs": "api-docs-gen ./temp/cli.api.json -c ./docsgen.config.js -o ./ -g noprefix",
     "build:extract": "api-extractor run -l -c ./api-extractor.json",
-    "build:transpile": "tsc -p .",
+    "build:transpile": "unbuild",
     "clean": "npm-run-all clean:*",
-    "clean:cache:jest": "jest --clearCache",
-    "clean:coverage": "rm -rf ./coverage",
     "clean:lib": "rm -rf ./lib/*.*",
-    "coverage": "opener coverage/lcov-report/index.html",
     "fix": "npm-run-all --parallel lint:eslint:fix format:fix",
     "format": "prettier --config .prettierrc --ignore-path .prettierignore '**/*.{js,json,html}'",
     "format:fix": "yarn format --write",
@@ -122,10 +133,9 @@
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",
     "test": "yarn lint && yarn test:cover",
-    "test:cover": "yarn test:unit --coverage",
-    "test:unit": "jest --env node",
-    "test:watch": "jest --env node --watch",
+    "test:cover": "nyc mocha -r jiti/register test/*",
+    "test:unit": "mocha -r jiti/register test/*",
     "watch": "tsc -p . --watch"
   },
-  "types": "dist/cli.d.ts"
+  "types": "dist/index.d.ts"
 }

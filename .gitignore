@@ -9,3 +9,4 @@ lib
 *~
 temp
 .env
+.nyc_output

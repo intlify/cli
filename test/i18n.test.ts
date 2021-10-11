@@ -1,9 +1,9 @@
+import { assert } from '@sinonjs/referee'
 import { getLocale } from '../src/i18n'
 
 let ORG_ENV = {}
 
 beforeEach(() => {
-  jest.resetModules()
   ORG_ENV = process.env
   process.env = {}
 })
@@ -13,32 +13,32 @@ afterEach(() => {
 })
 
 describe('getLocale', () => {
-  test('default', () => {
-    expect(getLocale()).toEqual('en-US')
+  it('default', () => {
+    assert.equals(getLocale(), 'en-US')
   })
 
-  test('LC_ALL', () => {
+  it('LC_ALL', () => {
     process.env['LC_ALL'] = 'ja_JP'
-    expect(getLocale()).toEqual('ja-JP')
+    assert.equals(getLocale(), 'ja-JP')
   })
 
-  test('LC_MESSAGES', () => {
+  it('LC_MESSAGES', () => {
     process.env['LC_MESSAGES'] = 'ja_JP'
-    expect(getLocale()).toEqual('ja-JP')
+    assert.equals(getLocale(), 'ja-JP')
   })
 
-  test('LANG', () => {
+  it('LANG', () => {
     process.env['LANG'] = 'ja_JP'
-    expect(getLocale()).toEqual('ja-JP')
+    assert.equals(getLocale(), 'ja-JP')
   })
 
-  test('LANGUAGE', () => {
+  it('LANGUAGE', () => {
     process.env['LANGUAGE'] = 'ja_JP'
-    expect(getLocale()).toEqual('ja-JP')
+    assert.equals(getLocale(), 'ja-JP')
   })
 
-  test('BCP-47', () => {
+  it('BCP-47', () => {
     process.env['LC_ALL'] = 'ja-JP'
-    expect(getLocale()).toEqual('ja-JP')
+    assert.equals(getLocale(), 'ja-JP')
   })
 })
