@@ -1,8 +1,11 @@
 # @intlify/cli Contributing Guide
 
-- [Issue Reporting Guidelines](#issue-reporting-guidelines)
-- [Pull Request Guidelines](#pull-request-guidelines)
-- [Development Setup](#development-setup)
+- [@intlify/cli Contributing Guide](#intlifycli-contributing-guide)
+  - [Issue Reporting Guidelines](#issue-reporting-guidelines)
+  - [Pull Request Guidelines](#pull-request-guidelines)
+    - [Work Step Example](#work-step-example)
+  - [Development Setup](#development-setup)
+    - [Commonly used NPM scripts](#commonly-used-npm-scripts)
 
 ## Issue Reporting Guidelines
 
@@ -24,7 +27,7 @@
 
 - It's OK to have multiple small commits as you work on the PR - we will let GitHub automatically squash it before merging.
 
-- Make sure `npm test` passes. (see [development setup](#development-setup))
+- Make sure `pnpm test` passes. (see [development setup](#development-setup))
 
 - If adding new feature:
   - Add accompanying test case.
@@ -44,17 +47,21 @@
 
 ## Development Setup
 
+You will need [Node.js](http://nodejs.org) **version 12+**, and [PNPM](https://pnpm.io).
+
 After cloning the repo, run:
 
-    $ npm install
+```bash
+$ pnpm i # install the dependencies of the project
+```
 
 ### Commonly used NPM scripts
 
     # lint source codes
-    $ npm run lint
+    $ pnpm lint
 
     # run the full test suite, include linting
-    $ npm test
+    $ pnpm test
 
 There are some other scripts available in the `scripts` section of the `package.json` file.
 
