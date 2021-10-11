@@ -1,5 +1,5 @@
 import { resolve } from 'pathe'
-import fs from 'fs/promises'
+import { promises as fs } from 'fs'
 
 export async function readFile(
   filepath: string,
