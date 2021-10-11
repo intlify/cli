@@ -129,7 +129,7 @@
     "lint": "npm-run-all --parallel lint:eslint lint:secret",
     "lint:eslint": "eslint ./src ./test --ext .ts",
     "lint:eslint:fix": "yarn lint:eslint --fix",
-    "lint:secret": "npx secretlint \"**/*\"",
+    "lint:secret": "npx secretlint --debug \"**/*\"",
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",
     "test": "yarn lint && yarn test:cover",
