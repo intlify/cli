@@ -135,8 +135,7 @@
     "test": "npm run lint && npm run test:type && npm run test:cover",
     "test:type": "tsc -p . --noEmit",
     "test:cover": "nyc mocha -r jiti/register test/*",
-    "test:unit": "mocha -r jiti/register test/*",
-    "watch": "tsc -p . --watch"
+    "test:unit": "mocha -r jiti/register test/*"
   },
   "types": "dist/index.d.ts"
 }
