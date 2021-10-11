@@ -25,6 +25,7 @@ specifiers:
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^4.0.0
   eslint-plugin-vue-libs: ^4.0.0
+  execa: ^5.1.1
   glob: ^7.2.0
   jiti: ^1.12.6
   lint-staged: ^11.0.0
@@ -49,6 +50,7 @@ dependencies:
   '@intlify/shared': 9.1.9
   chalk: 4.1.2
   debug: 4.3.2
+  execa: 5.1.1
   glob: 7.2.0
   pathe: 0.2.0
   yargs: 17.2.1
@@ -2640,7 +2642,6 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
-    dev: true
 
   /d/1.0.1:
     resolution:
@@ -3550,7 +3551,6 @@ packages:
       onetime: 5.1.2
       signal-exit: 3.0.5
       strip-final-newline: 2.0.0
-    dev: true
 
   /execall/1.0.0:
     resolution: { integrity: sha1-c9CQTjlbPKsGWLCNCewlMH8pu3M= }
@@ -3929,7 +3929,6 @@ packages:
         integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==
       }
     engines: { node: '>=10' }
-    dev: true
 
   /get-symbol-description/1.0.0:
     resolution:
@@ -4262,7 +4261,6 @@ packages:
         integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
       }
     engines: { node: '>=10.17.0' }
-    dev: true
 
   /humanize-ms/1.2.1:
     resolution: { integrity: sha1-xG4xWaKT9riW2ikxbYtv6Lt5u+0= }
@@ -4726,7 +4724,6 @@ packages:
         integrity: sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==
       }
     engines: { node: '>=8' }
-    dev: true
 
   /is-string/1.0.7:
     resolution:
@@ -4826,7 +4823,6 @@ packages:
 
   /isexe/2.0.0:
     resolution: { integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA= }
-    dev: true
 
   /isobject/3.0.1:
     resolution: { integrity: sha1-TkMekrEalzFjaqH5yNHMvP2reN8= }
@@ -5442,7 +5438,6 @@ packages:
       {
         integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==
       }
-    dev: true
 
   /merge2/1.4.1:
     resolution:
@@ -5487,7 +5482,6 @@ packages:
         integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
       }
     engines: { node: '>=6' }
-    dev: true
 
   /min-indent/1.0.1:
     resolution:
@@ -5903,7 +5897,6 @@ packages:
     engines: { node: '>=8' }
     dependencies:
       path-key: 3.1.1
-    dev: true
 
   /number-is-nan/1.0.1:
     resolution: { integrity: sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0= }
@@ -5995,7 +5988,6 @@ packages:
     engines: { node: '>=6' }
     dependencies:
       mimic-fn: 2.1.0
-    dev: true
 
   /open/7.4.2:
     resolution:
@@ -6276,7 +6268,6 @@ packages:
         integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==
       }
     engines: { node: '>=8' }
-    dev: true
 
   /path-parse/1.0.7:
     resolution:
@@ -6978,7 +6969,6 @@ packages:
     engines: { node: '>=8' }
     dependencies:
       shebang-regex: 3.0.0
-    dev: true
 
   /shebang-regex/1.0.0:
     resolution: { integrity: sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM= }
@@ -6991,7 +6981,6 @@ packages:
         integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
       }
     engines: { node: '>=8' }
-    dev: true
 
   /shell-quote/1.7.2:
     resolution:
@@ -7079,7 +7068,6 @@ packages:
       {
         integrity: sha512-KWcOiKeQj6ZyXx7zq4YxSMgHRlod4czeBQZrPb8OKcohcqAXShm7E20kEMle9WBt26hFcAf0qLOcp5zmY7kOqQ==
       }
-    dev: true
 
   /sinon/11.1.2:
     resolution:
@@ -7421,7 +7409,6 @@ packages:
         integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==
       }
     engines: { node: '>=6' }
-    dev: true
 
   /strip-indent/2.0.0:
     resolution: { integrity: sha1-XvjbKV0B5u1sv3qrlpmNeCJSe2g= }
@@ -8143,7 +8130,6 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
-    dev: true
 
   /windows-release/3.3.3:
     resolution:

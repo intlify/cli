@@ -1,9 +1,13 @@
-const execa = require(require.resolve('execa'))
-const { promisify } = require('util')
-const fs = require('fs')
-const path = require('path')
-const read = promisify(fs.readFile)
-const write = fs.writeFileSync
+import execa from 'execa'
+import { promises as fs, writeFile } from 'fs'
+import path from 'pathe'
+
+const dirname = path.dirname(new URL(import.meta.url).pathname)
+
+async function readJson(path) {
+  const data = await fs.readFile(path, 'utf8')
+  return JSON.parse(data)
+}
 
 function extractSpecificChangelog(changelog, version) {
   if (!changelog) {
@@ -31,8 +35,8 @@ async function commitChangelog(current, next) {
   )
   const matches = regex.exec(stdout.toString())
   const head = matches ? matches[1] : stdout
-  const changelog = await read('./CHANGELOG.md', 'utf8')
-  return write('./CHANGELOG.md', `${head}\n\n${changelog}`)
+  const changelog = await fs.readFile('./CHANGELOG.md', 'utf8')
+  return writeFile('./CHANGELOG.md', `${head}\n\n${changelog}`)
 }
 
 module.exports = {
@@ -40,8 +44,8 @@ module.exports = {
   monorepo: undefined,
   updateChangelog: false,
   beforeCommitChanges: ({ nextVersion, exec, dir }) => {
-    return new Promise(resolve => {
-      const pkg = require('./package.json')
+    return new Promise(async resolve => {
+      const pkg = await readJson(path.relative(dirname, './package.json'))
       commitChangelog(pkg.version, nextVersion).then(resolve)
     })
   },
@@ -51,10 +55,10 @@ module.exports = {
     `${releaseType} release v${version}`,
   shouldRelease: () => true,
   releases: {
-    extractChangelog: ({ version, dir }) => {
+    extractChangelog: async ({ version, dir }) => {
       const changelogPath = path.resolve(dir, 'CHANGELOG.md')
       try {
-        const changelogFile = fs.readFileSync(changelogPath, 'utf-8').toString()
+        const changelogFile = await fs.readFile(changelogPath, 'utf8')
         const ret = extractSpecificChangelog(changelogFile, version)
         return ret
       } catch (err) {
