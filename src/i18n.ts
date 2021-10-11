@@ -10,7 +10,7 @@ import type {
   LocaleMessages,
   LocaleMessageDictionary,
   CoreContext
-} from '@intlify/core'
+} from '@intlify/core-base'
 
 const dirname = path.dirname(new URL(import.meta.url).pathname)
 const debug = createDebug('@intlify/cli:i18n')
