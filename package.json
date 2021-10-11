@@ -132,7 +132,8 @@
     "lint:secret": "npx secretlint \"**/*\"",
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",
-    "test": "npm run lint && npm run test:cover",
+    "test": "npm run lint && npm run test:type && npm run test:cover",
+    "test:type": "tsc -p . --noEmit",
     "test:cover": "nyc mocha -r jiti/register test/*",
     "test:unit": "mocha -r jiti/register test/*",
     "watch": "tsc -p . --watch"
