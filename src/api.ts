@@ -1,5 +1,5 @@
 import path from 'pathe'
-import fs from 'fs/promises'
+import { promises as fs } from 'fs'
 import createDebug from 'debug'
 import { isString } from '@intlify/shared'
 import { generateJSON, generateYAML } from '@intlify/bundle-utils'
