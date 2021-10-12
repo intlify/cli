@@ -136,5 +136,5 @@
     "test:cover": "nyc mocha -r jiti/register test/*",
     "test:unit": "mocha -r jiti/register test/*"
   },
-  "types": "dist/index.d.ts"
+  "types": "dist/cli.d.ts"
 }
