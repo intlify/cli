@@ -10,8 +10,8 @@ import { compile, annotate } from './commands'
   yargs(hideBin(process.argv))
     .scriptName('intlify')
     .usage(t('Usage: $0 <command> [options]'))
-    .command(compile)
-    .command(annotate)
+    .command(compile())
+    .command(annotate())
     .demandCommand()
     .help()
     .version().argv
