@@ -1,13 +1,14 @@
-import path from 'path'
+import path from 'pathe'
 import chalk from 'chalk'
-import { debug as Debug } from 'debug'
+import createDebug from 'debug'
 import { CompileErrorCodes, compile } from '../api'
 import { t } from '../i18n'
 
 import type { Arguments, Argv } from 'yargs'
 import type { DevEnv } from '@intlify/bundle-utils'
 
-const debug = Debug('@intlify/cli:compile')
+const debug = createDebug('@intlify/cli:compile')
+const dirname = path.dirname(new URL(import.meta.url).pathname)
 
 type CompileOptions = {
   source: string
@@ -46,7 +47,7 @@ export const handler = async (
   args: Arguments<CompileOptions>
 ): Promise<void> => {
   const output =
-    args.output != null ? path.resolve(__dirname, args.output) : process.cwd()
+    args.output != null ? path.resolve(dirname, args.output) : process.cwd()
   const ret = await compile(args.source, output, {
     mode: args.mode as DevEnv,
     onCompile: (source: string, output: string): void => {

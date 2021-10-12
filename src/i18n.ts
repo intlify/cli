@@ -1,7 +1,7 @@
 import path from 'pathe'
 import { promises as fs } from 'fs'
 import { isString } from '@intlify/shared'
-import { createCoreContext, translate } from '@intlify/core-base'
+import { createCoreContext, translate } from '@intlify/core'
 import createDebug from 'debug'
 import i18nResourceSchema from '../locales/en.json'
 
@@ -10,23 +10,24 @@ import type {
   LocaleMessages,
   LocaleMessageDictionary,
   CoreContext
-} from '@intlify/core-base'
+} from '@intlify/core'
 
 const dirname = path.dirname(new URL(import.meta.url).pathname)
 const debug = createDebug('@intlify/cli:i18n')
+
 const DEFAULT_LOCALE = 'en-US'
 
 let resources: LocaleMessages | null = null
 let context: CoreContext<unknown, unknown, unknown, string> | null = null
 
 async function loadI18nResources(): Promise<LocaleMessages> {
-  const dirents = await fs.readdir(path.resolve(dirname, '../../locales'), {
+  const dirents = await fs.readdir(path.resolve(dirname, '../locales'), {
     withFileTypes: true
   })
   return dirents.reduce(async (acc, dir) => {
     if (dir.isFile()) {
       const data = await fs.readFile(
-        path.resolve(dirname, '../../locales', dir.name),
+        path.resolve(dirname, '../locales', dir.name),
         { encoding: 'utf-8' }
       )
       const { name } = path.parse(dir.name)

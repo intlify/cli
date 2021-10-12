@@ -28,11 +28,11 @@
   },
   "dependencies": {
     "@intlify/bundle-utils": "^0.3.0",
-    "@intlify/core-base": "^9.1.9",
+    "@intlify/core": "^9.1.9",
     "@intlify/shared": "^9.1.9",
     "chalk": "^4.1.0",
     "debug": "^4.3.2",
-    "glob": "^7.2.0",
+    "fast-glob": "^3.2.7",
     "pathe": "^0.2.0",
     "yargs": "^17.2.0"
   },
@@ -75,18 +75,18 @@
   },
   "exports": {
     ".": {
-      "import": "./index.mjs",
-      "require": "./index.js"
+      "import": "./lib/index.mjs",
+      "require": "./lib/index.cjs"
     },
     "./dist/*": "./dist/*",
+    "./lib/*": "./lib/*",
     "./package.json": "./package.json"
   },
   "files": [
-    "bin/*.js",
+    "bin/*.mjs",
     "locales/*.json",
     "dist/*.d.ts",
-    "lib/index.cjs",
-    "lib/index.mjs"
+    "lib/"
   ],
   "gitHooks": {
     "pre-commit": "lint-staged"

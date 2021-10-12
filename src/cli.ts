@@ -1,11 +1,17 @@
-import * as yargs from 'yargs'
+import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
 import { initI18n, t } from './i18n'
+import { compile, annotate } from './commands'
+/**
+ * CLI entrypoint
+ */
 ;(async () => {
   await initI18n()
-  yargs
+  yargs(hideBin(process.argv))
     .scriptName('intlify')
     .usage(t('Usage: $0 <command> [options]'))
-    .commandDir('./commands')
+    .command(compile)
+    .command(annotate)
     .demandCommand()
     .help()
     .version().argv

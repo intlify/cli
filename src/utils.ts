@@ -1,12 +1,5 @@
-import { glob } from 'glob'
+import fg from 'fast-glob'
 
 export function globAsync(pattern: string): Promise<string[]> {
-  return new Promise((resolve, reject) => {
-    glob(pattern, (err: Error | null, matches: string[]) => {
-      if (err) {
-        return reject(err)
-      }
-      resolve(matches)
-    })
-  })
+  return fg(pattern)
 }
