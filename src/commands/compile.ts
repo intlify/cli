@@ -8,7 +8,6 @@ import type { Arguments, Argv } from 'yargs'
 import type { DevEnv } from '@intlify/bundle-utils'
 
 const debug = createDebug('@intlify/cli:compile')
-const dirname = path.dirname(new URL(import.meta.url).pathname)
 
 type CompileOptions = {
   source: string
@@ -46,7 +45,9 @@ export default function defineCommand() {
 
   const handler = async (args: Arguments<CompileOptions>): Promise<void> => {
     const output =
-      args.output != null ? path.resolve(dirname, args.output) : process.cwd()
+      args.output != null
+        ? path.resolve(process.cwd(), args.output)
+        : process.cwd()
     const ret = await compile(args.source, output, {
       mode: args.mode as DevEnv,
       onCompile: (source: string, output: string): void => {

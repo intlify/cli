@@ -120,6 +120,7 @@
     "build:docs": "api-docs-gen ./temp/cli.api.json -c ./docsgen.config.js -o ./ -g noprefix",
     "build:extract": "api-extractor run -l -c ./api-extractor.json",
     "build:transpile": "unbuild",
+    "dev": "jiti ./src/cli.ts",
     "clean": "run-p clean:*",
     "clean:lib": "rm -rf ./lib/*.*",
     "fix": "run-p lint:eslint:fix format:fix",
@@ -131,10 +132,10 @@
     "lint:secret": "npx secretlint \"**/*\"",
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",
-    "test": "npm run lint && npm run test:type && npm run test:cover",
+    "test": "npm run test:type && npm run test:cover",
     "test:type": "tsc -p . --noEmit",
-    "test:cover": "nyc mocha -r jiti/register test/*",
-    "test:unit": "mocha -r jiti/register test/*"
+    "test:cover": "nyc mocha -r jiti/register test/**/*.test.ts",
+    "test:unit": "mocha -r jiti/register test/**/*.test.ts"
   },
   "types": "dist/cli.d.ts"
 }
