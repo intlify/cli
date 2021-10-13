@@ -45,7 +45,7 @@ describe('compile', () => {
   it('--mode development', async () => {
     sandbox.stub(console, 'log')
     const cmd = yargs.command(compile())
-    const data = await cmd.parse(
+    await cmd.parse(
       `compile --source ./test/fixtures/codegen/complex-dev.json --output ./temp --mode development`
     )
 
@@ -57,8 +57,6 @@ describe('compile', () => {
       resolve(__dirname, '../../temp/complex-dev.js'),
       'utf8'
     )
-    sandbox.restore()
-    console.log('sss', data)
     assert.equals(compiled, expected)
   })
 })
