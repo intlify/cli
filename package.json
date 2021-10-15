@@ -30,10 +30,13 @@
     "@intlify/bundle-utils": "^0.3.0",
     "@intlify/core": "^9.1.9",
     "@intlify/shared": "^9.1.9",
+    "@vue/compiler-sfc": "^3.2.20",
     "chalk": "^4.1.0",
     "debug": "^4.3.2",
     "fast-glob": "^3.2.7",
+    "jsonc-eslint-parser": "^1.4.1",
     "pathe": "^0.2.0",
+    "yaml-eslint-parser": "^0.4.1",
     "yargs": "^17.2.0"
   },
   "devDependencies": {
@@ -134,8 +137,8 @@
     "release:trigger": "shipjs trigger",
     "test": "npm run test:type && npm run test:cover",
     "test:type": "tsc -p . --noEmit",
-    "test:cover": "nyc mocha -r jiti/register test/**/*.test.ts",
-    "test:unit": "mocha -r jiti/register test/**/*.test.ts"
+    "test:cover": "nyc mocha -r jiti/register 'test/**/*.test.ts'",
+    "test:unit": "mocha -r jiti/register 'test/**/*.test.ts'"
   },
   "types": "dist/cli.d.ts"
 }

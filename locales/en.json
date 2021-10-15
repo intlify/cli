@@ -10,6 +10,8 @@
   "Error compilation: {source} -> {output}, {msg}": "Error compilation: {source} -> {output}, {msg}",
   "annotate the attributes": "annotate the attributes",
   "the target path": "the target path",
-  "the annotation mode": "the annotation mode",
-  "the attributes to annotate": "the attributes to annotate"
+  "the annotation type": "the annotation type",
+  "the attributes to annotate": "the attributes to annotate",
+  "'--type' is not supported except for 'custom-block'": "'--type' is not supported except for 'custom-block'",
+  "there is a parse error in {filename}": "there is a parse error in {filename}"
 }

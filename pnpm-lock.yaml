@@ -18,6 +18,7 @@ specifiers:
   '@types/yargs': ^17.0.3
   '@typescript-eslint/eslint-plugin': ^5.0.0
   '@typescript-eslint/parser': ^5.0.0
+  '@vue/compiler-sfc': ^3.2.20
   api-docs-gen: ^0.3.0
   chalk: ^4.1.0
   debug: ^4.3.2
@@ -26,6 +27,7 @@ specifiers:
   eslint-plugin-prettier: ^4.0.0
   fast-glob: ^3.2.7
   jiti: ^1.12.6
+  jsonc-eslint-parser: ^1.4.1
   lint-staged: ^11.0.0
   mocha: ^9.1.2
   npm-run-all: ^4.1.5
@@ -39,6 +41,7 @@ specifiers:
   typescript: ^4.4.3
   typescript-eslint-language-service: ^4.1.3
   unbuild: ^0.5.6
+  yaml-eslint-parser: ^0.4.1
   yargs: ^17.2.0
   yorkie: ^2.0.0
 
@@ -46,10 +49,13 @@ dependencies:
   '@intlify/bundle-utils': 0.3.0
   '@intlify/core': 9.1.9
   '@intlify/shared': 9.1.9
+  '@vue/compiler-sfc': 3.2.20
   chalk: 4.1.2
   debug: 4.3.2
   fast-glob: 3.2.7
+  jsonc-eslint-parser: 1.4.1
   pathe: 0.2.0
+  yaml-eslint-parser: 0.4.1
   yargs: 17.2.1
 
 devDependencies:
@@ -334,7 +340,6 @@ packages:
       }
     engines: { node: '>=6.0.0' }
     hasBin: true
-    dev: true
 
   /@babel/runtime/7.15.4:
     resolution:
@@ -1580,6 +1585,76 @@ packages:
         integrity: sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==
       }
     dev: true
+
+  /@vue/compiler-core/3.2.20:
+    resolution:
+      {
+        integrity: sha512-vcEXlKXoPwBXFP5aUTHN9GTZaDfwCofa9Yu9bbW2C5O/QSa9Esdt7OG4+0RRd3EHEMxUvEdj4RZrd/KpQeiJbA==
+      }
+    dependencies:
+      '@babel/parser': 7.15.8
+      '@vue/shared': 3.2.20
+      estree-walker: 2.0.2
+      source-map: 0.6.1
+    dev: false
+
+  /@vue/compiler-dom/3.2.20:
+    resolution:
+      {
+        integrity: sha512-QnI77ec/JtV7R0YBbcVayYTDCRcI9OCbxiUQK6izVyqQO0658n0zQuoNwe+bYgtqnvGAIqTR3FShTd5y4oOjdg==
+      }
+    dependencies:
+      '@vue/compiler-core': 3.2.20
+      '@vue/shared': 3.2.20
+    dev: false
+
+  /@vue/compiler-sfc/3.2.20:
+    resolution:
+      {
+        integrity: sha512-03aZo+6tQKiFLfunHKSPZvdK4Jsn/ftRCyaro8AQIWkuxJbvSosbKK6HTTn+D2c3nPScG155akJoxKENw7rftQ==
+      }
+    dependencies:
+      '@babel/parser': 7.15.8
+      '@vue/compiler-core': 3.2.20
+      '@vue/compiler-dom': 3.2.20
+      '@vue/compiler-ssr': 3.2.20
+      '@vue/ref-transform': 3.2.20
+      '@vue/shared': 3.2.20
+      estree-walker: 2.0.2
+      magic-string: 0.25.7
+      postcss: 8.3.9
+      source-map: 0.6.1
+    dev: false
+
+  /@vue/compiler-ssr/3.2.20:
+    resolution:
+      {
+        integrity: sha512-rzzVVYivm+EjbfiGQvNeyiYZWzr6Hkej97RZLZvcumacQlnKv9176Xo9rRyeWwFbBlxmtNdrVMslRXtipMXk2w==
+      }
+    dependencies:
+      '@vue/compiler-dom': 3.2.20
+      '@vue/shared': 3.2.20
+    dev: false
+
+  /@vue/ref-transform/3.2.20:
+    resolution:
+      {
+        integrity: sha512-Y42d3PGlYZ1lXcF3dbd3+qU/C/a3wYEZ949fyOI5ptzkjDWlkfU6vn74fmOjsLjEcjs10BXK2qO99FqQIK2r1Q==
+      }
+    dependencies:
+      '@babel/parser': 7.15.8
+      '@vue/compiler-core': 3.2.20
+      '@vue/shared': 3.2.20
+      estree-walker: 2.0.2
+      magic-string: 0.25.7
+    dev: false
+
+  /@vue/shared/3.2.20:
+    resolution:
+      {
+        integrity: sha512-FbpX+hD5BvXCQerEYO7jtAGHlhAkhTQ4KIV73kmLWNlawWhTiVuQxizgVb0BOkX5oG9cIRZ42EG++d/k/Efp0w==
+      }
+    dev: false
 
   /JSONStream/1.3.5:
     resolution:
@@ -3274,7 +3349,6 @@ packages:
         integrity: sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==
       }
     engines: { node: '>=10' }
-    dev: true
 
   /eslint-visitor-keys/3.0.0:
     resolution:
@@ -3423,7 +3497,6 @@ packages:
       {
         integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==
       }
-    dev: true
 
   /esutils/2.0.3:
     resolution:
@@ -5282,7 +5355,6 @@ packages:
       }
     dependencies:
       sourcemap-codec: 1.4.8
-    dev: true
 
   /make-dir/3.1.0:
     resolution:
@@ -5691,6 +5763,15 @@ packages:
     engines: { node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1 }
     hasBin: true
     dev: true
+
+  /nanoid/3.1.29:
+    resolution:
+      {
+        integrity: sha512-dW2pUSGZ8ZnCFIlBIA31SV8huOGCHb6OwzVCc7A69rb/a+SgPBwfmLvK5TKQ3INPbRkcI8a/Owo0XbiTNH19wg==
+      }
+    engines: { node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1 }
+    hasBin: true
+    dev: false
 
   /natural-compare/1.4.0:
     resolution: { integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc= }
@@ -6266,7 +6347,6 @@ packages:
       {
         integrity: sha512-cMlDqaLEqfSaW8Z7N5Jw+lyIW869EzT73/F5lhtY9cLGoVxSXznfgfXMO0Z5K0o0Q2TkTXq+0KFsdnSe3jDViA==
       }
-    dev: true
 
   /picomatch/2.3.0:
     resolution:
@@ -6324,6 +6404,18 @@ packages:
       }
     engines: { node: '>=4' }
     dev: true
+
+  /postcss/8.3.9:
+    resolution:
+      {
+        integrity: sha512-f/ZFyAKh9Dnqytx5X62jgjhhzttjZS7hMsohcI7HEI5tjELX/HxCy3EFhsRxyzGvrzFF+82XPvCS8T9TFleVJw==
+      }
+    engines: { node: ^10 || ^12 || >=14 }
+    dependencies:
+      nanoid: 3.1.29
+      picocolors: 0.2.1
+      source-map-js: 0.6.2
+    dev: false
 
   /prelude-ls/1.2.1:
     resolution:
@@ -7111,6 +7203,14 @@ packages:
       smart-buffer: 4.2.0
     dev: true
 
+  /source-map-js/0.6.2:
+    resolution:
+      {
+        integrity: sha512-/3GptzWzu0+0MBQFrDKzw/DvvMTUORvgY6k6jd/VS6iCR4RDTKWH6v6WPwQoUO8667uQEf9Oe38DxAYWY5F/Ug==
+      }
+    engines: { node: '>=0.10.0' }
+    dev: false
+
   /source-map/0.5.7:
     resolution: { integrity: sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w= }
     engines: { node: '>=0.10.0' }
@@ -7128,7 +7228,6 @@ packages:
       {
         integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
       }
-    dev: true
 
   /spawn-wrap/2.0.0:
     resolution:
@@ -8182,6 +8281,17 @@ packages:
       }
     dependencies:
       eslint-visitor-keys: 1.3.0
+      lodash: 4.17.21
+      yaml: 1.10.2
+    dev: false
+
+  /yaml-eslint-parser/0.4.1:
+    resolution:
+      {
+        integrity: sha512-GoJ/p1EW8O2tbTbuhfxjo1XhfUFU3uX3kwvfEQoOaZjO2Lubx8POjlsSqB+18b3SxkujAdQYT9r9nURaUWNYWQ==
+      }
+    dependencies:
+      eslint-visitor-keys: 2.1.0
       lodash: 4.17.21
       yaml: 1.10.2
     dev: false
