@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'pathe'
 import { promises as fs } from 'fs'
 import yargs from 'yargs'
-import { assert } from '@sinonjs/referee'
+import { assert } from 'chai'
 import sinon from 'sinon'
 import { compile } from '../../src/commands'
 import { initI18n } from '../../src/i18n'
@@ -24,7 +24,7 @@ afterEach(() => {
 })
 
 describe('compile', () => {
-  it('basic', async () => {
+  it('basic', async function () {
     sandbox.stub(console, 'log')
     const cmd = yargs.command(compile())
     await cmd.parse(
@@ -38,9 +38,10 @@ describe('compile', () => {
       resolve(__dirname, '../../temp/compile-basic.js'),
       'utf8'
     )
-    assert.equals(compiled, expected)
+    assert.equal(compiled, expected)
   })
-  it('--mode development', async () => {
+
+  it('--mode development', async function () {
     sandbox.stub(console, 'log')
     const cmd = yargs.command(compile())
     await cmd.parse(
@@ -54,6 +55,6 @@ describe('compile', () => {
       resolve(__dirname, '../../temp/compile-mode.js'),
       'utf8'
     )
-    assert.equals(compiled, expected)
+    assert.equal(compiled, expected)
   })
 })

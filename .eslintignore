@@ -2,3 +2,4 @@
 ./test/fixtures
 ./playground
 ./temp
+__snapshots__

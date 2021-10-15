@@ -1,5 +1,5 @@
+import { assert } from 'chai'
 import sinon from 'sinon'
-import { assert } from '@sinonjs/referee'
 import path from 'pathe'
 import { CompileErrorCodes, compile } from '../src/api'
 
@@ -17,9 +17,9 @@ describe('compile', () => {
         onError
       }
     )
-    assert.equals(ret, true)
-    assert.equals(onCompile.callCount, 3)
-    assert.equals(onError.callCount, 0)
+    assert.equal(ret, true)
+    assert.equal(onCompile.callCount, 3)
+    assert.equal(onError.callCount, 0)
   })
 
   it('yaml', async () => {
@@ -33,9 +33,9 @@ describe('compile', () => {
         onError
       }
     )
-    assert.equals(ret, true)
-    assert.equals(onCompile.callCount, 1)
-    assert.equals(onError.callCount, 0)
+    assert.equal(ret, true)
+    assert.equal(onCompile.callCount, 1)
+    assert.equal(onError.callCount, 0)
   })
 
   it('json5', async () => {
@@ -49,9 +49,9 @@ describe('compile', () => {
         onError
       }
     )
-    assert.equals(ret, true)
-    assert.equals(onCompile.callCount, 1)
-    assert.equals(onError.callCount, 0)
+    assert.equal(ret, true)
+    assert.equal(onCompile.callCount, 1)
+    assert.equal(onError.callCount, 0)
   })
 
   it('other format', async () => {
@@ -65,10 +65,10 @@ describe('compile', () => {
         onError
       }
     )
-    assert.equals(ret, false)
-    assert.equals(onCompile.callCount, 0)
-    assert.equals(onError.callCount, 1)
-    assert.equals(
+    assert.equal(ret, false)
+    assert.equal(onCompile.callCount, 0)
+    assert.equal(onError.callCount, 1)
+    assert.equal(
       onError.getCall(0).args[0],
       CompileErrorCodes.NOT_SUPPORTED_FORMAT
     )
