@@ -1,6 +1,6 @@
 import { assert } from 'chai'
 import sinon from 'sinon'
-import fs from 'fs/promises'
+import { promises as fs } from 'fs'
 import { dirname, resolve } from 'pathe'
 import { annotate, SFCAnnotateError } from '../../src/api'
 

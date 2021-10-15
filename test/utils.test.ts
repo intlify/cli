@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import fs from 'fs/promises'
+import { promises as fs } from 'fs'
 import { dirname, resolve } from 'pathe'
 import { parse } from '@vue/compiler-sfc'
 import {
