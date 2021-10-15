@@ -1,5 +1,5 @@
-./lib
-./test/fixtures
-./playground
-./temp
+lib
+test/fixtures
+playground
+temp
 __snapshots__

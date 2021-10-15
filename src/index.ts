@@ -1,4 +1,10 @@
 export { DevEnv } from '@intlify/bundle-utils'
-export { CompileErrorCodes, compile } from './api'
+export {
+  CompileErrorCodes,
+  compile,
+  AnnotateWarningCodes,
+  annotate,
+  SFCAnnotateError
+} from './api'
 
-export type { CompileOptions } from './api'
+export type { CompileOptions, AnnotateOptions, SFCParseError } from './api'

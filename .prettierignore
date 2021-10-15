@@ -4,4 +4,5 @@ tsconfig.json
 __generated__
 ./playground
 .nyc_output
+temp
 __snapshots__

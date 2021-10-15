@@ -1,9 +1,9 @@
 import { assert } from 'chai'
 import sinon from 'sinon'
 import path from 'pathe'
-import { CompileErrorCodes, compile } from '../src/api'
+import { CompileErrorCodes, compile } from '../../src/api'
 
-const dirname = path.dirname(new URL(import.meta.url).pathname)
+const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
 describe('compile', () => {
   it('json', async () => {
@@ -11,7 +11,7 @@ describe('compile', () => {
     const onError = sinon.spy()
     const ret = await compile(
       './test/fixtures/codegen/**.json',
-      path.resolve(dirname, './__generated__/compile/json'),
+      path.resolve(__dirname, '../__generated__/compile/json'),
       {
         onCompile,
         onError
@@ -27,7 +27,7 @@ describe('compile', () => {
     const onError = sinon.spy()
     const ret = await compile(
       './test/fixtures/codegen/**.yaml',
-      path.resolve(dirname, './__generated__/compile/yaml'),
+      path.resolve(__dirname, '../__generated__/compile/yaml'),
       {
         onCompile,
         onError
@@ -43,7 +43,7 @@ describe('compile', () => {
     const onError = sinon.spy()
     const ret = await compile(
       './test/fixtures/codegen/**.json5',
-      path.resolve(dirname, './__generated__/compile/json5'),
+      path.resolve(__dirname, '../__generated__/compile/json5'),
       {
         onCompile,
         onError
@@ -59,7 +59,7 @@ describe('compile', () => {
     const onError = sinon.spy()
     const ret = await compile(
       './test/fixtures/**.txt',
-      path.resolve(dirname, './__generated__/compile/other'),
+      path.resolve(__dirname, '../__generated__/compile/other'),
       {
         onCompile,
         onError
