@@ -3,7 +3,7 @@ import path from 'pathe'
 import chalk from 'chalk'
 import createDebug from 'debug'
 import { t } from '../i18n'
-import { globAsync } from '../utils'
+import { globAsync, hasDiff } from '../utils'
 import {
   annotate,
   AnnotateWarningCodes,
@@ -22,10 +22,11 @@ type AnnotateOptions = {
   source: string
   type?: string
   force?: boolean
+  details?: boolean
   attrs?: Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
-type AnnoateStatus = 'fine' | 'warn' | 'error'
+type AnnoateStatus = 'none' | 'fine' | 'warn' | 'error'
 
 export default function defineCommand() {
   const command = 'annotate'
@@ -50,6 +51,11 @@ export default function defineCommand() {
         alias: 'f',
         describe: t('forced applying of attributes')
       })
+      .option('details', {
+        type: 'boolean',
+        alias: 'd',
+        describe: t('annotated result detail options')
+      })
       .option('attrs', {
         type: 'array',
         alias: 'a',
@@ -59,8 +65,8 @@ export default function defineCommand() {
 
   const handler = async (args: Arguments<AnnotateOptions>): Promise<void> => {
     const ret = false
-    const { source, type, force, attrs } = args as AnnotateOptions
-    console.log('anntate args:', source, type, force, attrs)
+    const { source, type, force, details, attrs } = args as AnnotateOptions
+    debug('anntate args:', source, type, force, details, attrs)
 
     if ((type as AnnotateMode) !== 'custom-block') {
       console.log(
@@ -72,8 +78,11 @@ export default function defineCommand() {
     }
 
     let counter = 0
+    let passCounter = 0
     let fineCounter = 0
     let warnCounter = 0
+    let forceCounter = 0
+    let ignoreCounter = 0
     let errorCounter = 0
 
     let status: AnnoateStatus = 'fine'
@@ -90,23 +99,33 @@ export default function defineCommand() {
 
       let annotated: null | string = null
       try {
-        status = 'fine'
+        status = 'none'
         annotated = annotate(data, file, {
           type: 'i18n',
           force,
-          ...attrs,
+          attrs,
           onWarn
         })
+
+        if (hasDiff(annotated, data)) {
+          status = 'fine'
+        }
+
         if (status === 'fine') {
-          console.log(chalk.green(`annotate: ${file}`))
+          console.log(chalk.bold.green(`annotate: ${file}`))
           await fs.writeFile(file, annotated, 'utf8')
           fineCounter++
+        } else if (status === 'none') {
+          console.log(chalk.white(`pass annotate: ${file}`))
+          passCounter++
         } else if (status === 'warn') {
           if (force) {
-            console.log(chalk.bold.yellow(`annotate (force): ${file}`))
+            console.log(chalk.bold.yellow(`force annotate: ${file}`))
             await fs.writeFile(file, annotated, 'utf8')
+            forceCounter++
           } else {
-            console.log(chalk.yellow(`annotate: ${file}`))
+            console.log(chalk.yellow(`ignore annotate: ${file}`))
+            ignoreCounter++
           }
           warnCounter++
         }
@@ -131,11 +150,21 @@ export default function defineCommand() {
     console.log(
       `${chalk.bold.white(
         t('{count} annotateable files ', { count: counter })
-      )} (${chalk.bold.green(
-        t('{count} success', { count: fineCounter })
-      )}, ${chalk.bold.yellow(
-        t('{count} warnings', { count: warnCounter })
-      )}, ${chalk.bold.red(t('{count} errors', { count: errorCounter }))})`
+      )}\n${chalk.bold.green(
+        t('{count} annotates', { count: fineCounter })
+      )}\n${
+        details
+          ? `${chalk.white(t('{count} pass', { count: passCounter }))}\n`
+          : ''
+      }${chalk.bold.yellow(t('{count} warnings', { count: warnCounter }))}\n${
+        details
+          ? `${chalk.yellow(t('{count} forces', { count: forceCounter }))}\n`
+          : ''
+      }${
+        details
+          ? `${chalk.yellow(t('{count} ignores', { count: ignoreCounter }))}\n`
+          : ''
+      }${chalk.bold.red(t('{count} errors', { count: errorCounter }))}`
     )
 
     debug('annotate: ', ret)

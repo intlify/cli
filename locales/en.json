@@ -12,6 +12,7 @@
   "the source path": "the source path",
   "the annotation type": "the annotation type",
   "forced applying of attributes": "forced applying of attributes",
+  "annotated result detail options": "annotated result detail options",
   "the attributes to annotate": "the attributes to annotate",
   "'--type' is not supported except for 'custom-block'": "'--type' is not supported except for 'custom-block'",
   "there is a parse error in {filename}": "there is a parse error in {filename}",
@@ -20,7 +21,10 @@
   "Detected lang mismatch in `lang` option ('{lang}') and block content ('{content}')": "Detected lang mismatch in `lang` option ('{lang}') and block content ('{content}')",
   "Detected lang mismatch in `lang` attr ('{lang}') and block content ('{content}')": "Detected lang mismatch in `lang` attr ('{lang}') and block content ('{content}')",
   "{count} annotateable files ": "{count} annotateable files ",
-  "{count} success": "{count} success",
+  "{count} annotates": "{count} annotates",
+  "{count} pass": "{count} pass",
   "{count} warnings": "{count} warnings",
+  "{count} forces": "{count} forces",
+  "{count} ignores": "{count} ignores",
   "{count} errors": "{count} errors"
 }

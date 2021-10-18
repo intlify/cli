@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { dirname, resolve } from 'pathe'
 import { promises as fs } from 'fs'
 import yargs from 'yargs'
@@ -32,3 +33,5 @@ describe('annoate', () => {
     // TODO:
   })
 })
+
+/* eslint-enable @typescript-eslint/no-unused-vars */

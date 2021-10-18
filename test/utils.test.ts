@@ -5,7 +5,8 @@ import { parse } from '@vue/compiler-sfc'
 import {
   getSFCBlocks,
   getSFCContentInfo,
-  getCustomBlockContenType
+  getCustomBlockContenType,
+  hasDiff
 } from '../src/utils'
 
 const __dirname = dirname(new URL(import.meta.url).pathname)
@@ -102,5 +103,15 @@ foo:
 `),
       'yaml'
     )
+  })
+})
+
+describe('hasDiff', () => {
+  it('not equal', () => {
+    assert.equal(hasDiff('foo', 'bar'), true)
+  })
+
+  it('equal', () => {
+    assert.equal(hasDiff('foo', 'foo'), false)
   })
 })
