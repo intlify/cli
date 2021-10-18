@@ -46,7 +46,7 @@ module.exports = {
   installCommand: () => 'pnpm install --silent',
   buildCommand: ({ isYarn, version }) => 'pnpm build',
   beforeCommitChanges: async ({ nextVersion, exec, dir }) => {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
       const pkg = await readJson(path.resolve(dirname, './package.json'))
       await commitChangelog(pkg.version, nextVersion)
       await exec('pnpm fix')
@@ -59,7 +59,7 @@ module.exports = {
     `${releaseType} release v${version}`,
   shouldRelease: () => true,
   releases: {
-    extractChangelog: ({ version, dir }) => {
+    extractChangelog: async ({ version, dir }) => {
       const changelogPath = path.resolve(dir, 'CHANGELOG.md')
       try {
         const changelogFile = await fs.readFile(changelogPath, 'utf8')
