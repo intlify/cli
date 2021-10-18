@@ -39,7 +39,7 @@ async function commitChangelog(current, next) {
   return fs.writeFile('./CHANGELOG.md', `${head}\n\n${changelog}`)
 }
 
-module.exports = {
+export default {
   mergeStrategy: { toSameBranch: ['main'] },
   monorepo: undefined,
   updateChangelog: false,
