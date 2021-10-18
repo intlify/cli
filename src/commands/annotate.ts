@@ -133,7 +133,7 @@ export default function defineCommand() {
         status = 'error'
         errorCounter++
         if (isSFCParserError(e)) {
-          console.error(chalk.bold.red(e.message))
+          console.error(chalk.bold.red(`${e.message} at ${e.filepath}`))
           e.erorrs.forEach(err =>
             console.error(chalk.bold.red(`  ${err.message}`))
           )

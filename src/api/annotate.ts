@@ -92,6 +92,10 @@ export interface SFCParseError extends SyntaxError {
    * The error that occurred in Vue SFC compiler
    */
   erorrs: CompilerError[]
+  /**
+   * The filepath of the source file
+   */
+  filepath: string
 }
 
 /**
@@ -99,10 +103,12 @@ export interface SFCParseError extends SyntaxError {
  *
  * @param err - The error that occurred in Vue SFC compiler
  * @returns if the error is raised in Vue SFC compiler, return `true`, else `false`
+ *
+ * @public
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isSFCParserError(err: any): err is SFCParseError {
-  return 'errors' in err
+  return 'errors' in err && 'filepath' in err
 }
 
 /**
@@ -110,7 +116,24 @@ export function isSFCParserError(err: any): err is SFCParseError {
  *
  * @public
  */
-export class SFCAnnotateError extends Error {}
+export class SFCAnnotateError extends Error {
+  /**
+   * The filepath of the target file at annotate processing
+   */
+  filepath: string
+
+  /**
+   * Constructor
+   *
+   * @param message - The error message
+   * @param filepath - The filepath of the target file at annotate processing
+   */
+  constructor(message: string, filepath: string) {
+    super(message)
+    this.name = 'SFCAnnotateError'
+    this.filepath = filepath
+  }
+}
 
 /* eslint-disable */
 const NOOP_WARN = (
@@ -145,12 +168,13 @@ export function annotate(
     debug('parse error', errors)
     const error = new SyntaxError(String('SFC parse error')) as SFCParseError
     error.erorrs = errors as CompilerError[]
+    error.filepath = filepath
     throw error
   }
 
   // NOTE: currently support i18n only!
   if (options.type !== 'i18n') {
-    throw new SFCAnnotateError('Not supported error')
+    throw new SFCAnnotateError('Not supported error', filepath)
   }
 
   const original = descriptor.source
