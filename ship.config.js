@@ -40,7 +40,7 @@ async function commitChangelog(current, next) {
 }
 
 module.exports = {
-  mergeStrategy: { toSameBranch: ['master'] },
+  mergeStrategy: { toSameBranch: ['main'] },
   monorepo: undefined,
   updateChangelog: false,
   installCommand: () => 'pnpm install --silent',
