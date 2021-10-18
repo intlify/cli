@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'pathe'
 import { promises as fs } from 'fs'
 import yargs from 'yargs'
-import { assert } from '@sinonjs/referee'
+import { assert } from 'chai'
 import sinon from 'sinon'
 import { compile } from '../../src/commands'
 import { initI18n } from '../../src/i18n'
@@ -24,39 +24,37 @@ afterEach(() => {
 })
 
 describe('compile', () => {
-  it('basic', async () => {
+  it('basic', async function () {
     sandbox.stub(console, 'log')
     const cmd = yargs.command(compile())
     await cmd.parse(
-      `compile --source ./test/fixtures/codegen/complex.json --output ./temp`
+      `compile --source ./test/fixtures/commands/compile-basic.json --output ./temp`
     )
-
     const expected = await fs.readFile(
-      resolve(__dirname, '../__generated__/compile/json/complex.js'),
+      resolve(__dirname, '../__generated__/compile/commands/compile-basic.js'),
       'utf8'
     )
     const compiled = await fs.readFile(
-      resolve(__dirname, '../../temp/complex.js'),
+      resolve(__dirname, '../../temp/compile-basic.js'),
       'utf8'
     )
-    assert.equals(compiled, expected)
+    assert.equal(compiled, expected)
   })
 
-  it('--mode development', async () => {
+  it('--mode development', async function () {
     sandbox.stub(console, 'log')
     const cmd = yargs.command(compile())
     await cmd.parse(
-      `compile --source ./test/fixtures/codegen/complex-dev.json --output ./temp --mode development`
+      `compile --source ./test/fixtures/commands/compile-mode.json --output ./temp --mode development`
     )
-
     const expected = await fs.readFile(
-      resolve(__dirname, '../__generated__/compile/json/complex-dev.js'),
+      resolve(__dirname, '../__generated__/compile/commands/compile-mode.js'),
       'utf8'
     )
     const compiled = await fs.readFile(
-      resolve(__dirname, '../../temp/complex-dev.js'),
+      resolve(__dirname, '../../temp/compile-mode.js'),
       'utf8'
     )
-    assert.equals(compiled, expected)
+    assert.equal(compiled, expected)
   })
 })
