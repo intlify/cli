@@ -1,4 +1,23 @@
 
+## v0.7.0 (2021-10-18)
+
+#### :star: Features
+* [#33](https://github.com/intlify/cli/pull/33) feat: annotate command ([@kazupon](https://github.com/kazupon))
+* [#27](https://github.com/intlify/cli/pull/27) support node native es modules ([@kazupon](https://github.com/kazupon))
+
+#### :bug: Bug Fixes
+* [#32](https://github.com/intlify/cli/pull/32) fix: compilation output bug ([@kazupon](https://github.com/kazupon))
+* [#29](https://github.com/intlify/cli/pull/29) fix type missing ([@kazupon](https://github.com/kazupon))
+
+#### :zap: Improvement Features
+* [#31](https://github.com/intlify/cli/pull/31) switch to pnpm from yarn ([@kazupon](https://github.com/kazupon))
+* [#30](https://github.com/intlify/cli/pull/30) revert pnpm ([@kazupon](https://github.com/kazupon))
+* [#28](https://github.com/intlify/cli/pull/28) move to pnpm from yarn v1 ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.6.0 (2021-07-13)
 
 #### :boom: Breaking Change
