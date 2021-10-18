@@ -95,6 +95,17 @@ export interface SFCParseError extends SyntaxError {
 }
 
 /**
+ * Check wheather Vue SFC compiler error
+ *
+ * @param err - The error that occurred in Vue SFC compiler
+ * @returns if the error is raised in Vue SFC compiler, return `true`, else `false`
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isSFCParserError(err: any): err is SFCParseError {
+  return 'errors' in err
+}
+
+/**
  * The Annocation error
  *
  * @public
