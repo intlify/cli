@@ -7,7 +7,7 @@
     "email": "kawakazu80@gmail.com"
   },
   "bin": {
-    "intlify": "./bin/run.mjs"
+    "intlify": "./bin/run.cjs"
   },
   "bugs": {
     "url": "https://github.com/intlify/cli/issues"
@@ -89,7 +89,7 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "bin/*.mjs",
+    "bin/",
     "locales/*.json",
     "dist/*.d.ts",
     "lib/"

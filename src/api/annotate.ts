@@ -148,7 +148,7 @@ const NOOP_WARN = (
  *
  * @param source - The source code of the Vue SFC
  * @param filepath - The file path of the Vue SFC
- * @param options - The {@link options | AnnotateOptions} of the annotate function
+ * @param options - The {@link AnnotateOptions | options} of the annotate function
  * @returns The annotated source code of the Vue SFC
  *
  * @public

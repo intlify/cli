@@ -33,7 +33,7 @@ declare function annotate(source: string, filepath: string, options?: AnnotateOp
 | --- | --- | --- |
 | source | string | The source code of the Vue SFC |
 | filepath | string | The file path of the Vue SFC |
-| options | AnnotateOptions | The  of the annotate function |
+| options | AnnotateOptions | The [options](#annotateoptions) of the annotate function |
 
 #### Returns
 
