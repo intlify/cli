@@ -1,0 +1,158 @@
+exports[`undefined 1`] = `<template>
+  <p>This is NoBlock component</p>
+</template>
+
+<script>
+export default {
+  name: 'Bar'
+}
+</script>
+`;
+
+exports[`undefined 2`] = `<template>
+  <p>This is Yaml component: {{ count }}</p>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+<i18n lang="yaml">
+en:
+  message: my message
+</i18n>
+`;
+
+exports[`undefined 3`] = `<template>
+  <p>This is Multi component</p>
+</template>
+
+<i18n lang="json5">
+{
+  en: {
+    // comment
+    name: "Name"
+  }
+}
+</i18n>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+<i18n lang="yaml">
+ja:
+  name: 名前
+</i18n>
+
+<docs>
+# Multi component
+</docs>
+
+<style>
+p {
+  color: blue;
+}
+</style>
+`;
+
+exports[`undefined 4`] = `<template>
+  <p>This is External component</p>
+</template>
+
+<script src="./external.ts"></script>
+
+<i18n src="./ja.json"></i18n>
+`;
+
+exports[`undefined 5`] = `<template>
+  <p>This is Unknown component</p>
+</template>
+
+<script src="./external.ts"></script>
+
+<i18n>
+!!!
+</i18n>
+`;
+
+exports[`undefined 6`] = `<template>
+  <p>This is OptionLangContentMissmatch component</p>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+<i18n>
+{
+  ja: {
+    hello: "hello"
+  }
+}
+</i18n>
+`;
+
+exports[`undefined 7`] = `<template>
+  <p>This is OptionLangContentMissmatch component</p>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+<i18n lang="yaml">
+{
+  ja: {
+    hello: "hello"
+  }
+}
+</i18n>
+`;
+
+exports[`undefined 8`] = `<template>
+  <p>This is Force component</p>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+<i18n lang="json">
+{
+  ja: {
+    hello: "hello"
+  }
+}
+</i18n>
+`;
+
+exports[`undefined 9`] = `<template>
+  <p>This is Attrs component</p>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+<i18n global foo="&lt;bar&gt;" lang="json5">
+{
+  ja: {
+    hello: "hello"
+  }
+}
+</i18n>
+`;
+
