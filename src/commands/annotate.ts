@@ -65,8 +65,12 @@ export default function defineCommand() {
 
   const handler = async (args: Arguments<AnnotateOptions>): Promise<void> => {
     const ret = false
+    if (args.type == null) {
+      args.type = 'custom-block'
+    }
+
     const { source, type, force, details, attrs } = args as AnnotateOptions
-    debug('anntate args:', source, type, force, details, attrs)
+    debug('annotate args:', source, type, force, details, attrs)
 
     if ((type as AnnotateMode) !== 'custom-block') {
       console.log(
