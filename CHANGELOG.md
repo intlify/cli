@@ -1,4 +1,16 @@
 
+## v0.8.0 (2021-10-21)
+
+#### :star: Features
+* [#39](https://github.com/intlify/cli/pull/39) feat: accept files in annotate command ([@kazupon](https://github.com/kazupon))
+
+#### :zap: Improvement Features
+* [#38](https://github.com/intlify/cli/pull/38) fix: set default value to --type option ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.7.0 (2021-10-18)
 
 #### :star: Features
