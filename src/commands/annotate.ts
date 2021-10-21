@@ -10,6 +10,7 @@ import {
   isSFCParserError,
   SFCAnnotateError
 } from '../api/annotate'
+import { defineFail, RequireError } from './fail'
 
 import type { Arguments, Argv } from 'yargs'
 import type { SFCBlock } from '@vue/compiler-sfc'
@@ -19,7 +20,7 @@ const debug = createDebug('@intlify/cli:annotate')
 export type AnnotateMode = 'custom-block'
 
 type AnnotateOptions = {
-  source: string
+  source?: string
   type?: string
   force?: boolean
   details?: boolean
@@ -38,8 +39,7 @@ export default function defineCommand() {
       .option('source', {
         type: 'string',
         alias: 's',
-        describe: t('the source path'),
-        demandOption: true
+        describe: t('the source path')
       })
       .option('type', {
         type: 'string',
@@ -61,6 +61,7 @@ export default function defineCommand() {
         alias: 'a',
         describe: t('the attributes to annotate')
       })
+      .fail(defineFail(RequireError))
   }
 
   const handler = async (args: Arguments<AnnotateOptions>): Promise<void> => {
@@ -73,12 +74,15 @@ export default function defineCommand() {
     debug('annotate args:', source, type, force, details, attrs)
 
     if ((type as AnnotateMode) !== 'custom-block') {
-      console.log(
-        chalk.bold.yellow(
-          t(`'--type' is not supported except for 'custom-block'`)
-        )
+      throw new RequireError(
+        `'--type' is not supported except for 'custom-block'`
       )
-      return
+    }
+
+    if (source == null && args._.length === 1) {
+      throw new RequireError(
+        `if you don't specify some files at the end of the command, the '—-source' option is required`
+      )
     }
 
     let counter = 0
@@ -92,7 +96,11 @@ export default function defineCommand() {
     let status: AnnoateStatus = 'fine'
     const onWarn = warnHnadler(() => (status = 'warn'))
 
-    const files = await globAsync(source)
+    const files =
+      source != null
+        ? await globAsync(source)
+        : [...args._].map(a => a.toString()).splice(1)
+
     for (const file of files) {
       const parsed = path.parse(file)
       if (parsed.ext !== '.vue') {
