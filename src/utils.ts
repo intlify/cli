@@ -4,6 +4,7 @@ import { diffChars as diff } from 'diff'
 import { parseJSON } from 'jsonc-eslint-parser'
 import { parseYAML } from 'yaml-eslint-parser'
 import { readFileSync } from 'fs'
+import { cosmiconfig } from 'cosmiconfig'
 import path from 'pathe'
 
 import type { SFCBlock, SFCDescriptor } from '@vue/compiler-sfc'
@@ -163,4 +164,9 @@ export function buildSFCBlockTag(meta: {
   }
   tag += '>'
   return tag
+}
+
+export async function getPrettierConfig(filepath: string) {
+  const explorer = cosmiconfig('prettier')
+  return await explorer.load(filepath)
 }

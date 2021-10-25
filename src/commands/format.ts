@@ -1,13 +1,15 @@
 import { promises as fs } from 'fs'
 import chalk from 'chalk'
+import path from 'pathe'
 import createDebug from 'debug'
 import { t } from '../i18n'
-import { hasDiff } from '../utils'
+import { getPrettierConfig, hasDiff } from '../utils'
 import { checkType, checkSource, getSFCFiles } from './utils'
 import { format, FormatLangNotFoundError, isSFCParserError } from '../api'
 import { defineFail, RequireError } from './fail'
 
 import type { Arguments, Argv } from 'yargs'
+import type { Options as PrettierOptions } from 'prettier'
 
 const debug = createDebug('@intlify/cli:format')
 
@@ -51,11 +53,16 @@ export default function defineCommand() {
   const handler = async (args: Arguments<FormatOptions>): Promise<void> => {
     args.type = args.type || 'custom-block'
 
-    const { source, type, dryRun } = args as FormatOptions
-    debug('format args:', source, type, dryRun)
+    const { source, type, prettier, dryRun } = args as FormatOptions
+    debug('format args:', source, type, prettier, dryRun)
 
     checkType(args.type)
     checkSource(args._.length, source)
+
+    const prettierConfig = prettier
+      ? await getPrettierConfig(path.resolve(process.cwd(), prettier))
+      : { filepath: '', config: {} }
+    debug('prettier config', prettierConfig)
 
     if (dryRun) {
       console.log()
@@ -71,7 +78,9 @@ export default function defineCommand() {
     for (const file of files) {
       try {
         const data = await fs.readFile(file, 'utf8')
-        const formatted = format(data, file)
+        const formatted = format(data, file, {
+          prettier: prettierConfig?.config as PrettierOptions
+        })
         if (hasDiff(formatted, data)) {
           formattedCounter++
           console.log(chalk.green(`${file}: ${t('formatted')}`))

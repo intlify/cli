@@ -86,8 +86,8 @@ export function format(
 ): string {
   const prettierOptions = Object.assign(
     {},
-    options.prettier,
-    DEFAULT_PRETTIER_OPTIONS
+    DEFAULT_PRETTIER_OPTIONS,
+    options.prettier
   )
 
   const { descriptor, errors } = parse(source)
