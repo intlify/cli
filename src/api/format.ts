@@ -28,7 +28,7 @@ export type FormatOptions = {
 /**
  * Fortmat lang fwnot found error
  *
- * @reamrks
+ * @remarks
  * The error that not specified `lang` attribute in `i18n` custom block
  *
  * @public

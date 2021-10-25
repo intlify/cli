@@ -6,7 +6,8 @@ export {
   annotate,
   SFCAnnotateError,
   format,
-  FormatLangNotFoundError
+  FormatLangNotFoundError,
+  DEFAULT_PRETTIER_OPTIONS
 } from './api'
 
 export type {
