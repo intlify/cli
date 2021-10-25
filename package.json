@@ -27,9 +27,9 @@
     }
   },
   "dependencies": {
-    "@intlify/bundle-utils": "^0.3.0",
-    "@intlify/core": "^9.1.9",
-    "@intlify/shared": "^9.1.9",
+    "@intlify/bundle-utils": "next",
+    "@intlify/core": "beta",
+    "@intlify/shared": "beta",
     "@vue/compiler-sfc": "^3.2.20",
     "chalk": "^4.1.0",
     "cosmiconfig": "^7.0.1",
