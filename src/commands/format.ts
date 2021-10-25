@@ -1,25 +1,20 @@
 import { promises as fs } from 'fs'
-import path from 'pathe'
 import chalk from 'chalk'
 import createDebug from 'debug'
 import { t } from '../i18n'
-import { getSourceFiles, hasDiff } from '../utils'
-import {
-  format,
-  FormatLangNotFoundError,
-  isSFCParserError,
-  SFCAnnotateError
-} from '../api'
+import { hasDiff } from '../utils'
+import { checkType, checkSource, getSFCFiles } from './utils'
+import { format, FormatLangNotFoundError, isSFCParserError } from '../api'
 import { defineFail, RequireError } from './fail'
 
 import type { Arguments, Argv } from 'yargs'
-import type { SFCBlock } from '@vue/compiler-sfc'
 
 const debug = createDebug('@intlify/cli:format')
 
 type FormatOptions = {
   source?: string
   type?: string
+  prettier?: string
   dryRun?: boolean
 }
 
@@ -40,6 +35,11 @@ export default function defineCommand() {
         alias: 't',
         describe: t('the format type')
       })
+      .option('prettier', {
+        type: 'string',
+        alias: 'p',
+        describe: t('the config file path of prettier')
+      })
       .option('dryRun', {
         type: 'boolean',
         alias: 'd',
@@ -49,53 +49,80 @@ export default function defineCommand() {
   }
 
   const handler = async (args: Arguments<FormatOptions>): Promise<void> => {
-    if (args.type == null) {
-      args.type = 'custom-block'
-    }
+    args.type = args.type || 'custom-block'
 
     const { source, type, dryRun } = args as FormatOptions
     debug('format args:', source, type, dryRun)
 
-    if (type !== 'custom-block') {
-      throw new RequireError(
-        `'--type' is not supported except for 'custom-block'`
-      )
+    checkType(args.type)
+    checkSource(args._.length, source)
+
+    if (dryRun) {
+      console.log()
+      console.log(chalk.bold.yellowBright(`${t('dry run mode')}:`))
+      console.log()
     }
 
-    if (source == null && args._.length === 1) {
-      throw new RequireError(
-        `if you don't specify some files at the end of the command, the '—-source' option is required`
-      )
-    }
+    let formattedCounter = 0
+    let noChangeCounter = 0
+    let errorCounter = 0
 
-    let counter = 0
-    const files = await getSourceFiles({ source, files: args._ as string[] })
+    const files = await getSFCFiles(source, args._)
     for (const file of files) {
-      const parsed = path.parse(file)
-      if (parsed.ext !== '.vue') {
-        continue
-      }
-
       try {
         const data = await fs.readFile(file, 'utf8')
-        if (!!dryRun) {
-          const result = format(data, file)
-        }
-        console.log(chalk.bold.green(`format: ${file}`))
-        counter++
-      } catch (e: unknown) {
-        if (e instanceof FormatLangNotFoundError) {
-          // TODO:
-        } else if (isSFCParserError(e)) {
-          // TODO:
+        const formatted = format(data, file)
+        if (hasDiff(formatted, data)) {
+          formattedCounter++
+          console.log(chalk.green(`${file}: ${t('formatted')}`))
         } else {
+          noChangeCounter++
+          console.log(chalk.blue(`${file}: ${t('no change')}`))
+        }
+        if (!dryRun) {
+          await fs.writeFile(file, formatted, 'utf8')
+        }
+      } catch (e: unknown) {
+        errorCounter++
+        if (e instanceof FormatLangNotFoundError) {
+          console.error(
+            chalk.red(`${e.filepath}: ${t(e.message as any)}`) // eslint-disable-line @typescript-eslint/no-explicit-any
+          )
+        } else if (isSFCParserError(e)) {
+          console.error(chalk.red(`${e.message} at ${e.filepath}`))
+          e.erorrs.forEach(err => console.error(chalk.red(`  ${err.message}`)))
+        } else {
+          console.error(chalk.red((e as Error).message))
+        }
+
+        if (!dryRun) {
           throw e
         }
       }
     }
 
     console.log('')
-    console.log(chalk.bold.white(`${counter} files formatted`))
+    console.log(
+      chalk.bold.whiteBright(
+        t('{count} formattable files', { count: files.length })
+      )
+    )
+    console.log(
+      chalk.bold.greenBright(
+        t('{count} formatted files', { count: formattedCounter })
+      )
+    )
+    console.log(
+      chalk.bold.blueBright(
+        t('{count} no change files', { count: noChangeCounter })
+      )
+    )
+    if (dryRun) {
+      console.log(
+        chalk.bold.redBright(t('{count} error files', { count: errorCounter }))
+      )
+    }
+    console.log('')
   }
 
   return {

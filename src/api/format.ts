@@ -26,11 +26,31 @@ export type FormatOptions = {
 }
 
 /**
+ * Fortmat lang fwnot found error
+ *
+ * @reamrks
  * The error that not specified `lang` attribute in `i18n` custom block
  *
  * @public
  */
-export class FormatLangNotFoundError extends Error {}
+export class FormatLangNotFoundError extends Error {
+  /**
+   * The filepath of the target file at formatting processing
+   */
+  filepath: string
+
+  /**
+   * Constructor
+   *
+   * @param message - The error message
+   * @param filepath - The filepath of the target file at formatting processing
+   */
+  constructor(message: string, filepath: string) {
+    super(message)
+    this.name = 'FormatLangNotFoundError'
+    this.filepath = filepath
+  }
+}
 
 /**
  * The default prettier options for formatting the content of `i18n` custom blocks
@@ -93,7 +113,7 @@ export function format(
 
     const { content, lang } = getSFCContentInfo(block, filepath)
     if (lang == null) {
-      throw new FormatLangNotFoundError('')
+      throw new FormatLangNotFoundError('`lang` attr not found', filepath)
     }
 
     const startLoc = block.loc.start

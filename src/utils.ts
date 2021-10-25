@@ -24,14 +24,19 @@ export type SFCAnnotateOptions = {
   onWarn?: (msg: string, block: SFCBlock) => void
 }
 
-export async function getSourceFiles(input: {
-  source?: string
-  files?: string[]
-}): Promise<string[]> {
+export async function getSourceFiles(
+  input: {
+    source?: string
+    files?: (string | number)[]
+  },
+  filter?: (file: string | number) => boolean
+): Promise<string[]> {
   const { source, files } = input
-  return source != null
-    ? await globAsync(source)
-    : [...(files || [])].map(a => a.toString()).splice(1)
+  const _files =
+    source != null
+      ? await globAsync(source)
+      : [...(files || [])].map(a => a.toString()).splice(1)
+  return filter ? _files.filter(filter) : _files
 }
 
 export function globAsync(pattern: string): Promise<string[]> {

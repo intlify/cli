@@ -1,9 +1,9 @@
 import { promises as fs } from 'fs'
-import path from 'pathe'
 import chalk from 'chalk'
 import createDebug from 'debug'
 import { t } from '../i18n'
-import { getSourceFiles, hasDiff } from '../utils'
+import { hasDiff } from '../utils'
+import { checkType, checkSource, getSFCFiles } from './utils'
 import {
   annotate,
   AnnotateWarningCodes,
@@ -65,25 +65,13 @@ export default function defineCommand() {
   }
 
   const handler = async (args: Arguments<AnnotateOptions>): Promise<void> => {
-    const ret = false
-    if (args.type == null) {
-      args.type = 'custom-block'
-    }
+    args.type = args.type || 'custom-block'
 
     const { source, type, force, details, attrs } = args as AnnotateOptions
     debug('annotate args:', source, type, force, details, attrs)
 
-    if ((type as AnnotateMode) !== 'custom-block') {
-      throw new RequireError(
-        `'--type' is not supported except for 'custom-block'`
-      )
-    }
-
-    if (source == null && args._.length === 1) {
-      throw new RequireError(
-        `if you don't specify some files at the end of the command, the '—-source' option is required`
-      )
-    }
+    checkType(args.type)
+    checkSource(args._.length, source)
 
     let counter = 0
     let passCounter = 0
@@ -96,13 +84,8 @@ export default function defineCommand() {
     let status: AnnoateStatus = 'fine'
     const onWarn = warnHnadler(() => (status = 'warn'))
 
-    const files = await getSourceFiles({ source, files: args._ as string[] })
+    const files = await getSFCFiles(source, args._)
     for (const file of files) {
-      const parsed = path.parse(file)
-      if (parsed.ext !== '.vue') {
-        continue
-      }
-
       const data = await fs.readFile(file, 'utf8')
 
       let annotated: null | string = null
@@ -174,8 +157,6 @@ export default function defineCommand() {
           : ''
       }${chalk.bold.red(t('{count} errors', { count: errorCounter }))}`
     )
-
-    debug('annotate: ', ret)
   }
 
   return {
