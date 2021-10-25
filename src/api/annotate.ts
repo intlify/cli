@@ -4,8 +4,9 @@ import {
   getSFCBlocks,
   getSFCContentInfo,
   getCustomBlockContenType,
-  escape
+  buildSFCBlockTag
 } from '../utils'
+import { SFCParseError } from './utils'
 
 import type { SFCBlock, CompilerError } from '@vue/compiler-sfc'
 
@@ -78,38 +79,6 @@ export type AnnotateOptions = {
   onWarn?: (code: number, args: Record<string, any>, block: SFCBlock) => void
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
-
-/**
- * Vue SFC compiler error
- *
- * @remarks
- * This is the error wrapping the error that occurred in Vue SFC compiler
- *
- * @public
- */
-export interface SFCParseError extends SyntaxError {
-  /**
-   * The error that occurred in Vue SFC compiler
-   */
-  erorrs: CompilerError[]
-  /**
-   * The filepath of the source file
-   */
-  filepath: string
-}
-
-/**
- * Check wheather Vue SFC compiler error
- *
- * @param err - The error that occurred in Vue SFC compiler
- * @returns if the error is raised in Vue SFC compiler, return `true`, else `false`
- *
- * @public
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function isSFCParserError(err: any): err is SFCParseError {
-  return 'errors' in err && 'filepath' in err
-}
 
 /**
  * The Annocation error
@@ -291,20 +260,4 @@ export function annotate(
 
   contents = contents.concat(original.slice(offset, original.length))
   return contents.join('')
-}
-
-function buildSFCBlockTag(meta: {
-  type: string
-  attrs: Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
-}): string {
-  let tag = `<${meta.type}`
-  for (const [key, value] of Object.entries(meta.attrs)) {
-    if (value === true) {
-      tag += ` ${key}`
-    } else {
-      tag += ` ${key}="${escape(meta.attrs[key])}"`
-    }
-  }
-  tag += '>'
-  return tag
 }

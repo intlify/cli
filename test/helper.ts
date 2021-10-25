@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs'
+import fs from 'fs'
 import path from 'pathe'
 
 type FileCache = {
@@ -7,21 +7,9 @@ type FileCache = {
 
 const fileCache: FileCache = {}
 
-async function exists(filepath: string) {
-  try {
-    return !!(await fs.lstat(filepath))
-  } catch (e) {
-    return false
-  }
-}
-
-async function readFile(filepath: string) {
-  return await fs.readFile(filepath, 'utf8')
-}
-
-async function readSnap(file: string, name: string) {
-  if (fileCache[file] == null) {
-    fileCache[file] = (await exists(file)) ? await readFile(file) : false
+function readSnap(file: string, name: string) {
+  if (fileCache[file] === undefined) {
+    fileCache[file] = fs.existsSync(file) ? require(file) : false
   }
   if (!fileCache[file] || !(name in fileCache[file])) {
     throw `Snapshot does not exists`
@@ -30,10 +18,9 @@ async function readSnap(file: string, name: string) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function writeSnap(file: string, name: string, data: any) {
-  let snap
-  if (!(await exists(path.dirname(file)))) {
-    await fs.mkdir(path.dirname(file))
+function writeSnap(file: string, name: string, data: any) {
+  if (!fs.existsSync(path.dirname(file))) {
+    fs.mkdirSync(path.dirname(file))
   }
 
   const snapShotCountsBefore = fileCache[file]
@@ -46,13 +33,14 @@ async function writeSnap(file: string, name: string, data: any) {
     fileCache[file][name] = data
   }
 
+  let snap
   const snapShotCountsAfter = Object.keys(fileCache[file]).length
   if (
     snapShotCountsBefore === 0 ||
     snapShotCountsBefore !== snapShotCountsAfter
   ) {
     snap = `exports[\`${name}\`] = \`${data}\`;\n\n`
-    fs.appendFile(file, snap, { encoding: 'utf8' })
+    fs.appendFileSync(file, snap, { encoding: 'utf8' })
     return true
   }
 
@@ -61,7 +49,7 @@ async function writeSnap(file: string, name: string, data: any) {
     snap = `${snap}exports[\`${snapshot}\`] = \`${fileCache[file][snapshot]}\`;\n\n`
   }
 
-  await fs.writeFile(file, snap, { encoding: 'utf8' })
+  fs.writeFileSync(file, snap, { encoding: 'utf8' })
 
   return true
 }
@@ -76,7 +64,7 @@ export function chatSnaptshotPlugin(
 
   const UPDATE_SNAPSHOT = process.env.UPDATE_SNAPSHOT
 
-  async function matchSnapshot(passedContext) {
+  function matchSnapshot(passedContext) {
     const actual = utils.flag(this, 'object')
     const isForced = UPDATE_SNAPSHOT || utils.flag(this, 'updateSnapshot')
     const context = passedContext.test ? passedContext.test : passedContext
@@ -102,14 +90,14 @@ export function chatSnaptshotPlugin(
     const name = `${prepareTitle(context)} ${context.matchSequence++}`
     let expected
     try {
-      expected = await readSnap(snapshotFile, name)
+      expected = readSnap(snapshotFile, name)
     } catch (e) {
       if (!isForced) {
         throw e
       }
     }
     if (isForced) {
-      await writeSnap(snapshotFile, name, actual)
+      writeSnap(snapshotFile, name, actual)
       expected = actual
     }
 

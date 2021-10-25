@@ -1,7 +1,7 @@
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { initI18n, t } from './i18n'
-import { compile, annotate } from './commands'
+import { compile, annotate, format } from './commands'
 /**
  * CLI entrypoint
  */
@@ -12,6 +12,7 @@ import { compile, annotate } from './commands'
     .usage(t('Usage: $0 <command> [options]'))
     .command(compile())
     .command(annotate())
+    .command(format())
     .demandCommand()
     .help()
     .version().argv

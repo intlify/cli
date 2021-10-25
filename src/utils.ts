@@ -24,6 +24,16 @@ export type SFCAnnotateOptions = {
   onWarn?: (msg: string, block: SFCBlock) => void
 }
 
+export async function getSourceFiles(input: {
+  source?: string
+  files?: string[]
+}): Promise<string[]> {
+  const { source, files } = input
+  return source != null
+    ? await globAsync(source)
+    : [...(files || [])].map(a => a.toString()).splice(1)
+}
+
 export function globAsync(pattern: string): Promise<string[]> {
   return fg(pattern)
 }
@@ -132,4 +142,20 @@ export function escape(s: string): string {
 export function hasDiff(newContent: string, oldContent: string): boolean {
   const contents = diff(oldContent, newContent)
   return !!contents.find(content => content.added || content.removed)
+}
+
+export function buildSFCBlockTag(meta: {
+  type: string
+  attrs: Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
+}): string {
+  let tag = `<${meta.type}`
+  for (const [key, value] of Object.entries(meta.attrs)) {
+    if (value === true) {
+      tag += ` ${key}`
+    } else {
+      tag += ` ${key}="${escape(meta.attrs[key])}"`
+    }
+  }
+  tag += '>'
+  return tag
 }

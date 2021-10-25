@@ -4,7 +4,14 @@ export {
   compile,
   AnnotateWarningCodes,
   annotate,
-  SFCAnnotateError
+  SFCAnnotateError,
+  format,
+  FormatLangNotFoundError
 } from './api'
 
-export type { CompileOptions, AnnotateOptions, SFCParseError } from './api'
+export type {
+  CompileOptions,
+  AnnotateOptions,
+  FormatOptions,
+  SFCParseError
+} from './api'

@@ -3,13 +3,13 @@ import path from 'pathe'
 import chalk from 'chalk'
 import createDebug from 'debug'
 import { t } from '../i18n'
-import { globAsync, hasDiff } from '../utils'
+import { getSourceFiles, hasDiff } from '../utils'
 import {
   annotate,
   AnnotateWarningCodes,
   isSFCParserError,
   SFCAnnotateError
-} from '../api/annotate'
+} from '../api'
 import { defineFail, RequireError } from './fail'
 
 import type { Arguments, Argv } from 'yargs'
@@ -96,11 +96,7 @@ export default function defineCommand() {
     let status: AnnoateStatus = 'fine'
     const onWarn = warnHnadler(() => (status = 'warn'))
 
-    const files =
-      source != null
-        ? await globAsync(source)
-        : [...args._].map(a => a.toString()).splice(1)
-
+    const files = await getSourceFiles({ source, files: args._ as string[] })
     for (const file of files) {
       const parsed = path.parse(file)
       if (parsed.ext !== '.vue') {
