@@ -12,15 +12,19 @@ import type {
   CoreContext
 } from '@intlify/core'
 
+type I18nReousrceSchema = typeof i18nResourceSchema
+
 const dirname = path.dirname(new URL(import.meta.url).pathname)
 const debug = createDebug('@intlify/cli:i18n')
 
 const DEFAULT_LOCALE = 'en-US'
 
-let resources: LocaleMessages | null = null
-let context: CoreContext<unknown, unknown, unknown, string> | null = null
+let resources: LocaleMessages<I18nReousrceSchema> | null = null
+let context: CoreContext | null = null
 
-async function loadI18nResources(): Promise<LocaleMessages> {
+async function loadI18nResources(): Promise<
+  LocaleMessages<I18nReousrceSchema>
+> {
   const dirents = await fs.readdir(path.resolve(dirname, '../locales'), {
     withFileTypes: true
   })
@@ -33,10 +37,12 @@ async function loadI18nResources(): Promise<LocaleMessages> {
       const { name } = path.parse(dir.name)
       debug('load i18n resource', name, data)
       const messages = await acc
-      messages[name] = JSON.parse(data) as LocaleMessageDictionary
+      messages[name] = JSON.parse(
+        data
+      ) as LocaleMessageDictionary<I18nReousrceSchema>
     }
     return acc
-  }, Promise.resolve({} as LocaleMessages))
+  }, Promise.resolve({} as LocaleMessages<I18nReousrceSchema>))
 }
 
 export function getLocale(env?: Record<string, unknown>): Locale {
@@ -48,7 +54,7 @@ export function getLocale(env?: Record<string, unknown>): Locale {
   return raw.replace(/\.UTF\-8/g, '').replace(/_/g, '-')
 }
 
-export function t<Key extends keyof typeof i18nResourceSchema>(
+export function t<Key extends keyof I18nReousrceSchema>(
   key: Key,
   ...args: unknown[]
 ): string {
@@ -58,7 +64,7 @@ export function t<Key extends keyof typeof i18nResourceSchema>(
     )
     return key
   }
-  const ret = translate(context, key, ...args)
+  const ret = Reflect.apply(translate, null, [context, key, ...args])
   return isString(ret) ? ret : key
 }
 
