@@ -1,5 +1,6 @@
 {
   "Usage: $0 <command> [options]": "Usage: $0 <command> [options]",
+  "dry run mode": "dry run mode",
   "compile the i18n resources": "compile the i18n resources",
   "the i18n resource source path": "the i18n resource source path",
   "the compiled i18n resource output path": "the compiled i18n resource output path",
@@ -16,7 +17,6 @@
   "the attributes to annotate": "the attributes to annotate",
   "'--type' is not supported except for 'custom-block'": "'--type' is not supported except for 'custom-block'",
   "if you don't specify some files at the end of the command, the '—-source' option is required": "if you don't specify some files at the end of the command, the '—-source' option is required",
-  "there is a parse error in {filename}": "there is a parse error in {filename}",
   "Unsupported '{type}' block content type: {actual}": "Unsupported '{type}' block content type: {actual}",
   "Detected lang mismatch in block `src` ('{src}') and block content ('{content}')": "Detected lang mismatch in block `src` ('{src}') and block content ('{content}')",
   "Detected lang mismatch in `lang` option ('{lang}') and block content ('{content}')": "Detected lang mismatch in `lang` option ('{lang}') and block content ('{content}')",
@@ -27,5 +27,16 @@
   "{count} warnings": "{count} warnings",
   "{count} forces": "{count} forces",
   "{count} ignores": "{count} ignores",
-  "{count} errors": "{count} errors"
+  "{count} errors": "{count} errors",
+  "`lang` attr not found": "`lang` attr not found",
+  "format for single-file components": "format for single-file components",
+  "the format type": "the format type",
+  "the config file path of prettier": "the config file path of prettier",
+  "target files without formatting": "target files without formatting",
+  "formatted": "formatted",
+  "no change": "no change",
+  "{count} formattable files": "{count} formattable files",
+  "{count} formatted files": "{count} formatted files",
+  "{count} no change files": "{count} no change files",
+  "{count} error files": "{count} error files"
 }

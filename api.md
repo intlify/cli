@@ -5,15 +5,20 @@
 - [Function](#function)
   - [annotate](#annotate)
   - [compile](#compile)
+  - [format](#format)
 - [TypeAlias](#typealias)
   - [AnnotateOptions](#annotateoptions)
+  - [FormatOptions](#formatoptions)
 - [Enum](#enum)
   - [AnnotateWarningCodes](#annotatewarningcodes)
   - [CompileErrorCodes](#compileerrorcodes)
 - [Interface](#interface)
   - [CompileOptions](#compileoptions)
   - [SFCParseError](#sfcparseerror)
+- [Variable](#variable)
+  - [DEFAULT_PRETTIER_OPTIONS](#default_prettier_options)
 - [Class](#class)
+  - [FormatLangNotFoundError](#formatlangnotfounderror)
   - [SFCAnnotateError](#sfcannotateerror)
 
 ## Function
@@ -64,6 +69,31 @@ declare function compile(source: string, output: string, options?: CompileOption
 
 This functoin is **asyncronous** function. If you want to get about error details, use the handler of [CompileOptions](#compileoptions) and [CompileErrorCodes](#compileerrorcodes)
 
+### format
+
+Format the Vue SFC block
+
+**Signature:**
+```typescript
+declare function format(source: string, filepath: string, options?: FormatOptions): string;
+```
+
+#### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| source | string | The source code of the Vue SFC |
+| filepath | string | The file path of the Vue SFC |
+| options | FormatOptions | The [options](#formatoptions) of the format function |
+
+#### Returns
+
+ The formatted source code of the Vue SFC
+
+#### Remarks
+
+Currently, only i18n custom blocks supporting
+
 
 ## TypeAlias
 
@@ -78,6 +108,17 @@ declare type AnnotateOptions = {
     force?: boolean;
     attrs?: Record<string, any>;
     onWarn?: (code: number, args: Record<string, any>, block: SFCBlock) => void;
+};
+```
+
+### FormatOptions
+
+Format options of [format](#format) function
+
+**Signature:**
+```typescript
+declare type FormatOptions = {
+    prettier?: Options;
 };
 ```
 
@@ -214,7 +255,67 @@ filepath: string;
 
 
 
+## Variable
+
+### DEFAULT_PRETTIER_OPTIONS
+
+The default prettier options for formatting the content of `i18n` custom blocks
+
+**Signature:**
+```typescript
+DEFAULT_PRETTIER_OPTIONS: {
+    printWidth: number;
+    tabWidth: number;
+    jsonRecursiveSort: boolean;
+    plugins: string[];
+}
+```
+
+
 ## Class
+
+### FormatLangNotFoundError
+
+Fortmat lang fwnot found error
+
+**Signature:**
+```typescript
+declare class FormatLangNotFoundError extends Error 
+```
+
+### Remarks
+
+The error that not specified `lang` attribute in `i18n` custom block
+
+
+#### Constructor
+
+Constructor
+
+**Signature:**
+```typescript
+constructor(message: string, filepath: string);
+```
+
+*Parameters*
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| message | string | The error message |
+| filepath | string | The filepath of the target file at formatting processing |
+
+
+#### Properties
+
+##### filepath
+
+The filepath of the target file at formatting processing
+
+**Signature:**
+```typescript
+filepath: string;
+```
+
 
 ### SFCAnnotateError
 
