@@ -25,6 +25,7 @@ type AnnotateOptions = {
   force?: boolean
   details?: boolean
   attrs?: Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
+  dryRun?: boolean
 }
 
 type AnnoateStatus = 'none' | 'fine' | 'warn' | 'error'
@@ -53,7 +54,7 @@ export default function defineCommand() {
       })
       .option('details', {
         type: 'boolean',
-        alias: 'd',
+        alias: 'v',
         describe: t('annotated result detail options')
       })
       .option('attrs', {
@@ -61,17 +62,29 @@ export default function defineCommand() {
         alias: 'a',
         describe: t('the attributes to annotate')
       })
+      .option('dryRun', {
+        type: 'boolean',
+        alias: 'd',
+        describe: t('target files without annotating')
+      })
       .fail(defineFail(RequireError))
   }
 
   const handler = async (args: Arguments<AnnotateOptions>): Promise<void> => {
     args.type = args.type || 'custom-block'
 
-    const { source, type, force, details, attrs } = args as AnnotateOptions
-    debug('annotate args:', source, type, force, details, attrs)
+    const { source, type, force, details, attrs, dryRun } =
+      args as AnnotateOptions
+    debug('annotate args:', source, type, force, details, attrs, dryRun)
 
     checkType(args.type)
     checkSource(args._.length, source)
+
+    if (dryRun) {
+      console.log()
+      console.log(chalk.bold.yellowBright(`${t('dry run mode')}:`))
+      console.log()
+    }
 
     let counter = 0
     let passCounter = 0
@@ -80,6 +93,34 @@ export default function defineCommand() {
     let forceCounter = 0
     let ignoreCounter = 0
     let errorCounter = 0
+
+    function printStats() {
+      console.log('')
+      console.log(
+        chalk.bold.white(t('{count} annotateable files ', { count: counter }))
+      )
+      console.log(
+        chalk.bold.green(t('{count} annotated files', { count: fineCounter }))
+      )
+      if (details) {
+        console.log(
+          chalk.white(t('{count} passed files', { count: passCounter }))
+        )
+      }
+      console.log(
+        chalk.yellow(t('{count} warned files', { count: warnCounter }))
+      )
+      if (details) {
+        console.log(
+          chalk.yellow(t('{count} forced files', { count: forceCounter }))
+        )
+        console.log(
+          chalk.yellow(t('{count} ignored files', { count: ignoreCounter }))
+        )
+      }
+      console.log(chalk.red(t('{count} error files', { count: errorCounter })))
+      console.log('')
+    }
 
     let status: AnnoateStatus = 'fine'
     const onWarn = warnHnadler(() => (status = 'warn'))
@@ -103,60 +144,48 @@ export default function defineCommand() {
         }
 
         if (status === 'fine') {
-          console.log(chalk.bold.green(`annotate: ${file}`))
-          await fs.writeFile(file, annotated, 'utf8')
           fineCounter++
-        } else if (status === 'none') {
-          console.log(chalk.white(`pass annotate: ${file}`))
-          passCounter++
-        } else if (status === 'warn') {
-          if (force) {
-            console.log(chalk.bold.yellow(`force annotate: ${file}`))
+          console.log(chalk.green(`${file}: ${t('annotate')}`))
+          if (!dryRun) {
             await fs.writeFile(file, annotated, 'utf8')
-            forceCounter++
-          } else {
-            console.log(chalk.yellow(`ignore annotate: ${file}`))
-            ignoreCounter++
           }
+        } else if (status === 'none') {
+          passCounter++
+          console.log(chalk.white(`${file}: ${t('pass annotate')}`))
+        } else if (status === 'warn') {
           warnCounter++
+          if (force) {
+            forceCounter++
+            console.log(chalk.yellow(`${file}: ${t('force annotate')}`))
+            if (!dryRun) {
+              await fs.writeFile(file, annotated, 'utf8')
+            }
+          } else {
+            ignoreCounter++
+            console.log(chalk.yellow(`${file}: ${t('ignore annotate')}`))
+          }
         }
       } catch (e: unknown) {
         status = 'error'
         errorCounter++
         if (isSFCParserError(e)) {
           console.error(chalk.bold.red(`${e.message} at ${e.filepath}`))
-          e.erorrs.forEach(err =>
-            console.error(chalk.bold.red(`  ${err.message}`))
-          )
+          e.erorrs.forEach(err => console.error(chalk.red(`  ${err.message}`)))
         } else if (e instanceof SFCAnnotateError) {
-          console.error(chalk.bold.red(e.message))
+          console.error(
+            chalk.red(`${e.filepath}: ${t(e.message as any)}`) // eslint-disable-line @typescript-eslint/no-explicit-any
+          )
         } else {
+          console.error(chalk.red((e as Error).message))
+        }
+        if (!dryRun) {
           throw e
         }
       }
       counter++
     }
 
-    console.log('')
-    console.log(
-      `${chalk.bold.white(
-        t('{count} annotateable files ', { count: counter })
-      )}\n${chalk.bold.green(
-        t('{count} annotates', { count: fineCounter })
-      )}\n${
-        details
-          ? `${chalk.white(t('{count} pass', { count: passCounter }))}\n`
-          : ''
-      }${chalk.bold.yellow(t('{count} warnings', { count: warnCounter }))}\n${
-        details
-          ? `${chalk.yellow(t('{count} forces', { count: forceCounter }))}\n`
-          : ''
-      }${
-        details
-          ? `${chalk.yellow(t('{count} ignores', { count: ignoreCounter }))}\n`
-          : ''
-      }${chalk.bold.red(t('{count} errors', { count: errorCounter }))}`
-    )
+    printStats()
   }
 
   return {
