@@ -14,7 +14,7 @@ const debug = createDebug('@intlify/cli:api:format')
  *
  * @public
  */
-export type FormatOptions = {
+export interface FormatOptions {
   /**
    * The prettier options
    *

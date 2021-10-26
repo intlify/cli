@@ -45,7 +45,7 @@ export const enum AnnotateWarningCodes {
  *
  * @public
  */
-export type AnnotateOptions = {
+export interface AnnotateOptions {
   /**
    * The type of the block
    *
