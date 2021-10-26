@@ -1,4 +1,13 @@
 
+## v0.9.1 (2021-10-26)
+
+#### :zap: Improvement Features
+* [#46](https://github.com/intlify/cli/pull/46) improvement: api docs ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.9.0 (2021-10-26)
 
 #### :star: Features
