@@ -40,7 +40,7 @@
   "target files without formatting": "target files without formatting",
   "formatted": "formatted",
   "no change": "no change",
-  "{count} formattable files": "{count} formattable files",
-  "{count} formatted files": "{count} formatted files",
-  "{count} no change files": "{count} no change files"
+  "{count} formattable files": "formattable no files | {count} formattable file | {count} formattable files",
+  "{count} formatted files": "formatted no files | {count} formatted file | {count} formatted files",
+  "{count} no change files": "no change no files | {count} no change file | {count} no change files"
 }
