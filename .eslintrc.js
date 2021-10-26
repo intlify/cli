@@ -10,14 +10,25 @@ module.exports = {
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@intlify/vue-i18n/recommended',
     'plugin:prettier/recommended',
     'prettier'
   ],
   plugins: ['@typescript-eslint'],
-  parser: '@typescript-eslint/parser',
   parserOptions: {
+    parser: '@typescript-eslint/parser',
     sourceType: 'module'
   },
+  overrides: [
+    {
+      files: ['*.json', '*.json5'],
+      extends: ['plugin:@intlify/vue-i18n/base']
+    },
+    {
+      files: ['*.yaml', '*.yml'],
+      extends: ['plugin:@intlify/vue-i18n/base']
+    }
+  ],
   rules: {
     'object-curly-spacing': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -26,6 +37,19 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/triple-slash-reference': 'off'
+    '@typescript-eslint/triple-slash-reference': 'off',
+    '@intlify/vue-i18n/no-dynamic-keys': 'error',
+    '@intlify/vue-i18n/no-unused-keys': [
+      'error',
+      {
+        extensions: ['.ts']
+      }
+    ]
+  },
+  settings: {
+    'vue-i18n': {
+      localeDir: './locales/*.json',
+      messageSyntaxVersion: '^9.0.0'
+    }
   }
 }

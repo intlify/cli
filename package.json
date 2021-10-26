@@ -44,6 +44,7 @@
     "yargs": "^17.2.0"
   },
   "devDependencies": {
+    "@intlify/eslint-plugin-vue-i18n": "^0.15.0",
     "@kazupon/lerna-changelog": "^4.3.0",
     "@microsoft/api-extractor": "^7.18.2",
     "@secretlint/secretlint-rule-preset-recommend": "^3.3.0",

@@ -9,7 +9,7 @@ import { compile, annotate, format } from './commands'
   await initI18n()
   yargs(hideBin(process.argv))
     .scriptName('intlify')
-    .usage(t('Usage: $0 <command> [options]'))
+    .usage(t('Usage: $0 <command> [options]')) // eslint-disable-line @intlify/vue-i18n/no-missing-keys
     .command(compile())
     .command(annotate())
     .command(format())

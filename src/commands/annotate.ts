@@ -173,7 +173,7 @@ export default function defineCommand() {
           e.erorrs.forEach(err => console.error(chalk.red(`  ${err.message}`)))
         } else if (e instanceof SFCAnnotateError) {
           console.error(
-            chalk.red(`${e.filepath}: ${t(e.message as any)}`) // eslint-disable-line @typescript-eslint/no-explicit-any
+            chalk.red(`${e.filepath}: ${t(e.message as any)}`) // eslint-disable-line @typescript-eslint/no-explicit-any, @intlify/vue-i18n/no-dynamic-keys
           )
         } else {
           console.error(chalk.red((e as Error).message))

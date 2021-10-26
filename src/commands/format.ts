@@ -95,7 +95,7 @@ export default function defineCommand() {
         errorCounter++
         if (e instanceof FormatLangNotFoundError) {
           console.error(
-            chalk.red(`${e.filepath}: ${t(e.message as any)}`) // eslint-disable-line @typescript-eslint/no-explicit-any
+            chalk.red(`${e.filepath}: ${t(e.message as any)}`) // eslint-disable-line @typescript-eslint/no-explicit-any, @intlify/vue-i18n/no-dynamic-keys
           )
         } else if (isSFCParserError(e)) {
           console.error(chalk.red(`${e.message} at ${e.filepath}`))
