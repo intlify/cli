@@ -1,4 +1,20 @@
 
+## v0.9.0 (2021-10-26)
+
+#### :star: Features
+* [#43](https://github.com/intlify/cli/pull/43) feat: add --dryRun option for annotate ([@kazupon](https://github.com/kazupon))
+* [#41](https://github.com/intlify/cli/pull/41) feat: format command ([@kazupon](https://github.com/kazupon))
+
+#### :zap: Improvement Features
+* [#42](https://github.com/intlify/cli/pull/42) improvement: bump intlify libs ([@kazupon](https://github.com/kazupon))
+
+#### :globe_with_meridians: Internationalization
+* [#44](https://github.com/intlify/cli/pull/44) i18n: support pluralization for format command ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.8.0 (2021-10-21)
 
 #### :star: Features
