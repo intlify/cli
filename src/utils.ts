@@ -1,6 +1,6 @@
 import createDebug from 'debug'
 import fg from 'fast-glob'
-import { diffChars as diff } from 'diff'
+import diff from 'diff-match-patch'
 import { parseJSON } from 'jsonc-eslint-parser'
 import { parseYAML } from 'yaml-eslint-parser'
 import { readFileSync } from 'fs'
@@ -145,9 +145,16 @@ export function escape(s: string): string {
   return s.replace(/[<>"&]/g, escapeChar)
 }
 
+const df = new diff.diff_match_patch()
+
 export function hasDiff(newContent: string, oldContent: string): boolean {
-  const contents = diff(oldContent, newContent)
-  return !!contents.find(content => content.added || content.removed)
+  const diffs = df.diff_main(oldContent, newContent, true)
+  if (diffs.length === 0) {
+    return false
+  }
+  return !!diffs.find(
+    d => d[0] === diff.DIFF_DELETE || d[0] === diff.DIFF_INSERT
+  )
 }
 
 export function buildSFCBlockTag(meta: {
