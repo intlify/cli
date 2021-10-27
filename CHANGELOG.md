@@ -1,4 +1,13 @@
 
+## v0.9.2 (2021-10-27)
+
+#### :chart_with_upwards_trend: Performance Fixes
+* [#48](https://github.com/intlify/cli/pull/48) fix: diff performance ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.9.1 (2021-10-26)
 
 #### :zap: Improvement Features
