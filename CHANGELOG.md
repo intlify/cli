@@ -1,4 +1,13 @@
 
+## v0.10.0 (2021-10-30)
+
+#### :star: Features
+* [#52](https://github.com/intlify/cli/pull/52) feat: support ignoring with `.intlifyignore` or `--ignore` option ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.9.2 (2021-10-27)
 
 #### :chart_with_upwards_trend: Performance Fixes
