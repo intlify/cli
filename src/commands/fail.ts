@@ -1,4 +1,4 @@
-import chalk from 'chalk'
+import { bold, red, yellow } from 'colorette'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T> = { new (...args: any[]): T }
@@ -16,11 +16,11 @@ export function defineFail(userError: any) {
     if (msg) {
       // TODO: should refactor console message
       console.error(msg)
-      console.warn(chalk.bold.red(msg))
+      console.warn(red(bold(msg)))
       process.exit(1)
     } else {
       if (typeGuard(err, userError)) {
-        console.warn(chalk.bold.yellow(err.message))
+        console.warn(yellow(bold(err.message)))
         process.exit(0)
       } else {
         // preserve statck! see the https://github.com/yargs/yargs/blob/master/docs/api.md#failfn

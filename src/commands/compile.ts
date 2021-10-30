@@ -1,5 +1,5 @@
 import path from 'pathe'
-import chalk from 'chalk'
+import { green, yellow } from 'colorette'
 import createDebug from 'debug'
 import { CompileErrorCodes, compile } from '../api'
 import { t } from '../i18n'
@@ -52,7 +52,7 @@ export default function defineCommand() {
       mode: args.mode as DevEnv,
       onCompile: (source: string, output: string): void => {
         console.log(
-          chalk.green(
+          green(
             t('Success compilation: {source} -> {output}', { source, output })
           )
         )
@@ -67,7 +67,7 @@ export default function defineCommand() {
           case CompileErrorCodes.NOT_SUPPORTED_FORMAT:
             const parsed = path.parse(source)
             console.warn(
-              chalk.yellow(
+              yellow(
                 t("{source}: Ignore compilation due to not supported '{ext}'", {
                   named: { ext: parsed.ext }
                 })
@@ -76,7 +76,7 @@ export default function defineCommand() {
             break
           case CompileErrorCodes.INTERNAL_COMPILE_WARNING:
             console.log(
-              chalk.yellow(
+              yellow(
                 t('Warning compilation: {source} -> {output}, {msg}', {
                   named: { source, output, msg }
                 })
@@ -85,7 +85,7 @@ export default function defineCommand() {
             break
           case CompileErrorCodes.INTERNAL_COMPILE_ERROR:
             console.log(
-              chalk.green(
+              green(
                 t('Error compilation: {source} -> {output}, {msg}', {
                   named: { source, output, msg }
                 })

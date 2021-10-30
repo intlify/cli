@@ -1,5 +1,15 @@
 import { promises as fs } from 'fs'
-import chalk from 'chalk'
+import {
+  green,
+  blue,
+  red,
+  whiteBright,
+  greenBright,
+  redBright,
+  blueBright,
+  yellowBright,
+  bold
+} from 'colorette'
 import path from 'pathe'
 import createDebug from 'debug'
 import { t } from '../i18n'
@@ -76,7 +86,7 @@ export default function defineCommand() {
 
     if (dryRun) {
       console.log()
-      console.log(chalk.bold.yellowBright(`${t('dry run mode')}:`))
+      console.log(yellowBright(bold(`${t('dry run mode')}:`)))
       console.log()
     }
 
@@ -99,10 +109,10 @@ export default function defineCommand() {
         })
         if (hasDiff(formatted, data)) {
           formattedCounter++
-          console.log(chalk.green(`${file}: ${t('formatted')}`))
+          console.log(green(`${file}: ${t('formatted')}`))
         } else {
           noChangeCounter++
-          console.log(chalk.blue(`${file}: ${t('no change')}`))
+          console.log(blue(`${file}: ${t('no change')}`))
         }
         if (!dryRun) {
           await fs.writeFile(file, formatted, 'utf8')
@@ -111,13 +121,13 @@ export default function defineCommand() {
         errorCounter++
         if (e instanceof FormatLangNotFoundError) {
           console.error(
-            chalk.red(`${e.filepath}: ${t(e.message as any)}`) // eslint-disable-line @typescript-eslint/no-explicit-any, @intlify/vue-i18n/no-dynamic-keys
+            red(`${e.filepath}: ${t(e.message as any)}`) // eslint-disable-line @typescript-eslint/no-explicit-any, @intlify/vue-i18n/no-dynamic-keys
           )
         } else if (isSFCParserError(e)) {
-          console.error(chalk.red(`${e.message} at ${e.filepath}`))
-          e.erorrs.forEach(err => console.error(chalk.red(`  ${err.message}`)))
+          console.error(red(`${e.message} at ${e.filepath}`))
+          e.erorrs.forEach(err => console.error(red(`  ${err.message}`)))
         } else {
-          console.error(chalk.red((e as Error).message))
+          console.error(red((e as Error).message))
         }
 
         if (!dryRun) {
@@ -128,23 +138,19 @@ export default function defineCommand() {
 
     console.log('')
     console.log(
-      chalk.bold.whiteBright(
-        t('{count} formattable files', { count: files.length })
+      whiteBright(bold(t('{count} formattable files', { count: files.length })))
+    )
+    console.log(
+      greenBright(
+        bold(t('{count} formatted files', { count: formattedCounter }))
       )
     )
     console.log(
-      chalk.bold.greenBright(
-        t('{count} formatted files', { count: formattedCounter })
-      )
-    )
-    console.log(
-      chalk.bold.blueBright(
-        t('{count} no change files', { count: noChangeCounter })
-      )
+      blueBright(bold(t('{count} no change files', { count: noChangeCounter })))
     )
     if (dryRun) {
       console.log(
-        chalk.bold.redBright(t('{count} error files', { count: errorCounter }))
+        redBright(bold(t('{count} error files', { count: errorCounter })))
       )
     }
     console.log('')
