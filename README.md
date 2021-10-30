@@ -58,7 +58,7 @@ build
 coverage
 ```
 
-tt’s recommended to have a `.intlifyignore` in your project! This way you can run `intlify format —source /path/to/**/*.vue —type custom-block` . to make sure that everything is executed (without mangling files you don’t want, or choking on generated files).
+It’s recommended to have a `.intlifyignore` in your project! This way you can run `intlify format —source /path/to/**/*.vue —type custom-block` . to make sure that everything is executed (without mangling files you don’t want, or choking on generated files).
 
 ### `--ignore` option
 
