@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import createDebug from 'debug'
 import { t } from '../i18n'
 import { hasDiff } from '../utils'
-import { checkType, checkSource, getSFCFiles } from './utils'
+import { checkType, checkSource, readIgnore, getSFCFiles } from './utils'
 import {
   annotate,
   AnnotateWarningCodes,
@@ -25,6 +25,7 @@ type AnnotateOptions = {
   force?: boolean
   details?: boolean
   attrs?: Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
+  ignore?: string
   dryRun?: boolean
 }
 
@@ -62,6 +63,13 @@ export default function defineCommand() {
         alias: 'a',
         describe: t('the attributes to annotate')
       })
+      .option('ignore', {
+        type: 'string',
+        alias: 'i',
+        describe: t(
+          'the ignore configuration path files passed at the end of the options or `--source` option'
+        )
+      })
       .option('dryRun', {
         type: 'boolean',
         alias: 'd',
@@ -73,9 +81,9 @@ export default function defineCommand() {
   const handler = async (args: Arguments<AnnotateOptions>): Promise<void> => {
     args.type = args.type || 'custom-block'
 
-    const { source, type, force, details, attrs, dryRun } =
+    const { source, force, details, attrs, ignore, dryRun } =
       args as AnnotateOptions
-    debug('annotate args:', source, type, force, details, attrs, dryRun)
+    debug('annotate args:', args)
 
     checkType(args.type)
     checkSource(args._.length, source)
@@ -125,7 +133,15 @@ export default function defineCommand() {
     let status: AnnoateStatus = 'fine'
     const onWarn = warnHnadler(() => (status = 'warn'))
 
-    const files = await getSFCFiles(source, args._)
+    const cwd = process.cwd()
+    const _ignore = await readIgnore(cwd, ignore)
+    const files = await getSFCFiles({
+      source,
+      files: args._,
+      cwd,
+      ignore: _ignore
+    })
+
     for (const file of files) {
       const data = await fs.readFile(file, 'utf8')
 

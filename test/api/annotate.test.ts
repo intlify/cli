@@ -8,7 +8,7 @@ import { annotate, SFCAnnotateError } from '../../src/api'
 
 const __dirname = dirname(new URL(import.meta.url).pathname)
 
-describe('annotate', () => {
+describe('annotate', function () {
   it('basic', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/Basic.vue')
     const source = await fs.readFile(filepath, 'utf8')

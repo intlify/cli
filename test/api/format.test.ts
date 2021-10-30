@@ -7,7 +7,7 @@ import { format, FormatLangNotFoundError } from '../../src/api'
 
 const __dirname = dirname(new URL(import.meta.url).pathname)
 
-describe('format', () => {
+describe('format', function () {
   it('basic', async function () {
     const filepath = resolve(
       __dirname,

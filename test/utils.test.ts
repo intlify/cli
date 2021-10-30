@@ -1,18 +1,54 @@
+/// <reference path="./chai.shim.d.ts"/>
+
 import { assert } from 'chai'
 import { promises as fs } from 'fs'
-import { dirname, resolve } from 'pathe'
+import { dirname, resolve, relative, parse as pathParse } from 'pathe'
 import { parse } from '@vue/compiler-sfc'
 import {
+  getSourceFiles,
   getSFCBlocks,
   getSFCContentInfo,
   getCustomBlockContenType,
   hasDiff
 } from '../src/utils'
+import { VUE_COMPONENT_FIXTURES } from './contents'
 
 const __dirname = dirname(new URL(import.meta.url).pathname)
+const EXPECTABLE_FILES = VUE_COMPONENT_FIXTURES.map(
+  fixture => `fixtures/components/${fixture}`
+)
 
-describe('getSFCBlocks', () => {
-  it('basic', async () => {
+describe('getSourceFiles', function () {
+  it('source', async function () {
+    const source = resolve(__dirname, './fixtures/**/*.vue')
+    const files = await getSourceFiles({ source })
+    assert.deepEqual(
+      files.map(file => relative(__dirname, file)),
+      EXPECTABLE_FILES
+    )
+  })
+
+  it('files', async function () {
+    const files = ['annotate', ...EXPECTABLE_FILES]
+    const actual = await getSourceFiles({ files })
+    assert.deepEqual(actual, files.splice(1))
+  })
+
+  it('filter', async function () {
+    const source = resolve(__dirname, './fixtures/**/*.*')
+    const files = await getSourceFiles({ source }, file => {
+      const parsed = pathParse(file as string)
+      return parsed.ext === '.vue'
+    })
+    assert.deepEqual(
+      files.map(file => relative(__dirname, file)),
+      EXPECTABLE_FILES
+    )
+  })
+})
+
+describe('getSFCBlocks', function () {
+  it('basic', async function () {
     const data = await fs.readFile(
       resolve(__dirname, './fixtures/components/Basic.vue'),
       'utf8'
@@ -25,7 +61,7 @@ describe('getSFCBlocks', () => {
     assert.equal(i18n.type, 'i18n')
   })
 
-  it('multi', async () => {
+  it('multi', async function () {
     const data = await fs.readFile(
       resolve(__dirname, './fixtures/components/Multi.vue'),
       'utf8'
@@ -41,7 +77,7 @@ describe('getSFCBlocks', () => {
     assert.equal(style.type, 'style')
   })
 
-  it('external', async () => {
+  it('external', async function () {
     const data = await fs.readFile(
       resolve(__dirname, './fixtures/components/External.vue'),
       'utf8'
@@ -54,8 +90,8 @@ describe('getSFCBlocks', () => {
   })
 })
 
-describe('getSFCContentInfo', () => {
-  it('src', async () => {
+describe('getSFCContentInfo', function () {
+  it('src', async function () {
     const filepath = resolve(__dirname, './fixtures/components/External.vue')
     const source = await fs.readFile(filepath, 'utf8')
     const externalPath = resolve(__dirname, './fixtures/components/external.ts')
@@ -68,7 +104,7 @@ describe('getSFCContentInfo', () => {
     assert.equal(contentPath, externalPath)
   })
 
-  it('lang', async () => {
+  it('lang', async function () {
     const filepath = resolve(__dirname, './fixtures/components/Exist.vue')
     const source = await fs.readFile(filepath, 'utf8')
     const { descriptor } = parse(source)
@@ -80,12 +116,12 @@ describe('getSFCContentInfo', () => {
   })
 })
 
-describe('getCustomBlockContenType', () => {
-  it('json', () => {
+describe('getCustomBlockContenType', function () {
+  it('json', function () {
     assert.equal(getCustomBlockContenType('{ "foo": 1 }'), 'json')
   })
 
-  it('json5', () => {
+  it('json5', function () {
     assert.equal(
       getCustomBlockContenType(`{
   foo: 1, buz: { "bar": "hello" } }
@@ -94,7 +130,7 @@ describe('getCustomBlockContenType', () => {
     )
   })
 
-  it('yaml', () => {
+  it('yaml', function () {
     assert.equal(
       getCustomBlockContenType(`
 foo:
@@ -106,12 +142,12 @@ foo:
   })
 })
 
-describe('hasDiff', () => {
-  it('not equal', () => {
+describe('hasDiff', function () {
+  it('not equal', function () {
     assert.equal(hasDiff('foo', 'bar'), true)
   })
 
-  it('equal', () => {
+  it('equal', function () {
     assert.equal(hasDiff('foo', 'foo'), false)
   })
 })
