@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs'
-import chalk from 'chalk'
+import { green, white, yellow, red, yellowBright, bold } from 'colorette'
 import createDebug from 'debug'
 import { t } from '../i18n'
 import { hasDiff } from '../utils'
@@ -90,7 +90,7 @@ export default function defineCommand() {
 
     if (dryRun) {
       console.log()
-      console.log(chalk.bold.yellowBright(`${t('dry run mode')}:`))
+      console.log(yellowBright(bold(`${t('dry run mode')}:`)))
       console.log()
     }
 
@@ -105,28 +105,24 @@ export default function defineCommand() {
     function printStats() {
       console.log('')
       console.log(
-        chalk.bold.white(t('{count} annotateable files ', { count: counter }))
+        white(bold(t('{count} annotateable files ', { count: counter })))
       )
       console.log(
-        chalk.bold.green(t('{count} annotated files', { count: fineCounter }))
+        green(bold(t('{count} annotated files', { count: fineCounter })))
       )
       if (details) {
         console.log(
-          chalk.white(t('{count} passed files', { count: passCounter }))
+          white(bold(t('{count} passed files', { count: passCounter })))
         )
       }
-      console.log(
-        chalk.yellow(t('{count} warned files', { count: warnCounter }))
-      )
+      console.log(yellow(t('{count} warned files', { count: warnCounter })))
       if (details) {
+        console.log(yellow(t('{count} forced files', { count: forceCounter })))
         console.log(
-          chalk.yellow(t('{count} forced files', { count: forceCounter }))
-        )
-        console.log(
-          chalk.yellow(t('{count} ignored files', { count: ignoreCounter }))
+          yellow(t('{count} ignored files', { count: ignoreCounter }))
         )
       }
-      console.log(chalk.red(t('{count} error files', { count: errorCounter })))
+      console.log(red(t('{count} error files', { count: errorCounter })))
       console.log('')
     }
 
@@ -161,38 +157,38 @@ export default function defineCommand() {
 
         if (status === 'fine') {
           fineCounter++
-          console.log(chalk.green(`${file}: ${t('annotate')}`))
+          console.log(green(`${file}: ${t('annotate')}`))
           if (!dryRun) {
             await fs.writeFile(file, annotated, 'utf8')
           }
         } else if (status === 'none') {
           passCounter++
-          console.log(chalk.white(`${file}: ${t('pass annotate')}`))
+          console.log(white(`${file}: ${t('pass annotate')}`))
         } else if (status === 'warn') {
           warnCounter++
           if (force) {
             forceCounter++
-            console.log(chalk.yellow(`${file}: ${t('force annotate')}`))
+            console.log(yellow(`${file}: ${t('force annotate')}`))
             if (!dryRun) {
               await fs.writeFile(file, annotated, 'utf8')
             }
           } else {
             ignoreCounter++
-            console.log(chalk.yellow(`${file}: ${t('ignore annotate')}`))
+            console.log(yellow(`${file}: ${t('ignore annotate')}`))
           }
         }
       } catch (e: unknown) {
         status = 'error'
         errorCounter++
         if (isSFCParserError(e)) {
-          console.error(chalk.bold.red(`${e.message} at ${e.filepath}`))
-          e.erorrs.forEach(err => console.error(chalk.red(`  ${err.message}`)))
+          console.error(red(bold(`${e.message} at ${e.filepath}`)))
+          e.erorrs.forEach(err => console.error(red(`  ${err.message}`)))
         } else if (e instanceof SFCAnnotateError) {
           console.error(
-            chalk.red(`${e.filepath}: ${t(e.message as any)}`) // eslint-disable-line @typescript-eslint/no-explicit-any, @intlify/vue-i18n/no-dynamic-keys
+            red(`${e.filepath}: ${t(e.message as any)}`) // eslint-disable-line @typescript-eslint/no-explicit-any, @intlify/vue-i18n/no-dynamic-keys
           )
         } else {
-          console.error(chalk.red((e as Error).message))
+          console.error(red((e as Error).message))
         }
         if (!dryRun) {
           throw e
@@ -220,13 +216,11 @@ function warnHnadler(cb: () => void) {
     switch (code) {
       case AnnotateWarningCodes.NOT_SUPPORTED_TYPE:
         console.log(
-          chalk.yellow(
-            t(`Unsupported '{type}' block content type: {actual}`, args)
-          )
+          yellow(t(`Unsupported '{type}' block content type: {actual}`, args))
         )
       case AnnotateWarningCodes.LANG_MISMATCH_IN_ATTR_AND_CONTENT:
         console.log(
-          chalk.yellow(
+          yellow(
             t(
               "Detected lang mismatch in `lang` attr ('{lang}') and block content ('{content}')",
               args
@@ -235,7 +229,7 @@ function warnHnadler(cb: () => void) {
         )
       case AnnotateWarningCodes.LANG_MISMATCH_IN_OPTION_AND_CONTENT:
         console.log(
-          chalk.yellow(
+          yellow(
             t(
               "Detected lang mismatch in `lang` option ('{lang}') and block content ('{content}')",
               args
@@ -244,7 +238,7 @@ function warnHnadler(cb: () => void) {
         )
       case AnnotateWarningCodes.LANG_MISMATCH_IN_SRC_AND_CONTENT:
         console.log(
-          chalk.yellow(
+          yellow(
             t(
               "Detected lang mismatch in block `src` ('{src}') and block content ('{content}')",
               args
