@@ -40,6 +40,35 @@ Options:
   --version  Show version number                                       [boolean]
 ```
 
+## 🙈 Ignoring
+
+For `annotate` or `format` commands, you can ignore with using `.intlifyignore` or `--ignore` for files passed at the end of the options or `--source` option
+
+### `.intlifyignore`
+
+To exclude files from iles passed at the end of the options or `--source` option, create a `.itnlifyignore` file in the root of your project. `.intlifyignore` uses [gitignore syntax](https://git-scm.com/docs/gitignore#_pattern_format).
+
+example:
+```
+# Ignore node_modules
+node_modules
+
+# ignore  artifacts
+build
+coverage
+```
+
+It’s recommended to have a `.intlifyignore` in your project! This way you can run `intlify format —source /path/to/**/*.vue —type custom-block` . to make sure that everything is executed (without mangling files you don’t want, or choking on generated files).
+
+### `--ignore` option
+
+If you can't use `.intlifyignore` for some reason and want to specify a different file, you can use the `--ignore` option to achieve this.
+
+```sh
+# ignore with `.gitignore`
+intlify format —source /path/to/**/*.vue —type custom-block --ignore .gitignore
+```
+
 ## 🤝 API
 
 About details, See the [API References](https://github.com/intlify/cli/blob/main/api.md)

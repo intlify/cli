@@ -4,7 +4,7 @@ import path from 'pathe'
 import createDebug from 'debug'
 import { t } from '../i18n'
 import { getPrettierConfig, hasDiff } from '../utils'
-import { checkType, checkSource, getSFCFiles } from './utils'
+import { checkType, checkSource, readIgnore, getSFCFiles } from './utils'
 import { format, FormatLangNotFoundError, isSFCParserError } from '../api'
 import { defineFail, RequireError } from './fail'
 
@@ -17,6 +17,7 @@ type FormatOptions = {
   source?: string
   type?: string
   prettier?: string
+  ignore?: string
   dryRun?: boolean
 }
 
@@ -42,6 +43,13 @@ export default function defineCommand() {
         alias: 'p',
         describe: t('the config file path of prettier')
       })
+      .option('ignore', {
+        type: 'string',
+        alias: 'i',
+        describe: t(
+          'the ignore configuration path files passed at the end of the options or `--source` option'
+        )
+      })
       .option('dryRun', {
         type: 'boolean',
         alias: 'd',
@@ -53,14 +61,16 @@ export default function defineCommand() {
   const handler = async (args: Arguments<FormatOptions>): Promise<void> => {
     args.type = args.type || 'custom-block'
 
-    const { source, type, prettier, dryRun } = args as FormatOptions
-    debug('format args:', source, type, prettier, dryRun)
+    const { source, prettier, ignore, dryRun } = args as FormatOptions
+    debug('format args:', args)
 
     checkType(args.type)
     checkSource(args._.length, source)
 
+    const cwd = process.cwd()
+
     const prettierConfig = prettier
-      ? await getPrettierConfig(path.resolve(process.cwd(), prettier))
+      ? await getPrettierConfig(path.resolve(cwd, prettier))
       : { filepath: '', config: {} }
     debug('prettier config', prettierConfig)
 
@@ -74,7 +84,13 @@ export default function defineCommand() {
     let noChangeCounter = 0
     let errorCounter = 0
 
-    const files = await getSFCFiles(source, args._)
+    const _ignore = await readIgnore(cwd, ignore)
+    const files = await getSFCFiles({
+      source,
+      files: args._,
+      cwd,
+      ignore: _ignore
+    })
     for (const file of files) {
       try {
         const data = await fs.readFile(file, 'utf8')

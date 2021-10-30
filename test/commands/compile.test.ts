@@ -11,19 +11,19 @@ const CWD = resolve(__dirname, '../../')
 
 let orgCwd
 let sandbox
-beforeEach(async () => {
+beforeEach(async function () {
   await initI18n()
   sandbox = sinon.createSandbox()
   orgCwd = process.cwd
   process.cwd = sinon.stub().returns(CWD)
 })
 
-afterEach(() => {
+afterEach(function () {
   sandbox.restore()
   process.cwd = orgCwd
 })
 
-describe('compile', () => {
+describe('compile', function () {
   it('basic', async function () {
     sandbox.stub(console, 'log')
     const cmd = yargs.command(compile())

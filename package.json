@@ -36,6 +36,7 @@
     "debug": "^4.3.2",
     "diff-match-patch": "^1.0.5",
     "fast-glob": "^3.2.7",
+    "ignore": "^5.1.8",
     "jsonc-eslint-parser": "^1.4.1",
     "pathe": "^0.2.0",
     "prettier": "^2.4.1",
@@ -44,7 +45,7 @@
     "yargs": "^17.2.0"
   },
   "devDependencies": {
-    "@intlify/eslint-plugin-vue-i18n": "^0.15.0",
+    "@intlify/eslint-plugin-vue-i18n": "^1.0.0",
     "@kazupon/lerna-changelog": "^4.3.0",
     "@microsoft/api-extractor": "^7.18.2",
     "@secretlint/secretlint-rule-preset-recommend": "^3.3.0",
@@ -65,6 +66,7 @@
     "chai": "^4.3.4",
     "eslint": "^8.0.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-mocha": "^9.0.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jiti": "^1.12.6",
     "lint-staged": "^11.0.0",

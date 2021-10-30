@@ -5,8 +5,8 @@ import { CompileErrorCodes, compile } from '../../src/api'
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
-describe('compile', () => {
-  it('json', async () => {
+describe('compile', function () {
+  it('json', async function () {
     const onCompile = sinon.spy()
     const onError = sinon.spy()
     const ret = await compile(
@@ -22,7 +22,7 @@ describe('compile', () => {
     assert.equal(onError.callCount, 0)
   })
 
-  it('yaml', async () => {
+  it('yaml', async function () {
     const onCompile = sinon.spy()
     const onError = sinon.spy()
     const ret = await compile(
@@ -38,7 +38,7 @@ describe('compile', () => {
     assert.equal(onError.callCount, 0)
   })
 
-  it('json5', async () => {
+  it('json5', async function () {
     const onCompile = sinon.spy()
     const onError = sinon.spy()
     const ret = await compile(
@@ -54,7 +54,7 @@ describe('compile', () => {
     assert.equal(onError.callCount, 0)
   })
 
-  it('other format', async () => {
+  it('other format', async function () {
     const onCompile = sinon.spy()
     const onError = sinon.spy()
     const ret = await compile(

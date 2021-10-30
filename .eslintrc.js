@@ -14,7 +14,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'prettier'
   ],
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'mocha'],
   parserOptions: {
     parser: '@typescript-eslint/parser',
     sourceType: 'module'
@@ -30,6 +30,7 @@ module.exports = {
     }
   ],
   rules: {
+    'mocha/no-mocha-arrows': 'error',
     'object-curly-spacing': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/member-delimiter-style': 'off',

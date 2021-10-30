@@ -15,6 +15,7 @@
   "forced applying of attributes": "forced applying of attributes",
   "annotated result detail options": "annotated result detail options",
   "the attributes to annotate": "the attributes to annotate",
+  "the ignore configuration path files passed at the end of the options or `--source` option": "The ignore configuration path files passed at the end of the options or `--source` option",
   "target files without annotating": "target files without annotating",
   "'--type' is not supported except for 'custom-block'": "'--type' is not supported except for 'custom-block'",
   "if you don't specify some files at the end of the command, the '—-source' option is required": "if you don't specify some files at the end of the command, the '—-source' option is required",

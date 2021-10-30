@@ -5,6 +5,7 @@ import { parseJSON } from 'jsonc-eslint-parser'
 import { parseYAML } from 'yaml-eslint-parser'
 import { readFileSync } from 'fs'
 import { cosmiconfig } from 'cosmiconfig'
+import { promises as fs } from 'fs'
 import path from 'pathe'
 
 import type { SFCBlock, SFCDescriptor } from '@vue/compiler-sfc'
@@ -25,19 +26,44 @@ export type SFCAnnotateOptions = {
   onWarn?: (msg: string, block: SFCBlock) => void
 }
 
+export async function exists(path: string, isThrow = false): Promise<boolean> {
+  let ret = false
+  try {
+    const stat = await fs.stat(path)
+    ret = stat.isFile()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    if (e.code === 'ENOENT') {
+      if (isThrow) {
+        throw e
+      }
+    } else {
+      throw e
+    }
+  }
+  return ret
+}
+
+type FilterCallback = (file: string | number) => boolean
+
 export async function getSourceFiles(
   input: {
     source?: string
     files?: (string | number)[]
   },
-  filter?: (file: string | number) => boolean
+  filter?: FilterCallback | FilterCallback[]
 ): Promise<string[]> {
   const { source, files } = input
   const _files =
     source != null
       ? await globAsync(source)
       : [...(files || [])].map(a => a.toString()).splice(1)
-  return filter ? _files.filter(filter) : _files
+  if (filter) {
+    const _filters = Array.isArray(filter) ? filter : [filter]
+    return _filters.reduce((files, filter) => files.filter(filter), _files)
+  } else {
+    return _files
+  }
 }
 
 export function globAsync(pattern: string): Promise<string[]> {
