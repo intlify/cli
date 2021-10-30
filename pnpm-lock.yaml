@@ -24,7 +24,6 @@ specifiers:
   '@vue/compiler-sfc': ^3.2.20
   api-docs-gen: ^0.3.0
   chai: ^4.3.4
-  chalk: ^4.1.0
   colorette: ^2.0.16
   cosmiconfig: ^7.0.1
   debug: ^4.3.2
@@ -43,7 +42,6 @@ specifiers:
   nyc: ^15.1.0
   opener: ^1.5.1
   pathe: ^0.2.0
-  picocolors: ^1.0.0
   prettier: ^2.4.1
   prettier-plugin-sort-json: ^0.0.2
   secretlint: ^3.3.0
@@ -61,7 +59,6 @@ dependencies:
   '@intlify/core': 9.2.0-beta.16
   '@intlify/shared': 9.2.0-beta.16
   '@vue/compiler-sfc': 3.2.20
-  chalk: 4.1.2
   colorette: 2.0.16
   cosmiconfig: 7.0.1
   debug: 4.3.2
@@ -70,7 +67,6 @@ dependencies:
   ignore: 5.1.8
   jsonc-eslint-parser: 1.4.1
   pathe: 0.2.0
-  picocolors: 1.0.0
   prettier: 2.4.1
   prettier-plugin-sort-json: 0.0.2_prettier@2.4.1
   yaml-eslint-parser: 0.4.1
@@ -2307,6 +2303,7 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+    dev: true
 
   /change-case/4.1.1:
     resolution:
@@ -4203,6 +4200,7 @@ packages:
         integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==
       }
     engines: { node: '>=8' }
+    dev: true
 
   /has-symbols/1.0.2:
     resolution:
@@ -7533,6 +7531,7 @@ packages:
     engines: { node: '>=8' }
     dependencies:
       has-flag: 4.0.0
+    dev: true
 
   /supports-color/8.1.1:
     resolution:
