@@ -30,7 +30,7 @@
     "@intlify/bundle-utils": "next",
     "@intlify/core": "beta",
     "@intlify/shared": "beta",
-    "@vue/compiler-sfc": "^3.2.20",
+    "@vue/compiler-sfc": "latest",
     "colorette": "^2.0.16",
     "cosmiconfig": "^7.0.1",
     "debug": "^4.3.2",
@@ -42,7 +42,8 @@
     "prettier": "^2.4.1",
     "prettier-plugin-sort-json": "^0.0.2",
     "yaml-eslint-parser": "^0.4.1",
-    "yargs": "^17.2.0"
+    "yargs": "^17.2.0",
+    "vue-template-compiler": "latest"
   },
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^1.0.0",

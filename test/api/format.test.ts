@@ -14,21 +14,21 @@ describe('format', function () {
       '../fixtures/components/BasicFormat.vue'
     )
     const source = await fs.readFile(filepath, 'utf8')
-    const content = format(source, filepath)
+    const content = await format(source, filepath)
     expect(content).to.matchSnapshot(this)
   })
 
   it('nested', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/HasNested.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    const content = format(source, filepath)
+    const content = await format(source, filepath)
     expect(content).matchSnapshot(this)
   })
 
   it('oneline', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/Oneline.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    const content = format(source, filepath)
+    const content = await format(source, filepath)
     expect(content).matchSnapshot(this)
   })
 
@@ -38,15 +38,29 @@ describe('format', function () {
       '../fixtures/components/MultiFormat.vue'
     )
     const source = await fs.readFile(filepath, 'utf8')
-    const content = format(source, filepath)
+    const content = await format(source, filepath)
+    expect(content).matchSnapshot(this)
+  })
+
+  it('vue 2', async function () {
+    const filepath = resolve(
+      __dirname,
+      '../fixtures/components/FunctionalLangFill.vue'
+    )
+    const source = await fs.readFile(filepath, 'utf8')
+    const content = await format(source, filepath, { vue: 2 })
     expect(content).matchSnapshot(this)
   })
 
   it('FormatLangNotFoundError', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/Basic.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    assert.throw(() => {
-      format(source, filepath)
-    }, FormatLangNotFoundError)
+    let err
+    try {
+      await format(source, filepath)
+    } catch (e) {
+      err = e
+    }
+    assert.instanceOf(err, FormatLangNotFoundError)
   })
 })

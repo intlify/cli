@@ -27,6 +27,7 @@ type FormatOptions = {
   source?: string
   type?: string
   prettier?: string
+  vue?: number
   ignore?: string
   dryRun?: boolean
 }
@@ -53,6 +54,12 @@ export default function defineCommand() {
         alias: 'p',
         describe: t('the config file path of prettier')
       })
+      .option('vue', {
+        type: 'number',
+        alias: 'v',
+        describe: t('the vue template compiler version'),
+        default: 3
+      })
       .option('ignore', {
         type: 'string',
         alias: 'i',
@@ -71,7 +78,7 @@ export default function defineCommand() {
   const handler = async (args: Arguments<FormatOptions>): Promise<void> => {
     args.type = args.type || 'custom-block'
 
-    const { source, prettier, ignore, dryRun } = args as FormatOptions
+    const { source, prettier, ignore, vue, dryRun } = args as FormatOptions
     debug('format args:', args)
 
     checkType(args.type)
@@ -104,7 +111,8 @@ export default function defineCommand() {
     for (const file of files) {
       try {
         const data = await fs.readFile(file, 'utf8')
-        const formatted = format(data, file, {
+        const formatted = await format(data, file, {
+          vue,
           prettier: prettierConfig?.config as PrettierOptions
         })
         if (hasDiff(formatted, data)) {

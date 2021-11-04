@@ -5,6 +5,8 @@ export const VUE_COMPONENT_FIXTURES = [
   'Exist.vue',
   'External.vue',
   'Force.vue',
+  'Functional.vue',
+  'FunctionalLangFill.vue',
   'HasNested.vue',
   'LangContentMissmatch.vue',
   'Multi.vue',
