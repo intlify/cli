@@ -28,7 +28,7 @@ Annoate the Vue SFC block
 
 **Signature:**
 ```typescript
-declare function annotate(source: string, filepath: string, options?: AnnotateOptions): string;
+declare function annotate(source: string, filepath: string, options?: AnnotateOptions): Promise<string>;
 ```
 
 #### Parameters
@@ -74,7 +74,7 @@ Format the Vue SFC block
 
 **Signature:**
 ```typescript
-declare function format(source: string, filepath: string, options?: FormatOptions): string;
+declare function format(source: string, filepath: string, options?: FormatOptions): Promise<string>;
 ```
 
 #### Parameters
@@ -162,6 +162,19 @@ Only `i18n` type is supported, if you don't specify it. If any other type is spe
 
 default as `i18n`
 
+##### vue
+
+The Vue template compiler version
+
+**Signature:**
+```typescript
+vue?: number;
+```
+
+#### Remarks
+
+The version of the Vue template to be parsed by the annotate function. If `2` is specified, the `vue-template-compiler` used by Vue 2 is used; if `3` is specified, the `@vue/compiler-sfc` used by Vue 3 is used. defalt as `3`
+
 
 ### CompileOptions
 
@@ -235,6 +248,19 @@ prettier?: Options;
 #### Remarks
 
 The options for formatting the content of `i18n` custom blocks with prettier default as [DEFAULT_PRETTIER_OPTIONS](#default_prettier_options)
+
+##### vue
+
+The Vue template compiler version
+
+**Signature:**
+```typescript
+vue?: number;
+```
+
+#### Remarks
+
+The version of the Vue template to be parsed by the annotate function. If `2` is specified, the `vue-template-compiler` used by Vue 2 is used; if `3` is specified, the `@vue/compiler-sfc` used by Vue 3 is used. defalt as `3`
 
 
 ### SFCParseError
