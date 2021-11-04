@@ -1,7 +1,12 @@
 import createDebug from 'debug'
 import { format as pritterFormat } from 'prettier'
-import { parse } from '@vue/compiler-sfc'
-import { getSFCBlocks, getSFCContentInfo } from '../utils'
+import {
+  getSFCBlocks,
+  getSFCContentInfo,
+  getSFCParser,
+  updateContents,
+  getPosition
+} from '../utils'
 import { SFCParseError } from './utils'
 
 import type { CompilerError } from '@vue/compiler-sfc'
@@ -15,6 +20,15 @@ const debug = createDebug('@intlify/cli:api:format')
  * @public
  */
 export interface FormatOptions {
+  /**
+   * The Vue template compiler version
+   *
+   * @remarks
+   * The version of the Vue template to be parsed by the annotate function.
+   * If `2` is specified, the `vue-template-compiler` used by Vue 2 is used; if `3` is specified, the `@vue/compiler-sfc` used by Vue 3 is used.
+   * defalt as `3`
+   */
+  vue?: number
   /**
    * The prettier options
    *
@@ -77,18 +91,22 @@ export const DEFAULT_PRETTIER_OPTIONS = {
  *
  * @public
  */
-export function format(
+export async function format(
   source: string,
   filepath: string,
-  options: FormatOptions = {
-    prettier: {}
-  }
-): string {
+  options: FormatOptions = {}
+): Promise<string> {
   const prettierOptions = Object.assign(
     {},
     DEFAULT_PRETTIER_OPTIONS,
     options.prettier
   )
+  const vue = options.vue || 3
+
+  const parse = await getSFCParser(vue)
+  if (parse == null) {
+    throw new FormatLangNotFoundError('Not found SFC parser', filepath)
+  }
 
   const { descriptor, errors } = parse(source)
   if (errors.length) {
@@ -99,15 +117,20 @@ export function format(
     throw error
   }
 
-  const original = descriptor.source
+  const original = descriptor.source || source
   let offset = 0
   let contents = [] as string[]
 
-  contents = getSFCBlocks(descriptor).reduce((contents, block) => {
+  contents = getSFCBlocks(descriptor, vue).reduce((contents, block) => {
     debug(`start: type=${block.type}, offset=${offset}`)
     if (block.type !== 'i18n') {
-      contents = contents.concat(original.slice(offset, block.loc.end.offset))
-      offset = block.loc.end.offset
+      ;[contents, offset] = updateContents(
+        original,
+        contents,
+        offset,
+        block,
+        vue
+      )
       return contents
     }
 
@@ -116,10 +139,16 @@ export function format(
       throw new FormatLangNotFoundError('`lang` attr not found', filepath)
     }
 
-    const startLoc = block.loc.start
+    const [startOffset, startColumn] = getPosition(block, vue, 'start')
     debug(
-      `${block.type} block loc.start: offset=${startLoc.offset}, column=${startLoc.column}`
+      `${block.type} block start: offset=${startOffset}, column=${startColumn}`
     )
+    if (startOffset === -1) {
+      throw new FormatLangNotFoundError(
+        'Invalid block start offset position',
+        filepath
+      )
+    }
     const formatted = pritterFormat(
       content,
       Object.assign({}, prettierOptions, { parser: lang })
@@ -127,10 +156,17 @@ export function format(
     const blockContent = `\n${formatted}`
     debug(`content: ${blockContent}`)
     contents = contents.concat([
-      original.slice(offset, startLoc.offset),
+      original.slice(offset, startOffset),
       blockContent
     ])
-    offset = block.loc.end.offset
+    const [endOffset] = getPosition(block, vue, 'end')
+    if (endOffset === -1) {
+      throw new FormatLangNotFoundError(
+        'Invalid block end offset position',
+        filepath
+      )
+    }
+    offset = endOffset
 
     return contents
   }, contents)

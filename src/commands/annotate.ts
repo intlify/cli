@@ -25,6 +25,7 @@ type AnnotateOptions = {
   force?: boolean
   details?: boolean
   attrs?: Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
+  vue?: number
   ignore?: string
   dryRun?: boolean
 }
@@ -63,6 +64,12 @@ export default function defineCommand() {
         alias: 'a',
         describe: t('the attributes to annotate')
       })
+      .option('vue', {
+        type: 'number',
+        alias: 'v',
+        describe: t('the vue template compiler version'),
+        default: 3
+      })
       .option('ignore', {
         type: 'string',
         alias: 'i',
@@ -81,7 +88,7 @@ export default function defineCommand() {
   const handler = async (args: Arguments<AnnotateOptions>): Promise<void> => {
     args.type = args.type || 'custom-block'
 
-    const { source, force, details, attrs, ignore, dryRun } =
+    const { source, force, details, attrs, vue, ignore, dryRun } =
       args as AnnotateOptions
     debug('annotate args:', args)
 
@@ -144,10 +151,11 @@ export default function defineCommand() {
       let annotated: null | string = null
       try {
         status = 'none'
-        annotated = annotate(data, file, {
+        annotated = await annotate(data, file, {
           type: 'i18n',
           force,
           attrs,
+          vue,
           onWarn
         })
 

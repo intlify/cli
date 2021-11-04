@@ -9,7 +9,8 @@ import {
   getSFCBlocks,
   getSFCContentInfo,
   getCustomBlockContenType,
-  hasDiff
+  hasDiff,
+  getSFCParser
 } from '../src/utils'
 import { VUE_COMPONENT_FIXTURES } from './contents'
 
@@ -149,5 +150,34 @@ describe('hasDiff', function () {
 
   it('equal', function () {
     assert.equal(hasDiff('foo', 'foo'), false)
+  })
+})
+
+describe('getSFCParser', function () {
+  it('vue 2', async function () {
+    const parser = await getSFCParser(2)
+    const filepath = resolve(__dirname, './fixtures/components/Basic.vue')
+    const source = await fs.readFile(filepath, 'utf8')
+    const {
+      descriptor: { customBlocks }
+    } = parser(source)
+    assert.equal(customBlocks.length, 1)
+    assert.equal(customBlocks[0].type, 'i18n')
+  })
+
+  it('vue 3', async function () {
+    const parser = await getSFCParser(3)
+    const filepath = resolve(__dirname, './fixtures/components/Basic.vue')
+    const source = await fs.readFile(filepath, 'utf8')
+    const {
+      descriptor: { customBlocks }
+    } = parser(source)
+    assert.equal(customBlocks.length, 1)
+    assert.equal(customBlocks[0].type, 'i18n')
+  })
+
+  it('other', async function () {
+    const parser = await getSFCParser(123456789)
+    assert.isNull(parser)
   })
 })

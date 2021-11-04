@@ -12,7 +12,7 @@ describe('annotate', function () {
   it('basic', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/Basic.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    const content = annotate(source, filepath)
+    const content = await annotate(source, filepath)
     expect(content).to.matchSnapshot(this)
     assert.match(content, /lang=\"json\"/)
   })
@@ -20,7 +20,7 @@ describe('annotate', function () {
   it('exist lang', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/Exist.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    const content = annotate(source, filepath)
+    const content = await annotate(source, filepath)
     expect(content).matchSnapshot(this)
     assert.match(content, /lang=\"json\"/)
   })
@@ -28,7 +28,7 @@ describe('annotate', function () {
   it('no block', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/NoBlock.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    const content = annotate(source, filepath)
+    const content = await annotate(source, filepath)
     expect(content).matchSnapshot(this)
     assert.equal(content, source)
     assert.notMatch(content, /<i18n>/)
@@ -37,7 +37,7 @@ describe('annotate', function () {
   it('yaml', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/Yaml.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    const content = annotate(source, filepath)
+    const content = await annotate(source, filepath)
     expect(content).matchSnapshot(this)
     assert.match(content, /lang=\"yaml\"/)
   })
@@ -45,7 +45,7 @@ describe('annotate', function () {
   it('multiple', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/Multi.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    const content = annotate(source, filepath)
+    const content = await annotate(source, filepath)
     expect(content).matchSnapshot(this)
     assert.match(content, /lang=\"json5\"/)
     assert.match(content, /lang=\"yaml\"/)
@@ -54,7 +54,7 @@ describe('annotate', function () {
   it('external', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/External.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    const content = annotate(source, filepath)
+    const content = await annotate(source, filepath)
     expect(content).matchSnapshot(this)
     assert.match(content, /src=\".\/ja.json\"/)
   })
@@ -63,7 +63,7 @@ describe('annotate', function () {
     const filepath = resolve(__dirname, '../fixtures/components/Unknown.vue')
     const source = await fs.readFile(filepath, 'utf8')
     const onWarn = sinon.spy()
-    const content = annotate(source, filepath, {
+    const content = await annotate(source, filepath, {
       type: 'i18n',
       onWarn,
       attrs: {}
@@ -79,7 +79,7 @@ describe('annotate', function () {
     )
     const source = await fs.readFile(filepath, 'utf8')
     const onWarn = sinon.spy()
-    const content = annotate(source, filepath, {
+    const content = await annotate(source, filepath, {
       type: 'i18n',
       onWarn,
       attrs: { lang: 'json' }
@@ -95,7 +95,7 @@ describe('annotate', function () {
     )
     const source = await fs.readFile(filepath, 'utf8')
     const onWarn = sinon.spy()
-    const content = annotate(source, filepath, {
+    const content = await annotate(source, filepath, {
       type: 'i18n',
       onWarn
     })
@@ -107,7 +107,7 @@ describe('annotate', function () {
     const filepath = resolve(__dirname, '../fixtures/components/Force.vue')
     const source = await fs.readFile(filepath, 'utf8')
     const onWarn = sinon.spy()
-    const content = annotate(source, filepath, {
+    const content = await annotate(source, filepath, {
       type: 'i18n',
       force: true,
       onWarn,
@@ -121,7 +121,7 @@ describe('annotate', function () {
   it('attrs', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/Attrs.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    const content = annotate(source, filepath, {
+    const content = await annotate(source, filepath, {
       type: 'i18n',
       attrs: { global: true, foo: '<bar>' }
     })
@@ -130,11 +130,27 @@ describe('annotate', function () {
     assert.match(content, /foo=\"&lt;bar&gt;\"/)
   })
 
+  it('vue 2', async function () {
+    const filepath = resolve(__dirname, '../fixtures/components/Functional.vue')
+    const source = await fs.readFile(filepath, 'utf8')
+    const content = await annotate(source, filepath, {
+      type: 'i18n',
+      vue: 2,
+      attrs: { lang: 'json' }
+    })
+    expect(content).matchSnapshot(this)
+    assert.match(content, /lang=\"json\"/)
+  })
+
   it('other type', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/Basic.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    assert.throws(() => {
-      annotate(source, filepath, { type: 'script' })
-    }, SFCAnnotateError)
+    let err
+    try {
+      await annotate(source, filepath, { type: 'script' })
+    } catch (e) {
+      err = e
+    }
+    assert.instanceOf(err, SFCAnnotateError)
   })
 })

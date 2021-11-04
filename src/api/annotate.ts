@@ -1,10 +1,12 @@
 import createDebug from 'debug'
-import { parse } from '@vue/compiler-sfc'
 import {
   getSFCBlocks,
   getSFCContentInfo,
   getCustomBlockContenType,
-  buildSFCBlockTag
+  buildSFCBlockTag,
+  updateContents,
+  getPosition,
+  getSFCParser
 } from '../utils'
 import { SFCParseError } from './utils'
 
@@ -71,6 +73,15 @@ export interface AnnotateOptions {
    */
   attrs?: Record<string, any>
   /**
+   * The Vue template compiler version
+   *
+   * @remarks
+   * The version of the Vue template to be parsed by the annotate function.
+   * If `2` is specified, the `vue-template-compiler` used by Vue 2 is used; if `3` is specified, the `@vue/compiler-sfc` used by Vue 3 is used.
+   * defalt as `3`
+   */
+  vue?: number
+  /**
    * The warning handler
    *
    * @remarks
@@ -122,15 +133,21 @@ const NOOP_WARN = (
  *
  * @public
  */
-export function annotate(
+export async function annotate(
   source: string,
   filepath: string,
   options: AnnotateOptions = {}
-): string {
-  options.type = options.type || 'i18n'
-  options.force = options.force || false
-  options.attrs = options.attrs || {}
-  options.onWarn = options.onWarn || NOOP_WARN
+): Promise<string> {
+  const type = options.type || 'i18n'
+  const force = options.force || false
+  const attrs = options.attrs || {}
+  const onWarn = options.onWarn || NOOP_WARN
+  const vue = options.vue || 3
+
+  const parse = await getSFCParser(vue)
+  if (parse == null) {
+    throw new SFCAnnotateError('Not found SFC parser', filepath)
+  }
 
   const { descriptor, errors } = parse(source)
   if (errors.length) {
@@ -142,20 +159,27 @@ export function annotate(
   }
 
   // NOTE: currently support i18n only!
-  if (options.type !== 'i18n') {
+  if (type !== 'i18n') {
     throw new SFCAnnotateError('Not supported error', filepath)
   }
 
-  const original = descriptor.source
+  const original = descriptor.source || source
   let offset = 0
   let diffset = 0
   let contents = [] as string[]
 
-  contents = getSFCBlocks(descriptor).reduce((contents, block) => {
-    debug(`start: type=${block.type}, offset=${offset}, diffset=${diffset}`)
-    if (block.type !== options.type) {
-      contents = contents.concat(original.slice(offset, block.loc.end.offset))
-      offset = block.loc.end.offset
+  contents = getSFCBlocks(descriptor, vue).reduce((contents, block) => {
+    debug(
+      `start: vue=${vue} type=${block.type}, offset=${offset}, diffset=${diffset}`
+    )
+    if (block.type !== type) {
+      ;[contents, offset] = updateContents(
+        original,
+        contents,
+        offset,
+        block,
+        vue
+      )
       return contents
     }
 
@@ -163,7 +187,7 @@ export function annotate(
     const contentType = getCustomBlockContenType(content)
     debug('content info', block.lang, lang, contentType)
     if (contentType === 'unknwon') {
-      options.onWarn!(
+      onWarn(
         AnnotateWarningCodes.NOT_SUPPORTED_TYPE,
         {
           type: block.type,
@@ -171,14 +195,19 @@ export function annotate(
         },
         block
       )
-      contents = contents.concat(original.slice(offset, block.loc.end.offset))
-      offset = block.loc.end.offset
+      ;[contents, offset] = updateContents(
+        original,
+        contents,
+        offset,
+        block,
+        vue
+      )
       return contents
     }
 
     if (block.src) {
       if (lang !== contentType) {
-        options.onWarn!(
+        onWarn(
           AnnotateWarningCodes.LANG_MISMATCH_IN_SRC_AND_CONTENT,
           {
             src: lang,
@@ -187,45 +216,59 @@ export function annotate(
           block
         )
       }
-      contents = contents.concat(original.slice(offset, block.loc.end.offset))
-      offset = block.loc.end.offset
+      ;[contents, offset] = updateContents(
+        original,
+        contents,
+        offset,
+        block,
+        vue
+      )
       return contents
     }
 
     if (block.lang == null) {
       let lang = contentType as string
-      if (options.attrs!.lang && options.attrs!.lang !== contentType) {
-        options.onWarn!(
+      if (attrs.lang && attrs.lang !== contentType) {
+        onWarn(
           AnnotateWarningCodes.LANG_MISMATCH_IN_OPTION_AND_CONTENT,
           {
-            lang: options.attrs!.lang,
+            lang: attrs.lang,
             content: lang
           },
           block
         )
-        if (!options.force) {
-          contents = contents.concat(
-            original.slice(offset, block.loc.end.offset)
+        if (!force) {
+          ;[contents, offset] = updateContents(
+            original,
+            contents,
+            offset,
+            block,
+            vue
           )
-          offset = block.loc.end.offset
           return contents
         } else {
-          lang = options.attrs!.lang
+          lang = attrs.lang
         }
       }
 
       // annotate block tag attributes
-      const startLoc = block.loc.start
+      const [startOffset, startColumn] = getPosition(block, vue, 'start')
       debug(
-        `${block.type} block loc.start: offset=${startLoc.offset}, column=${startLoc.column}`
+        `${block.type} block start: offset=${startOffset}, column=${startColumn}`
       )
+      if (startOffset === -1) {
+        throw new SFCAnnotateError(
+          'Invalid block start offset position',
+          filepath
+        )
+      }
       const blockTag = buildSFCBlockTag(block)
-      const tagStartOffset = startLoc.offset - blockTag.length
+      const tagStartOffset = startOffset - blockTag.length
       debug(`current tag: ${blockTag}`)
       debug(`tag start offset: ${tagStartOffset}`)
       const annoatedBlockTag = buildSFCBlockTag({
-        type: options.type,
-        attrs: { ...options.attrs!, lang }
+        type,
+        attrs: { ...attrs, lang }
       })
       debug(
         `annotated tag: ${annoatedBlockTag} (length:${annoatedBlockTag.length})`
@@ -236,13 +279,20 @@ export function annotate(
         original.slice(offset, tagStartOffset),
         blockContent
       ])
+      const [endOffset] = getPosition(block, vue, 'end')
+      if (endOffset === -1) {
+        throw new SFCAnnotateError(
+          'Invalid block end offset position',
+          filepath
+        )
+      }
+      offset = endOffset
       diffset += annoatedBlockTag.length - blockTag.length
-      offset = block.loc.end.offset
 
       return contents
     } else {
       if (lang !== contentType) {
-        options.onWarn!(
+        onWarn(
           AnnotateWarningCodes.LANG_MISMATCH_IN_ATTR_AND_CONTENT,
           {
             lang,
@@ -251,8 +301,13 @@ export function annotate(
           block
         )
       }
-      contents = contents.concat(original.slice(offset, block.loc.end.offset))
-      offset = block.loc.end.offset
+      ;[contents, offset] = updateContents(
+        original,
+        contents,
+        offset,
+        block,
+        vue
+      )
       return contents
     }
   }, contents)
