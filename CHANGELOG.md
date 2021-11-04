@@ -1,4 +1,13 @@
 
+## v0.11.0 (2021-11-04)
+
+#### :star: Features
+* [#55](https://github.com/intlify/cli/pull/55) feat: vue version option ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.10.0 (2021-10-30)
 
 #### :star: Features
