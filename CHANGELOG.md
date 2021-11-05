@@ -1,3 +1,12 @@
+
+## v0.11.2 (2021-11-05)
+
+#### :bug: Bug Fixes
+* [#59](https://github.com/intlify/cli/pull/59) fix: duplicate omit option ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
 ## v0.11.1 (2021-11-04)
 
 #### :star: Features
