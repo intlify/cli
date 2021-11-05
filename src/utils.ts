@@ -20,7 +20,6 @@ declare module '@vue/compiler-sfc' {
   }
 }
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname)
 const debug = createDebug('@intlify/cli:utils')
 
 export type CustomBlockContentType = 'json' | 'json5' | 'yaml' | 'unknwon'
@@ -287,15 +286,12 @@ export async function getSFCParser(version: number): Promise<parseSFC | null> {
   let parser: parseSFC | null = null
   try {
     if (version === 3) {
-      parser = (
-        await import(
-          path.resolve(__dirname, '../node_modules', '@vue/compiler-sfc')
-        ).then(_rDefault)
-      ).parse as parseSFC
+      parser = (await import('@vue/compiler-sfc').then(_rDefault))
+        .parse as parseSFC
     } else if (version === 2) {
-      const { parseComponent } = await import(
-        path.resolve(__dirname, '../node_modules', 'vue-template-compiler')
-      ).then(_rDefault)
+      const { parseComponent } = await import('vue-template-compiler').then(
+        _rDefault
+      )
       parser = (source: string) => {
         const errors: SyntaxError[] = []
         const descriptor = parseComponent(source)
