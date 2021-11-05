@@ -56,7 +56,7 @@ export default function defineCommand() {
       })
       .option('details', {
         type: 'boolean',
-        alias: 'v',
+        alias: 'V',
         describe: t('annotated result detail options')
       })
       .option('attrs', {
