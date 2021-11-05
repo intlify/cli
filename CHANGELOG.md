@@ -1,5 +1,10 @@
+## v0.11.1 (2021-11-04)
 
+#### :star: Features
+* [#57](https://github.com/intlify/cli/pull/57) fix: can't resolve vue template compiler ([@kazupon](https://github.com/kazupon))
 
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
 
 ## v0.11.0 (2021-11-04)
 
