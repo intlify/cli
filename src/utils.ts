@@ -133,7 +133,11 @@ export function getSFCContentInfo(
       contentPath: target
     }
   } else {
-    return { content: block.content, lang: undefined, contentPath: filepath }
+    return {
+      content: block.content,
+      lang: block.attrs.lang ? block.attrs.lang.toString() : undefined,
+      contentPath: filepath
+    }
   }
 }
 
