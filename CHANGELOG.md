@@ -1,4 +1,13 @@
 
+## v0.11.3 (2021-11-12)
+
+#### :bug: Bug Fixes
+* [#61](https://github.com/intlify/cli/pull/61) fix: cannot detect lang when use the sfc compiler of vue2 ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.11.2 (2021-11-05)
 
 #### :bug: Bug Fixes
