@@ -1,7 +1,7 @@
 import { beforeEach, afterEach, describe, it, vi, expect } from 'vitest'
 import { prettier } from '../utils'
 import { dirname, resolve } from 'pathe'
-import { promises as fs } from 'fs'
+import { promises as fs, existsSync } from 'fs'
 import { fileURLToPath } from 'url'
 import yargs from 'yargs'
 import { compile } from '../../src/commands'
@@ -37,6 +37,10 @@ describe('compile', function () {
     const compiled = await fs.readFile(
       resolve(__dirname, '../../temp/compile-basic.js'),
       'utf8'
+    )
+    console.log(
+      'compiled ffile',
+      existsSync(resolve(__dirname, '../../temp/compile-basic.js'))
     )
     console.log('compiled', compiled)
     expect(await prettier(compiled)).toBe(await prettier(expected))
