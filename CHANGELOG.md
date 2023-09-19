@@ -1,3 +1,15 @@
+# v0.13.0 (2023-09-19T16:50:37Z)
+
+<!-- Release notes generated using configuration in .github/release.yml at v0.13.0 -->
+
+## What's Changed
+### 🌟 Features
+* feat: `format` and `ast` option for compile command by @kazupon in https://github.com/intlify/cli/pull/67
+### 🐛 Bug Fixes
+* fix: compile error messages by @kazupon in https://github.com/intlify/cli/pull/66
+
+**Full Changelog**: https://github.com/intlify/cli/compare/v0.12.0...v0.13.0
+
 # v0.12.0 (2023-09-19T15:50:37Z)
 
 <!-- Release notes generated using configuration in .github/release.yml at v0.12.0 -->
