@@ -5,6 +5,7 @@
   "the i18n resource source path": "the i18n resource source path",
   "the compiled i18n resource output path": "the compiled i18n resource output path",
   "the compiled i18n resource mode, 'production' or 'development' (default: 'production')": "the compiled i18n resource mode, 'production' or 'development' (default: 'production')",
+  "resource compilation format, 'function' or 'ast' (default: 'function')": "resource compilation format, 'function' or 'ast' (default: 'function')",
   "Success compilation: {source} -> {output}": "Success compilation: {source} -> {output}",
   "{source}: Ignore compilation due to not supported '{ext}'": "{source}: Ignore compilation due to not supported '{ext}'",
   "Warning compilation: {source} -> {output}, {msg}": "Warning compilation: {source} -> {output}, {msg}",

@@ -13,6 +13,7 @@ type CompileOptions = {
   source: string
   output?: string
   mode?: string
+  format?: string
 }
 
 export default function defineCommand() {
@@ -41,6 +42,14 @@ export default function defineCommand() {
           "the compiled i18n resource mode, 'production' or 'development' (default: 'production')"
         )
       })
+      .option('format', {
+        type: 'string',
+        alias: 'f',
+        default: 'function',
+        describe: t(
+          "resource compilation format, 'function' or 'ast' (default: 'function')"
+        )
+      })
   }
 
   const handler = async (args: Arguments<CompileOptions>): Promise<void> => {
@@ -50,6 +59,7 @@ export default function defineCommand() {
         : process.cwd()
     const ret = await compile(args.source, output, {
       mode: args.mode as DevEnv,
+      ast: args.format === 'ast',
       onCompile: (source: string, output: string): void => {
         console.log(
           green(

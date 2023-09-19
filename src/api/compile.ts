@@ -57,6 +57,13 @@ export interface CompileOptions {
    * The mode of code generation. Default `production` for optimization. If `development`, code generated with meta information from i18n resources.
    */
   mode?: DevEnv
+  /**
+   * Whether to generate AST format
+   *
+   * @remarks
+   * default `false`, it will output the function format.
+   */
+  ast?: boolean
 }
 
 const COMPILE_MODE = ['production', 'development'] as const
@@ -114,6 +121,7 @@ export async function compile(
     const { code } = generate(source, {
       type: 'plain',
       filename: target,
+      jit: !!options.ast,
       env,
       onError: (msg: string): void => {
         occuredError = true

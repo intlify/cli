@@ -11,18 +11,18 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const CWD = resolve(__dirname, '../../')
 
 let orgCwd
-beforeEach(async function () {
+beforeEach(async () => {
   await initI18n()
   orgCwd = process.cwd
   process.cwd = vi.fn().mockImplementation(() => CWD)
 })
 
-afterEach(function () {
+afterEach(() => {
   process.cwd = orgCwd
 })
 
-describe('compile', function () {
-  it('basic', async function () {
+describe('compile', () => {
+  it('basic', async () => {
     const cmd = yargs()
     // @ts-expect-error
     cmd.command(compile())
@@ -40,7 +40,7 @@ describe('compile', function () {
     expect(await prettier(compiled)).toBe(await prettier(expected))
   })
 
-  it('--mode development', async function () {
+  it('--mode development', async () => {
     const cmd = yargs()
     // @ts-expect-error
     cmd.command(compile())
@@ -56,5 +56,18 @@ describe('compile', function () {
       'utf8'
     )
     expect(await prettier(compiled)).toBe(await prettier(expected))
+  })
+
+  it('ast format', async () => {
+    const cmd = yargs()
+    // @ts-expect-error
+    cmd.command(compile())
+    await cmd.parse(
+      `compile --source ./test/fixtures/commands/compile-ast.json --output ./temp --format ast`
+    )
+    const code = await import(
+      resolve(__dirname, '../../temp/compile-ast.js')
+    ).then(m => m.default || m)
+    expect(code).toMatchSnapshot()
   })
 })
