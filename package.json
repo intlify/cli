@@ -107,7 +107,7 @@
   "packageManager": "pnpm@8.7.5",
   "scripts": {
     "prepare": "git config --local core.hooksPath .githooks",
-    "changelog": "gh-changelogen --repo=@intlify/cli",
+    "changelog": "gh-changelogen --repo=intlify/cli",
     "release": "bumpp --commit \"release: v%s\" --push --tag",
     "build": "pnpm build:transpile && pnpm build:extract",
     "build:extract": "api-extractor run -l -c ./api-extractor.json",
