@@ -1,6 +1,4 @@
-/// <reference path="./chai.shim.d.ts"/>
-
-import { assert } from 'chai'
+import { assert, describe, it } from 'vitest'
 import { promises as fs } from 'fs'
 import { dirname, resolve, relative, parse as pathParse } from 'pathe'
 import { parse } from '@vue/compiler-sfc'
@@ -160,7 +158,7 @@ describe('getSFCParser', function () {
     const source = await fs.readFile(filepath, 'utf8')
     const {
       descriptor: { customBlocks }
-    } = parser(source)
+    } = parser!(source)
     assert.equal(customBlocks.length, 1)
     assert.equal(customBlocks[0].type, 'i18n')
   })
@@ -171,7 +169,7 @@ describe('getSFCParser', function () {
     const source = await fs.readFile(filepath, 'utf8')
     const {
       descriptor: { customBlocks }
-    } = parser(source)
+    } = parser!(source)
     assert.equal(customBlocks.length, 1)
     assert.equal(customBlocks[0].type, 'i18n')
   })

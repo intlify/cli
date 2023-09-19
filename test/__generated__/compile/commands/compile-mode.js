@@ -1,9 +1,9 @@
-export default {
+const resource = {
   "hi": (()=>{const fn=(ctx) => {const { normalize: _normalize } = ctx;return _normalize(["hi there!"])};fn.source="hi there!";return fn;})(),
   "nested": {
     "hello": (()=>{const fn=(ctx) => {const { normalize: _normalize } = ctx;return _normalize(["hello world!"])};fn.source="hello world!";return fn;})(),
     "more": {
-      "plural": (()=>{const fn=(ctx) => {const { normalize: _normalize, linked: _linked, interpolate: _interpolate, list: _list, named: _named, plural: _plural } = ctx;return _plural([_normalize([_linked("no apples", "caml")]), _normalize([_interpolate(_list(0)), " apple"]), _normalize([_interpolate(_named("n")), " apples"])])};fn.source="@.caml:{'no apples'} | {0} apple | {n} apples";return fn;})()
+      "plural": (()=>{const fn=(ctx) => {const { normalize: _normalize, linked: _linked, type: _type, interpolate: _interpolate, list: _list, named: _named, plural: _plural } = ctx;return _plural([_normalize([_linked("no apples", "caml", _type)]), _normalize([_interpolate(_list(0)), " apple"]), _normalize([_interpolate(_named("n")), " apples"])])};fn.source="@.caml:{'no apples'} | {0} apple | {n} apples";return fn;})()
     },
     "list": (()=>{const fn=(ctx) => {const { normalize: _normalize, interpolate: _interpolate, list: _list } = ctx;return _normalize(["hi, ", _interpolate(_list(0)), " !"])};fn.source="hi, {0} !";return fn;})()
   },
@@ -16,7 +16,8 @@ export default {
   "backslash-backslash": (()=>{const fn=(ctx) => {const { normalize: _normalize } = ctx;return _normalize(["\\\\"])};fn.source="\\\\";return fn;})(),
   "errors": [
     (()=>{const fn=(ctx) => {const { normalize: _normalize } = ctx;return _normalize(["ERROR1001"])};fn.source="ERROR1001";return fn;})(),
-    (()=>{const fn=(ctx) => {const { normalize: _normalize } = ctx;return _normalize(["ERROR1002"])};fn.source="ERROR1002";return fn;})()
+    (()=>{const fn=(ctx) => {const { normalize: _normalize } = ctx;return _normalize(["ERROR1002"])};fn.source="ERROR1002";return fn;})(),
+
   ],
   "complex": {
     "warnings": [
@@ -27,3 +28,4 @@ export default {
     ]
   }
 }
+export default resource

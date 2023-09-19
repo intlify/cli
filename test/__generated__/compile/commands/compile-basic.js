@@ -1,9 +1,9 @@
-export default {
+const resource = {
   "hi": (ctx) => {const { normalize: _normalize } = ctx;return _normalize(["hi there!"])},
   "nested": {
     "hello": (ctx) => {const { normalize: _normalize } = ctx;return _normalize(["hello world!"])},
     "more": {
-      "plural": (ctx) => {const { normalize: _normalize, linked: _linked, interpolate: _interpolate, list: _list, named: _named, plural: _plural } = ctx;return _plural([_normalize([_linked("no apples", "caml")]), _normalize([_interpolate(_list(0)), " apple"]), _normalize([_interpolate(_named("n")), " apples"])])}
+      "plural": (ctx) => {const { normalize: _normalize, linked: _linked, type: _type, interpolate: _interpolate, list: _list, named: _named, plural: _plural } = ctx;return _plural([_normalize([_linked("no apples", "caml", _type)]), _normalize([_interpolate(_list(0)), " apple"]), _normalize([_interpolate(_named("n")), " apples"])])}
     },
     "list": (ctx) => {const { normalize: _normalize, interpolate: _interpolate, list: _list } = ctx;return _normalize(["hi, ", _interpolate(_list(0)), " !"])}
   },
@@ -16,7 +16,7 @@ export default {
   "backslash-backslash": (ctx) => {const { normalize: _normalize } = ctx;return _normalize(["\\\\"])},
   "errors": [
     (ctx) => {const { normalize: _normalize } = ctx;return _normalize(["ERROR1001"])},
-    (ctx) => {const { normalize: _normalize } = ctx;return _normalize(["ERROR1002"])}
+    (ctx) => {const { normalize: _normalize } = ctx;return _normalize(["ERROR1002"])},
   ],
   "complex": {
     "warnings": [
@@ -27,3 +27,4 @@ export default {
     ]
   }
 }
+export default resource

@@ -1,4 +1,4 @@
-import { assert } from 'chai'
+import { assert, beforeEach, afterEach, describe, it } from 'vitest'
 import { getLocale } from '../src/i18n'
 
 let ORG_ENV = {}

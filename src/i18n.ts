@@ -28,21 +28,24 @@ async function loadI18nResources(): Promise<
   const dirents = await fs.readdir(path.resolve(dirname, '../locales'), {
     withFileTypes: true
   })
-  return dirents.reduce(async (acc, dir) => {
-    if (dir.isFile()) {
-      const data = await fs.readFile(
-        path.resolve(dirname, '../locales', dir.name),
-        { encoding: 'utf-8' }
-      )
-      const { name } = path.parse(dir.name)
-      debug('load i18n resource', name, data)
-      const messages = await acc
-      messages[name] = JSON.parse(
-        data
-      ) as LocaleMessageDictionary<I18nReousrceSchema>
-    }
-    return acc
-  }, Promise.resolve({} as LocaleMessages<I18nReousrceSchema>))
+  return dirents.reduce(
+    async (acc, dir) => {
+      if (dir.isFile()) {
+        const data = await fs.readFile(
+          path.resolve(dirname, '../locales', dir.name),
+          { encoding: 'utf-8' }
+        )
+        const { name } = path.parse(dir.name)
+        debug('load i18n resource', name, data)
+        const messages = await acc
+        messages[name] = JSON.parse(
+          data
+        ) as LocaleMessageDictionary<I18nReousrceSchema>
+      }
+      return acc
+    },
+    Promise.resolve({} as LocaleMessages<I18nReousrceSchema>)
+  )
 }
 
 export function getLocale(env?: Record<string, unknown>): Locale {

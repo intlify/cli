@@ -1,6 +1,4 @@
-/// <reference path="../chai.shim.d.ts"/>
-
-import { assert } from 'chai'
+import { assert, describe, it } from 'vitest'
 import { promises as fs } from 'fs'
 import { dirname, resolve, relative } from 'pathe'
 import { readIgnore, getSFCFiles } from '../../src/commands/utils'
@@ -30,7 +28,8 @@ describe('readIgnore', function () {
   it('not found', async function () {
     const cwd = resolve(__dirname, '../fixtures')
     const ignorePath = resolve(cwd, 'ignore/myignore')
-    let err = null
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let err: any = null
     try {
       await readIgnore(cwd, ignorePath)
     } catch (e) {

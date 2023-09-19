@@ -1,4 +1,7 @@
-exports[`annotate : basic 1`] = `<template>
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`annotate > basic 1`] = `
+"<template>
   <p>This is App</p>
 </template>
 
@@ -14,22 +17,24 @@ export default {
 }
 </style>
 
-<i18n lang="json">
+<i18n lang=\\"json\\">
 {
-  "en": {
-    "title": "The application"
+  \\"en\\": {
+    \\"title\\": \\"The application\\"
   }
 }
-</i18n>`;
+</i18n>"
+`;
 
-exports[`annotate : exist lang 1`] = `<template>
+exports[`annotate > exist lang 1`] = `
+"<template>
   <p>This is Exist component</p>
 </template>
 
-<i18n lang="json">
+<i18n lang=\\"json\\">
 {
-  "en": {
-    "name": "Name"
+  \\"en\\": {
+    \\"name\\": \\"Name\\"
   }
 }
 </i18n>
@@ -39,55 +44,83 @@ p {
   color: red;
 }
 </style>
+"
 `;
 
-exports[`annotate : no block 1`] = `<template>
-  <p>This is NoBlock component</p>
+exports[`annotate > external 1`] = `
+"<template>
+  <p>This is External component</p>
 </template>
 
-<script>
-export default {
-  name: 'Bar'
-}
-</script>
+<script src=\\"./external.ts\\"></script>
+
+<i18n src=\\"./ja.json\\"></i18n>
+"
 `;
 
-exports[`annotate : yaml 1`] = `<template>
-  <p>This is Yaml component: {{ count }}</p>
+exports[`annotate > force 1`] = `
+"<template>
+  <p>This is Force component</p>
 </template>
 
-<script setup lang="ts">
+<script setup lang=\\"ts\\">
 import { ref } from 'vue'
 
 const count = ref(0)
 </script>
 
-<i18n lang="yaml">
-en:
-  message: my message
+<i18n lang=\\"json\\">
+{
+  ja: {
+    hello: \\"hello\\"
+  }
+}
 </i18n>
+"
 `;
 
-exports[`annotate : multiple 1`] = `<template>
+exports[`annotate > lang / content lang missmatch 1`] = `
+"<template>
+  <p>This is OptionLangContentMissmatch component</p>
+</template>
+
+<script setup lang=\\"ts\\">
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+<i18n lang=\\"yaml\\">
+{
+  ja: {
+    hello: \\"hello\\"
+  }
+}
+</i18n>
+"
+`;
+
+exports[`annotate > multiple 1`] = `
+"<template>
   <p>This is Multi component</p>
 </template>
 
-<i18n lang="json5">
+<i18n lang=\\"json5\\">
 {
   en: {
     // comment
-    name: "Name"
+    name: \\"Name\\"
   }
 }
 </i18n>
 
-<script setup lang="ts">
+<script setup lang=\\"ts\\">
 import { ref } from 'vue'
 
 const count = ref(0)
 </script>
 
-<i18n lang="yaml">
+<i18n lang=\\"yaml\\">
 ja:
   name: 名前
 </i18n>
@@ -101,98 +134,88 @@ p {
   color: blue;
 }
 </style>
+"
 `;
 
-exports[`annotate : external 1`] = `<template>
-  <p>This is External component</p>
+exports[`annotate > no block 1`] = `
+"<template>
+  <p>This is NoBlock component</p>
 </template>
 
-<script src="./external.ts"></script>
-
-<i18n src="./ja.json"></i18n>
+<script>
+export default {
+  name: 'Bar'
+}
+</script>
+"
 `;
 
-exports[`annotate : unknown 1`] = `<template>
+exports[`annotate > option lang / content lang missmatch 1`] = `
+"<template>
+  <p>This is OptionLangContentMissmatch component</p>
+</template>
+
+<script setup lang=\\"ts\\">
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+<i18n>
+{
+  ja: {
+    hello: \\"hello\\"
+  }
+}
+</i18n>
+"
+`;
+
+exports[`annotate > unknown 1`] = `
+"<template>
   <p>This is Unknown component</p>
 </template>
 
-<script src="./external.ts"></script>
+<script src=\\"./external.ts\\"></script>
 
 <i18n>
 !!!
 </i18n>
+"
 `;
 
-exports[`annotate : option lang / content lang missmatch 1`] = `<template>
-  <p>This is OptionLangContentMissmatch component</p>
-</template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-
-const count = ref(0)
-</script>
-
-<i18n>
-{
-  ja: {
-    hello: "hello"
-  }
-}
-</i18n>
-`;
-
-exports[`annotate : lang / content lang missmatch 1`] = `<template>
-  <p>This is OptionLangContentMissmatch component</p>
-</template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-
-const count = ref(0)
-</script>
-
-<i18n lang="yaml">
-{
-  ja: {
-    hello: "hello"
-  }
-}
-</i18n>
-`;
-
-exports[`annotate : force 1`] = `<template>
-  <p>This is Force component</p>
-</template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-
-const count = ref(0)
-</script>
-
-<i18n lang="json">
-{
-  ja: {
-    hello: "hello"
-  }
-}
-</i18n>
-`;
-
-exports[`annotate : vue 2 1`] = `<template functional>
+exports[`annotate > vue 2 1`] = `
+"<template functional>
   <p>This is functional component</p>
 </template>
 
-<i18n lang="json">
-{ "en": { "title": "The application" } }
+<i18n lang=\\"json\\">
+{ \\"en\\": { \\"title\\": \\"The application\\" } }
 </i18n>
 
-<i18n lang="json">
+<i18n lang=\\"json\\">
 {
-  "ja": {
-    "title": "これはアプリケーション"
+  \\"ja\\": {
+    \\"title\\": \\"これはアプリケーション\\"
   }
 }
-</i18n>`;
+</i18n>"
+`;
 
+exports[`annotate > yaml 1`] = `
+"<template>
+  <p>This is Yaml component: {{ count }}</p>
+</template>
+
+<script setup lang=\\"ts\\">
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+<i18n lang=\\"yaml\\">
+en:
+  message: my message
+</i18n>
+"
+`;

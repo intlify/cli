@@ -1,7 +1,4 @@
-/// <reference path="../chai.shim.d.ts"/>
-
-import { assert, expect } from 'chai'
-import sinon from 'sinon'
+import { assert, expect, describe, it, vi } from 'vitest'
 import { promises as fs } from 'fs'
 import { dirname, resolve } from 'pathe'
 import { annotate, SFCAnnotateError } from '../../src/api'
@@ -13,7 +10,7 @@ describe('annotate', function () {
     const filepath = resolve(__dirname, '../fixtures/components/Basic.vue')
     const source = await fs.readFile(filepath, 'utf8')
     const content = await annotate(source, filepath)
-    expect(content).to.matchSnapshot(this)
+    expect(content).toMatchSnapshot()
     assert.match(content, /lang=\"json\"/)
   })
 
@@ -21,7 +18,7 @@ describe('annotate', function () {
     const filepath = resolve(__dirname, '../fixtures/components/Exist.vue')
     const source = await fs.readFile(filepath, 'utf8')
     const content = await annotate(source, filepath)
-    expect(content).matchSnapshot(this)
+    expect(content).toMatchSnapshot()
     assert.match(content, /lang=\"json\"/)
   })
 
@@ -29,7 +26,7 @@ describe('annotate', function () {
     const filepath = resolve(__dirname, '../fixtures/components/NoBlock.vue')
     const source = await fs.readFile(filepath, 'utf8')
     const content = await annotate(source, filepath)
-    expect(content).matchSnapshot(this)
+    expect(content).toMatchSnapshot()
     assert.equal(content, source)
     assert.notMatch(content, /<i18n>/)
   })
@@ -38,7 +35,7 @@ describe('annotate', function () {
     const filepath = resolve(__dirname, '../fixtures/components/Yaml.vue')
     const source = await fs.readFile(filepath, 'utf8')
     const content = await annotate(source, filepath)
-    expect(content).matchSnapshot(this)
+    expect(content).toMatchSnapshot()
     assert.match(content, /lang=\"yaml\"/)
   })
 
@@ -46,7 +43,7 @@ describe('annotate', function () {
     const filepath = resolve(__dirname, '../fixtures/components/Multi.vue')
     const source = await fs.readFile(filepath, 'utf8')
     const content = await annotate(source, filepath)
-    expect(content).matchSnapshot(this)
+    expect(content).toMatchSnapshot()
     assert.match(content, /lang=\"json5\"/)
     assert.match(content, /lang=\"yaml\"/)
   })
@@ -55,21 +52,21 @@ describe('annotate', function () {
     const filepath = resolve(__dirname, '../fixtures/components/External.vue')
     const source = await fs.readFile(filepath, 'utf8')
     const content = await annotate(source, filepath)
-    expect(content).matchSnapshot(this)
+    expect(content).toMatchSnapshot()
     assert.match(content, /src=\".\/ja.json\"/)
   })
 
   it('unknown', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/Unknown.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    const onWarn = sinon.spy()
+    const onWarn = vi.fn()
     const content = await annotate(source, filepath, {
       type: 'i18n',
       onWarn,
       attrs: {}
     })
-    expect(content).matchSnapshot(this)
-    assert.equal(onWarn.callCount, 1)
+    expect(content).toMatchSnapshot()
+    expect(onWarn).toHaveBeenCalledTimes(1)
   })
 
   it('option lang / content lang missmatch', async function () {
@@ -78,14 +75,14 @@ describe('annotate', function () {
       '../fixtures/components/OptionLangContentMissmatch.vue'
     )
     const source = await fs.readFile(filepath, 'utf8')
-    const onWarn = sinon.spy()
+    const onWarn = vi.fn()
     const content = await annotate(source, filepath, {
       type: 'i18n',
       onWarn,
       attrs: { lang: 'json' }
     })
-    expect(content).matchSnapshot(this)
-    assert.equal(onWarn.callCount, 1)
+    expect(content).toMatchSnapshot()
+    expect(onWarn).toHaveBeenCalledTimes(1)
   })
 
   it('lang / content lang missmatch', async function () {
@@ -94,28 +91,28 @@ describe('annotate', function () {
       '../fixtures/components/LangContentMissmatch.vue'
     )
     const source = await fs.readFile(filepath, 'utf8')
-    const onWarn = sinon.spy()
+    const onWarn = vi.fn()
     const content = await annotate(source, filepath, {
       type: 'i18n',
       onWarn
     })
-    expect(content).matchSnapshot(this)
-    assert.equal(onWarn.callCount, 1)
+    expect(content).toMatchSnapshot()
+    expect(onWarn).toHaveBeenCalledTimes(1)
   })
 
   it('force', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/Force.vue')
     const source = await fs.readFile(filepath, 'utf8')
-    const onWarn = sinon.spy()
+    const onWarn = vi.fn()
     const content = await annotate(source, filepath, {
       type: 'i18n',
       force: true,
       onWarn,
       attrs: { lang: 'json' }
     })
-    expect(content).matchSnapshot(this)
+    expect(content).toMatchSnapshot()
     assert.match(content, /lang=\"json\"/)
-    assert.equal(onWarn.callCount, 1)
+    expect(onWarn).toHaveBeenCalledTimes(1)
   })
 
   it('attrs', async function () {
@@ -138,7 +135,7 @@ describe('annotate', function () {
       vue: 2,
       attrs: { lang: 'json' }
     })
-    expect(content).matchSnapshot(this)
+    expect(content).toMatchSnapshot()
     assert.match(content, /lang=\"json\"/)
   })
 
