@@ -192,6 +192,19 @@ This optioins is used at [compile](#compile) function
 
 #### Properties
 
+##### ast
+
+Whether to generate AST format
+
+**Signature:**
+```typescript
+ast?: boolean;
+```
+
+#### Remarks
+
+default `false`, it will output the function format.
+
 ##### mode
 
 Compile mode
