@@ -24,9 +24,10 @@ afterEach(function () {
 
 describe('compile', function () {
   it('basic', async function () {
+    const cmd = yargs()
     // @ts-expect-error
-    const cmd = yargs(compile())
-    cmd.parseSync(
+    cmd.command(compile())
+    await cmd.parse(
       `compile --source ./test/fixtures/commands/compile-basic.json --output ./temp`
     )
     const expected = await fs.readFile(
