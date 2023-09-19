@@ -9,6 +9,7 @@ import { initI18n } from '../../src/i18n'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const CWD = resolve(__dirname, '../../')
+console.log('CWD', CWD)
 
 let orgCwd
 beforeEach(async function () {
@@ -32,10 +33,12 @@ describe('compile', function () {
       resolve(__dirname, '../__generated__/compile/commands/compile-basic.js'),
       'utf8'
     )
+    console.log('expected', expected)
     const compiled = await fs.readFile(
       resolve(__dirname, '../../temp/compile-basic.js'),
       'utf8'
     )
+    console.log('compiled', compiled)
     expect(await prettier(compiled)).toBe(await prettier(expected))
   })
 
