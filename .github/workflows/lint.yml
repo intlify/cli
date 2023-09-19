@@ -25,7 +25,7 @@ jobs:
 
       - name: Enable corepack
         run: corepack enable
-s
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
