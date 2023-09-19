@@ -1,7 +1,7 @@
 import { beforeEach, afterEach, describe, it, vi, expect } from 'vitest'
 import { prettier } from '../utils'
 import { dirname, resolve } from 'pathe'
-import { promises as fs, existsSync } from 'fs'
+import { promises as fs } from 'fs'
 import { fileURLToPath } from 'url'
 import yargs from 'yargs'
 import { compile } from '../../src/commands'
@@ -9,7 +9,6 @@ import { initI18n } from '../../src/i18n'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const CWD = resolve(__dirname, '../../')
-console.log('CWD', CWD)
 
 let orgCwd
 beforeEach(async function () {
@@ -34,22 +33,17 @@ describe('compile', function () {
       resolve(__dirname, '../__generated__/compile/commands/compile-basic.js'),
       'utf8'
     )
-    console.log('expected', expected)
-    console.log(
-      'compiled ffile',
-      existsSync(resolve(__dirname, '../../temp/compile-basic.js'))
-    )
     const compiled = await fs.readFile(
       resolve(__dirname, '../../temp/compile-basic.js'),
       'utf8'
     )
-    console.log('compiled', compiled)
     expect(await prettier(compiled)).toBe(await prettier(expected))
   })
 
   it('--mode development', async function () {
+    const cmd = yargs()
     // @ts-expect-error
-    const cmd = yargs(compile())
+    cmd.command(compile())
     await cmd.parse(
       `compile --source ./test/fixtures/commands/compile-mode.json --output ./temp --mode development`
     )
