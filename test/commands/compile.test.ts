@@ -34,13 +34,13 @@ describe('compile', function () {
       'utf8'
     )
     console.log('expected', expected)
-    const compiled = await fs.readFile(
-      resolve(__dirname, '../../temp/compile-basic.js'),
-      'utf8'
-    )
     console.log(
       'compiled ffile',
       existsSync(resolve(__dirname, '../../temp/compile-basic.js'))
+    )
+    const compiled = await fs.readFile(
+      resolve(__dirname, '../../temp/compile-basic.js'),
+      'utf8'
     )
     console.log('compiled', compiled)
     expect(await prettier(compiled)).toBe(await prettier(expected))
