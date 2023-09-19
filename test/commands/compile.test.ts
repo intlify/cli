@@ -26,7 +26,7 @@ describe('compile', function () {
   it('basic', async function () {
     // @ts-expect-error
     const cmd = yargs(compile())
-    await cmd.parse(
+    cmd.parseSync(
       `compile --source ./test/fixtures/commands/compile-basic.json --output ./temp`
     )
     const expected = await fs.readFile(
