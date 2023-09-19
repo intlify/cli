@@ -1,5 +1,5 @@
 import path from 'pathe'
-import { green, yellow } from 'colorette'
+import { green, yellow, red } from 'colorette'
 import createDebug from 'debug'
 import { CompileErrorCodes, compile } from '../api'
 import { t } from '../i18n'
@@ -69,7 +69,7 @@ export default function defineCommand() {
             console.warn(
               yellow(
                 t("{source}: Ignore compilation due to not supported '{ext}'", {
-                  named: { ext: parsed.ext }
+                  ext: parsed.ext
                 })
               )
             )
@@ -78,16 +78,20 @@ export default function defineCommand() {
             console.log(
               yellow(
                 t('Warning compilation: {source} -> {output}, {msg}', {
-                  named: { source, output, msg }
+                  source,
+                  output,
+                  msg
                 })
               )
             )
             break
           case CompileErrorCodes.INTERNAL_COMPILE_ERROR:
-            console.log(
-              green(
+            console.error(
+              red(
                 t('Error compilation: {source} -> {output}, {msg}', {
-                  named: { source, output, msg }
+                  source,
+                  output,
+                  msg
                 })
               )
             )
