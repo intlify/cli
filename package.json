@@ -76,8 +76,7 @@
     "shipjs": "^0.24.4",
     "typescript": "^5.2.2",
     "unbuild": "^1.2.1",
-    "vitest": "^0.34.4",
-    "yorkie": "^2.0.0"
+    "vitest": "^0.34.4"
   },
   "engines": {
     "node": ">= 12"
@@ -101,9 +100,6 @@
   "bin": {
     "intlify": "./bin/run.cjs"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
   "lint-staged": {
     "*.{js,json,yaml,yml}": [
       "prettier --write"
@@ -121,6 +117,7 @@
   },
   "packageManager": "pnpm@8.7.5",
   "scripts": {
+    "prepare": "git config --local core.hooksPath .githooks",
     "build": "pnpm build:transpile && pnpm build:extract",
     "build:extract": "api-extractor run -l -c ./api-extractor.json",
     "build:transpile": "unbuild",
