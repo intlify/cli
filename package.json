@@ -17,20 +17,6 @@
   "bugs": {
     "url": "https://github.com/intlify/cli/issues"
   },
-  "changelog": {
-    "labels": {
-      "Type: Feature": ":star: Features",
-      "Type: Bug": ":bug: Bug Fixes",
-      "Type: Security": ":lock: Security Fixes",
-      "Type: Performance": ":chart_with_upwards_trend: Performance Fixes",
-      "Type: Improvement": ":zap: Improvement Features",
-      "Type: Breaking": ":boom: Breaking Change",
-      "Type: Deprecated": ":warning: Deprecated Features",
-      "Type: I18n": ":globe_with_meridians: Internationalization",
-      "Type: A11y": ":wheelchair: Accessibility",
-      "Type: Documentation": ":pencil: Documentation"
-    }
-  },
   "dependencies": {
     "@intlify/bundle-utils": "^7.3.0",
     "@intlify/core": "^9.4.1",
@@ -52,7 +38,6 @@
   },
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^3.0.0-next.3",
-    "@kazupon/lerna-changelog": "^4.3.0",
     "@microsoft/api-extractor": "^7.37.0",
     "@secretlint/secretlint-rule-preset-recommend": "^3.3.0",
     "@types/debug": "^4.1.8",
@@ -65,6 +50,8 @@
     "@typescript-eslint/parser": "^6.7.0",
     "@vitest/coverage-v8": "^0.34.4",
     "api-docs-gen": "^0.3.0",
+    "bumpp": "^9.2.0",
+    "gh-changelogen": "^0.2.8",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -73,7 +60,6 @@
     "npm-run-all": "^4.1.5",
     "opener": "^1.5.2",
     "secretlint": "^3.3.0",
-    "shipjs": "^0.24.4",
     "typescript": "^5.2.2",
     "unbuild": "^1.2.1",
     "vitest": "^0.34.4"
@@ -118,6 +104,8 @@
   "packageManager": "pnpm@8.7.5",
   "scripts": {
     "prepare": "git config --local core.hooksPath .githooks",
+    "changelog": "gh-changelogen --repo=@intlify/cli",
+    "release": "bumpp --commit \"release: v%s\" --push --tag",
     "build": "pnpm build:transpile && pnpm build:extract",
     "build:extract": "api-extractor run -l -c ./api-extractor.json",
     "build:transpile": "unbuild",
@@ -132,8 +120,6 @@
     "lint:eslint": "eslint ./src ./test --ext .ts",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:secret": "npx secretlint \"**/*\"",
-    "release:prepare": "shipjs prepare",
-    "release:trigger": "shipjs trigger",
     "test": "pnpm test:type && pnpm test:cover",
     "test:type": "tsc -p . --noEmit",
     "test:cover": "pnpm test:unit --coverage",
