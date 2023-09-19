@@ -6,6 +6,8 @@ node_modules
 lib
 *.log
 *.swp
+*.tgz
+*.zip
 *~
 !temp/.gitkeep
 temp/*.json
