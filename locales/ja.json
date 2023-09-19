@@ -4,6 +4,7 @@
   "the i18n resource source path": "コンパイルされる i18n リソースのパス",
   "the compiled i18n resource output path": "コンパイルされた i18n リソースの出力先パス",
   "the compiled i18n resource mode, 'production' or 'development' (default: 'production')": "コンパイルされる i18n リソースのモード, 'production' または 'development' (デフォルト: 'production')",
+  "resource compilation format, 'function' or 'ast' (default: 'function')": "コンパイルされるリソースフォーマット, 'function' または 'ast' (デフォルト: 'function')",
   "Success compilation: {source} -> {output}": "コンパイル成功: {source} -> {output}",
   "{source}: Ignore compilation due to not supported '{ext}'": "{source}: '{ext}' がサポートされていないためコンパイルされません",
   "Warning compilation: {source} -> {output}, {msg}": "コンパイル警告: {source} -> {output}, {msg}",
