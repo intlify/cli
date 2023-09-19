@@ -1,4 +1,7 @@
-exports[`format : basic 1`] = `<template>
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`format > basic 1`] = `
+"<template>
   <p>This is BasicFormat</p>
 </template>
 
@@ -14,19 +17,41 @@ export default {
 }
 </style>
 
-<i18n lang="json">
-{
-  "en": {
-    "title": "The application"
-  },
-  "ja": {
-    "title": "アプリケーション"
-  }
-}
-</i18n>
+<i18n lang=\\"json\\">
+[object Promise]</i18n>
+"
 `;
 
-exports[`format : nested 1`] = `<template>
+exports[`format > multi 1`] = `
+"<template>
+  <p>This is MultiFormat</p>
+</template>
+
+<i18n lang=\\"json\\">
+[object Promise]</i18n>
+
+<script>
+export default {
+  name: 'MultiFormat'
+}
+</script>
+
+<i18n lang=\\"yaml\\">
+[object Promise]</i18n>
+
+<style scoped>
+#app {
+  color: red;
+}
+</style>
+
+<i18n lang=\\"json5\\">
+[object Promise]</i18n>
+"
+`;
+
+exports[`format > nested 1`] = `
+"<template>
   <p>This is Nested resources</p>
 </template>
 
@@ -36,43 +61,19 @@ export default {
 }
 </script>
 
-<i18n lang="json" global>
-{
-  "en": {
-    "footer": "this is footer placeholder",
-    "menu": {
-      "sub1": {
-        "menu1": "menu 1",
-        "menu2": {
-          "1menu": "this is sub 1menu",
-          "menu1": "this is sub menu1",
-          "menu2": "this is sub menu2"
-        }
-      },
-      "sub2": "this is sub2 placeholder",
-      "sub3": "this is sub3 placeholder",
-      "sub4": {
-        "0menu": "this is sub 0menu",
-        "menu1": {
-          "menu1": "this is sub menu1",
-          "menu2": "this is sub menu2"
-        },
-        "menu10": "menu 10"
-      }
-    },
-    "title": "The application"
-  }
-}
-</i18n>
+<i18n lang=\\"json\\" global>
+[object Promise]</i18n>
 
 <style scoped>
 #app {
   color: red;
 }
 </style>
+"
 `;
 
-exports[`format : oneline 1`] = `<template>
+exports[`format > oneline 1`] = `
+"<template>
   <p>This is Oneline</p>
 </template>
 
@@ -84,75 +85,18 @@ export default { name: 'App' }
 #app { color: red; }
 </style>
 
-<i18n lang="json">
-{
-  "en": {
-    "title": "The application"
-  }
-}
-</i18n>`;
-
-exports[`format : multi 1`] = `<template>
-  <p>This is MultiFormat</p>
-</template>
-
-<i18n lang="json">
-{
-  "en": {
-    "title": "The application"
-  },
-  "ja": {
-    "title": "アプリケーション"
-  }
-}
-</i18n>
-
-<script>
-export default {
-  name: 'MultiFormat'
-}
-</script>
-
-<i18n lang="yaml">
-en:
-  login: "login"
-ja:
-  login: "ログイン"
-</i18n>
-
-<style scoped>
-#app {
-  color: red;
-}
-</style>
-
-<i18n lang="json5">
-{
-  en: { login: "login" },
-  ja: {
-    login: "ログイン",
-  },
-}
-</i18n>
+<i18n lang=\\"json\\">
+[object Promise]</i18n>"
 `;
 
-exports[`format : vue 2 1`] = `<template functional>
+exports[`format > vue 2 1`] = `
+"<template functional>
   <p>This is functional component</p>
 </template>
 
-<i18n lang="json">
-{
-  "en": {
-    "title": "The application"
-  }
-}
-</i18n>
+<i18n lang=\\"json\\">
+[object Promise]</i18n>
 
-<i18n lang="json">
-{
-  "ja": {
-    "title": "これはアプリケーション"
-  }
-}
-</i18n>`;
-
+<i18n lang=\\"json\\">
+[object Promise]</i18n>"
+`;

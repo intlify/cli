@@ -7,6 +7,9 @@ lib
 *.log
 *.swp
 *~
-temp
+!temp/.gitkeep
+temp/*.json
+temp/*.js
+temp/*.md
 .env
 .nyc_output

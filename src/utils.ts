@@ -290,9 +290,11 @@ export async function getSFCParser(version: number): Promise<parseSFC | null> {
   let parser: parseSFC | null = null
   try {
     if (version === 3) {
+      // @ts-ignore
       parser = (await import('@vue/compiler-sfc').then(_rDefault))
         .parse as parseSFC
     } else if (version === 2) {
+      // @ts-ignore
       const { parseComponent } = await import('vue-template-compiler').then(
         _rDefault
       )

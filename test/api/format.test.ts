@@ -1,6 +1,4 @@
-/// <reference path="../chai.shim.d.ts"/>
-
-import { assert, expect } from 'chai'
+import { assert, expect, describe, it } from 'vitest'
 import { promises as fs } from 'fs'
 import { dirname, resolve } from 'pathe'
 import { format, FormatLangNotFoundError } from '../../src/api'
@@ -15,21 +13,21 @@ describe('format', function () {
     )
     const source = await fs.readFile(filepath, 'utf8')
     const content = await format(source, filepath)
-    expect(content).to.matchSnapshot(this)
+    expect(content).toMatchSnapshot()
   })
 
   it('nested', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/HasNested.vue')
     const source = await fs.readFile(filepath, 'utf8')
     const content = await format(source, filepath)
-    expect(content).matchSnapshot(this)
+    expect(content).toMatchSnapshot()
   })
 
   it('oneline', async function () {
     const filepath = resolve(__dirname, '../fixtures/components/Oneline.vue')
     const source = await fs.readFile(filepath, 'utf8')
     const content = await format(source, filepath)
-    expect(content).matchSnapshot(this)
+    expect(content).toMatchSnapshot()
   })
 
   it('multi', async function () {
@@ -39,7 +37,7 @@ describe('format', function () {
     )
     const source = await fs.readFile(filepath, 'utf8')
     const content = await format(source, filepath)
-    expect(content).matchSnapshot(this)
+    expect(content).toMatchSnapshot()
   })
 
   it('vue 2', async function () {
@@ -49,7 +47,7 @@ describe('format', function () {
     )
     const source = await fs.readFile(filepath, 'utf8')
     const content = await format(source, filepath, { vue: 2 })
-    expect(content).matchSnapshot(this)
+    expect(content).toMatchSnapshot()
   })
 
   it('FormatLangNotFoundError', async function () {

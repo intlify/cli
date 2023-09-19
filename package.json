@@ -2,13 +2,18 @@
   "name": "@intlify/cli",
   "description": "CLI Tooling for i18n development",
   "version": "0.11.3",
+  "license": "MIT",
   "author": {
     "name": "kazuya kawaguchi",
     "email": "kawakazu80@gmail.com"
   },
-  "bin": {
-    "intlify": "./bin/run.cjs"
-  },
+  "keywords": [
+    "cli",
+    "i18n",
+    "intlify",
+    "tooling"
+  ],
+  "homepage": "https://github.com/intlify/cli#readme",
   "bugs": {
     "url": "https://github.com/intlify/cli/issues"
   },
@@ -27,91 +32,78 @@
     }
   },
   "dependencies": {
-    "@intlify/bundle-utils": "next",
-    "@intlify/core": "beta",
-    "@intlify/shared": "beta",
-    "@vue/compiler-sfc": "latest",
-    "colorette": "^2.0.16",
-    "cosmiconfig": "^7.0.1",
-    "debug": "^4.3.2",
+    "@intlify/bundle-utils": "^7.3.0",
+    "@intlify/core": "^9.4.1",
+    "@intlify/shared": "^9.4.1",
+    "@vue/compiler-sfc": "^3.3.4",
+    "colorette": "^2.0.20",
+    "cosmiconfig": "^7.1.0",
+    "debug": "^4.3.4",
     "diff-match-patch": "^1.0.5",
-    "fast-glob": "^3.2.7",
-    "ignore": "^5.1.8",
+    "fast-glob": "^3.3.1",
+    "ignore": "^5.2.4",
     "jsonc-eslint-parser": "^1.4.1",
-    "pathe": "^0.2.0",
-    "prettier": "^2.4.1",
+    "pathe": "^1.1.1",
+    "prettier": "^3.0.3",
     "prettier-plugin-sort-json": "^0.0.2",
+    "vue-template-compiler": "latest",
     "yaml-eslint-parser": "^0.4.1",
-    "yargs": "^17.2.0",
-    "vue-template-compiler": "latest"
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@intlify/eslint-plugin-vue-i18n": "^1.0.0",
+    "@intlify/eslint-plugin-vue-i18n": "^3.0.0-next.3",
     "@kazupon/lerna-changelog": "^4.3.0",
-    "@microsoft/api-extractor": "^7.18.2",
+    "@microsoft/api-extractor": "^7.37.0",
     "@secretlint/secretlint-rule-preset-recommend": "^3.3.0",
-    "@types/chai": "^4.2.22",
-    "@types/debug": "^4.1.7",
-    "@types/diff-match-patch": "^1.0.32",
-    "@types/eslint": "^7.2.6",
-    "@types/eslint-visitor-keys": "^1.0.0",
+    "@types/debug": "^4.1.8",
+    "@types/diff-match-patch": "^1.0.33",
+    "@types/eslint": "^8.44.2",
     "@types/glob": "^7.1.3",
-    "@types/mocha": "^9.0.0",
-    "@types/node": "^16.10.3",
-    "@types/prettier": "^2.4.1",
-    "@types/sinon": "^10.0.4",
-    "@types/yargs": "^17.0.3",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@types/node": "^20.6.2",
+    "@types/yargs": "^17.0.24",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "@vitest/coverage-v8": "^0.34.4",
     "api-docs-gen": "^0.3.0",
-    "chai": "^4.3.4",
-    "eslint": "^8.0.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-mocha": "^9.0.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "jiti": "^1.12.6",
-    "lint-staged": "^11.0.0",
-    "mocha": "^9.1.2",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "jiti": "^1.20.0",
+    "lint-staged": "^14.0.0",
     "npm-run-all": "^4.1.5",
-    "nyc": "^15.1.0",
-    "opener": "^1.5.1",
+    "opener": "^1.5.2",
     "secretlint": "^3.3.0",
-    "shipjs": "^0.24.0",
-    "sinon": "^11.1.2",
-    "typescript": "^4.4.3",
-    "typescript-eslint-language-service": "^4.1.3",
-    "unbuild": "^0.5.6",
+    "shipjs": "^0.24.4",
+    "typescript": "^5.2.2",
+    "unbuild": "^1.2.1",
+    "vitest": "^0.34.4",
     "yorkie": "^2.0.0"
   },
   "engines": {
     "node": ">= 12"
   },
+  "main": "./lib/index.cjs",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
+      "types": "./lib/index.d.ts",
       "import": "./lib/index.mjs",
       "require": "./lib/index.cjs"
     },
-    "./dist/*": "./dist/*",
     "./lib/*": "./lib/*",
     "./package.json": "./package.json"
   },
   "files": [
     "bin/",
     "locales/*.json",
-    "dist/*.d.ts",
     "lib/"
   ],
+  "bin": {
+    "intlify": "./bin/run.cjs"
+  },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
-  "homepage": "https://github.com/intlify/cli#readme",
-  "keywords": [
-    "cli",
-    "i18n",
-    "intlify",
-    "tooling"
-  ],
-  "license": "MIT",
   "lint-staged": {
     "*.{js,json,yaml,yml}": [
       "prettier --write"
@@ -123,33 +115,31 @@
       "secretlint"
     ]
   },
-  "main": "lib/src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/intlify/cli.git"
   },
+  "packageManager": "pnpm@8.7.5",
   "scripts": {
-    "build": "npm run build:transpile && npm run build:extract",
-    "build:docs": "api-docs-gen ./temp/cli.api.json -c ./docsgen.config.js -o ./ -g noprefix",
+    "build": "pnpm build:transpile && pnpm build:extract",
     "build:extract": "api-extractor run -l -c ./api-extractor.json",
     "build:transpile": "unbuild",
+    "build:docs": "api-docs-gen ./temp/cli.api.json -c ./docsgen.config.js -o ./ -g noprefix",
     "dev": "jiti ./src/cli.ts",
     "clean": "run-p clean:*",
     "clean:lib": "rm -rf ./lib/*.*",
     "fix": "run-p lint:eslint:fix format:fix",
     "format": "prettier --config .prettierrc --ignore-path .prettierignore '**/*.{js,json,html}'",
-    "format:fix": "npm run format -- --write",
+    "format:fix": "pnpm format --write",
     "lint": "run-p lint:eslint lint:secret",
     "lint:eslint": "eslint ./src ./test --ext .ts",
-    "lint:eslint:fix": "npm run lint:eslint -- --fix",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:secret": "npx secretlint \"**/*\"",
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",
-    "test": "npm run test:type && npm run test:cover",
+    "test": "pnpm test:type && pnpm test:cover",
     "test:type": "tsc -p . --noEmit",
-    "test:cover": "nyc mocha -r jiti/register -r ./test/setup.ts 'test/**/*.test.ts'",
-    "test:unit": "mocha -r jiti/register -r ./test/setup.ts 'test/**/*.test.ts'",
-    "test:snap": "UPDATE_SNAPSHOT=* mocha -r jiti/register -r ./test/setup.ts 'test/**/*.test.ts'"
-  },
-  "types": "dist/cli.d.ts"
+    "test:cover": "pnpm test:unit --coverage",
+    "test:unit": "vitest run"
+  }
 }
