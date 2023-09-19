@@ -1,3 +1,13 @@
+# v0.12.0 (2023-09-19T15:50:37Z)
+
+<!-- Release notes generated using configuration in .github/release.yml at v0.12.0 -->
+
+## What's Changed
+### ⚡ Improvement Features
+* fix: upgrade `@intlify/*` deps by @kazupon in https://github.com/intlify/cli/pull/65
+
+
+**Full Changelog**: https://github.com/intlify/cli/compare/v0.11.3...v0.12.0
 
 ## v0.11.3 (2021-11-12)
 
