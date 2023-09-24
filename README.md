@@ -1,5 +1,9 @@
 # 🧰 Intlify CLI
 
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![CI][ci-src]][ci-href]
+
 CLI Tooling for i18n development
 
 ## 💿 Installation
@@ -90,3 +94,12 @@ Please make sure to read the [Issue Reporting Checklist](https://github.com/intl
 ## ©️ License
 
 [MIT](http://opensource.org/licenses/MIT)
+
+<!-- Badges -->
+
+[npm-version-src]: https://img.shields.io/npm/v/@intlify/cli?style=flat&colorA=18181B&colorB=FFAD33
+[npm-version-href]: https://npmjs.com/package/@intlify/cli
+[npm-downloads-src]: https://img.shields.io/npm/dm/@intlify/cli?style=flat&colorA=18181B&colorB=FFAD33
+[npm-downloads-href]: https://npmjs.com/package/@intlify/cli
+[ci-src]: https://github.com/intlify/cli/actions/workflows/ci.yaml/badge.svg
+[ci-href]: https://github.com/intlify/cli/actions/workflows/ci.yaml
