@@ -71,7 +71,7 @@ intlify format —source /path/to/**/*.vue —type custom-block --ignore .gitign
 
 ## 🤝 API
 
-About details, See the [API References](https://github.com/intlify/cli/blob/main/api.md)
+About details, See the [API References](https://www.jsdocs.io/package/@intlify/cli)
 
 
 ## 🌏 I18n
