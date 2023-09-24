@@ -10,7 +10,8 @@ import { initI18n } from '../../src/i18n'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const CWD = resolve(__dirname, '../../')
 
-let orgCwd
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let orgCwd: any
 beforeEach(async () => {
   await initI18n()
   orgCwd = process.cwd

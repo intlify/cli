@@ -2,6 +2,7 @@ import path from 'pathe'
 import { promises as fs } from 'fs'
 import { isString } from '@intlify/shared'
 import { createCoreContext, translate } from '@intlify/core'
+import { getNavigatorLanguage } from '@intlify/utils/node'
 import createDebug from 'debug'
 import i18nResourceSchema from '../locales/en.json'
 
@@ -48,13 +49,8 @@ async function loadI18nResources(): Promise<
   )
 }
 
-export function getLocale(env?: Record<string, unknown>): Locale {
-  env = env || process.env
-  const raw =
-    ((env.LC_ALL || env.LC_MESSAGES || env.LANG || env.LANGUAGE) as string) ||
-    DEFAULT_LOCALE
-  debug('getLocale', raw)
-  return raw.replace(/\.UTF\-8/g, '').replace(/_/g, '-')
+export function getLocale(): Locale {
+  return getNavigatorLanguage() || DEFAULT_LOCALE
 }
 
 export function t<Key extends keyof I18nReousrceSchema>(

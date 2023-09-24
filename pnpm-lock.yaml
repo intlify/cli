@@ -14,6 +14,9 @@ dependencies:
   '@intlify/shared':
     specifier: ^9.4.1
     version: 9.4.1
+  '@intlify/utils':
+    specifier: 0.4.2
+    version: 0.4.2
   '@vue/compiler-sfc':
     specifier: ^3.3.4
     version: 3.3.4
@@ -1190,6 +1193,14 @@ packages:
         integrity: sha512-A51elBmZWf1FS80inf/32diO9DeXoqg9GR9aUDHFcfHoNDuT46Q+fpPOdj8jiJnSHSBh8E1E+6qWRhAZXdK3Ng==
       }
     engines: { node: '>= 16' }
+    dev: false
+
+  /@intlify/utils@0.4.2:
+    resolution:
+      {
+        integrity: sha512-rDic6ifdA3oAxkePnbgCH4/eIuw/aZnYvhrFH/sYAN4tM/UPtPf7T/YcwY1CioW5CTD+KKUkHU0hyBFmzzXmoQ==
+      }
+    engines: { node: '>= 18' }
     dev: false
 
   /@intlify/vue-devtools@9.3.0-beta.27:
