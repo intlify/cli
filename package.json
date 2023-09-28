@@ -32,7 +32,7 @@
     "jsonc-eslint-parser": "^1.4.1",
     "pathe": "^1.1.1",
     "prettier": "^3.0.3",
-    "prettier-plugin-sort-json": "^0.0.2",
+    "prettier-plugin-sort-json": "^0.0.3",
     "vue-template-compiler": "latest",
     "yaml-eslint-parser": "^0.4.1",
     "yargs": "^17.7.2"
