@@ -15,8 +15,8 @@ dependencies:
     specifier: ^9.4.1
     version: 9.4.1
   '@intlify/utils':
-    specifier: 0.4.2
-    version: 0.4.2
+    specifier: 0.6.0
+    version: 0.6.0
   '@vue/compiler-sfc':
     specifier: ^3.3.4
     version: 3.3.4
@@ -923,8 +923,8 @@ packages:
     engines: {node: '>= 16'}
     dev: false
 
-  /@intlify/utils@0.4.2:
-    resolution: {integrity: sha512-rDic6ifdA3oAxkePnbgCH4/eIuw/aZnYvhrFH/sYAN4tM/UPtPf7T/YcwY1CioW5CTD+KKUkHU0hyBFmzzXmoQ==}
+  /@intlify/utils@0.6.0:
+    resolution: {integrity: sha512-a5BxAxS35dLWp/yxBxSpr/T70yP6jXJynryR/7iQLlb3yN46N5MvKcj8GTAvQskLkmT4u04lArrCPXLhyajU6g==}
     engines: {node: '>= 18'}
     dev: false
 
