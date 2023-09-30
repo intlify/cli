@@ -48,8 +48,8 @@ dependencies:
     specifier: ^3.0.3
     version: 3.0.3
   prettier-plugin-sort-json:
-    specifier: ^0.0.3
-    version: 0.0.3(prettier@3.0.3)
+    specifier: ^3.0.0
+    version: 3.1.0(prettier@3.0.3)
   vue-template-compiler:
     specifier: latest
     version: 2.7.14
@@ -1403,10 +1403,6 @@ packages:
 
   /@types/parse-json@4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
-    dev: false
-
-  /@types/prettier@2.7.3:
-    resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
     dev: false
 
   /@types/resolve@1.20.2:
@@ -4308,13 +4304,12 @@ packages:
       fast-diff: 1.3.0
     dev: true
 
-  /prettier-plugin-sort-json@0.0.3(prettier@3.0.3):
-    resolution: {integrity: sha512-1WLOaeaRJRyVzDmuPif32xRn77+K6J00XIin1O/XuXpD5wy3XX8XyoQH/BSlzwdZ3GpnTOJRyIGXhxDCUb4L9Q==}
-    engines: {node: '>=14.0.0'}
+  /prettier-plugin-sort-json@3.1.0(prettier@3.0.3):
+    resolution: {integrity: sha512-eIDEUjwzekiVd+oKrpd0aoACBTp5zOW71wDTNy+qQ5C9Q8oqt9n9wCm4F+SeRZbXfgblh/WYIguJynImlBXrvQ==}
+    engines: {node: '>=16.0.0'}
     peerDependencies:
-      prettier: ^2.3.2
+      prettier: ^3.0.0
     dependencies:
-      '@types/prettier': 2.7.3
       prettier: 3.0.3
     dev: false
 
