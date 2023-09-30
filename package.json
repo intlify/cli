@@ -24,7 +24,7 @@
     "@intlify/utils": "0.6.0",
     "@vue/compiler-sfc": "^3.3.4",
     "colorette": "^2.0.20",
-    "cosmiconfig": "^7.1.0",
+    "cosmiconfig": "^8.0.0",
     "debug": "^4.3.4",
     "diff-match-patch": "^1.0.5",
     "fast-glob": "^3.3.1",
