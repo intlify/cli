@@ -34,7 +34,7 @@
     "prettier": "^3.0.3",
     "prettier-plugin-sort-json": "^0.0.3",
     "vue-template-compiler": "latest",
-    "yaml-eslint-parser": "^0.4.1",
+    "yaml-eslint-parser": "^0.5.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
