@@ -103,7 +103,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "packageManager": "pnpm@8.8.0",
+  "packageManager": "pnpm@8.9.0",
   "scripts": {
     "prepare": "git config --local core.hooksPath .githooks",
     "changelog": "gh-changelogen --repo=intlify/cli",
