@@ -29,7 +29,7 @@
     "diff-match-patch": "^1.0.5",
     "fast-glob": "^3.3.1",
     "ignore": "^5.2.4",
-    "jsonc-eslint-parser": "^1.4.1",
+    "jsonc-eslint-parser": "^2.0.0",
     "pathe": "^1.1.1",
     "prettier": "^3.0.3",
     "prettier-plugin-sort-json": "^0.0.3",
