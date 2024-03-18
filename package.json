@@ -21,7 +21,7 @@
     "@intlify/bundle-utils": "^7.3.0",
     "@intlify/core": "^9.4.1",
     "@intlify/shared": "^9.4.1",
-    "@intlify/utils": "0.6.0",
+    "@intlify/utils": "0.13.0",
     "@vue/compiler-sfc": "^3.3.4",
     "colorette": "^2.0.20",
     "cosmiconfig": "^7.1.0",
