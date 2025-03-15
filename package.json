@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^3.0.0-next.3",
-    "@secretlint/secretlint-rule-preset-recommend": "^3.3.0",
+    "@secretlint/secretlint-rule-preset-recommend": "^9.0.0",
     "@types/debug": "^4.1.8",
     "@types/diff-match-patch": "^1.0.33",
     "@types/eslint": "^8.44.2",
@@ -58,7 +58,7 @@
     "lint-staged": "^14.0.0",
     "npm-run-all2": "^5.0.0",
     "opener": "^1.5.2",
-    "secretlint": "^3.3.0",
+    "secretlint": "^9.0.0",
     "typescript": "^5.2.2",
     "unbuild": "^2.0.0",
     "vitest": "^0.34.4"
