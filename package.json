@@ -52,7 +52,7 @@
     "bumpp": "^9.2.0",
     "gh-changelogen": "^0.2.8",
     "eslint": "^8.49.0",
-    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "jiti": "^1.20.0",
     "lint-staged": "^14.0.0",
